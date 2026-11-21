@@ -27,7 +27,7 @@ h1{font-size:1.45rem}h2{font-size:1.1rem}h3{font-size:.98rem}
 .nv b{margin-left:auto;background:var(--bad);color:#fff;border-radius:99px;font-size:.72rem;padding:1px 7px}
 .main{padding:20px 22px 110px;max-width:1300px;width:100%;margin:0 auto}
 .top{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
-.tl0{flex:1 1 auto;min-width:0}.tact{display:flex;gap:8px;flex-wrap:wrap;align-items:center;order:1}.tbar{display:flex;gap:6px;align-items:center;order:2}.fbtns{display:flex;gap:8px;flex-wrap:wrap}@keyframes vp{50%{opacity:.25}}.vpulse{animation:vp 1s infinite}.expchk{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:6px 12px;margin-top:6px}.expchk .chk{display:flex;align-items:center;gap:8px;font-size:.9rem}.expchk input{width:auto}
+.tl0{flex:1 1 auto;min-width:0}.tact{display:flex;gap:8px;flex-wrap:wrap;align-items:center;order:1}.tbar{display:flex;gap:6px;align-items:center;order:2}.fbtns{display:flex;gap:8px;flex-wrap:wrap}.selbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:var(--soft);border-radius:12px;padding:8px 12px;margin-bottom:8px;position:sticky;top:0;z-index:5}.selrow td{background:var(--soft)}table.rs input[type=checkbox]{width:20px;height:20px}@keyframes vp{50%{opacity:.25}}.vpulse{animation:vp 1s infinite}.expchk{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:6px 12px;margin-top:6px}.expchk .chk{display:flex;align-items:center;gap:8px;font-size:.9rem}.expchk input{width:auto}
 .thbtn,.syb{gap:5px}.syb.bad{background:var(--bad);color:#fff}.thl{font-size:.78rem}@media(max-width:700px){.thl{display:none}}
 .sub{color:var(--mut);font-size:.88rem}
 .card{background:var(--card);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--cb);border-radius:var(--r);box-shadow:var(--sh);padding:16px;min-width:0}
@@ -132,7 +132,7 @@ tr:hover td{background:var(--soft)}
 .empty{text-align:center;color:var(--mut);padding:22px 8px}
 .ln{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--cb)}.ln:last-child{border:0}
 .ln .lt{min-width:62px;font-weight:700;font-size:.82rem;color:var(--mut)}
-.ln .lb2{flex:1;min-width:0}
+.ln .lb2{flex:1;min-width:0}.lbt{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}@media(max-width:899px){.ln{flex-wrap:wrap;row-gap:6px}.ln .lt{min-width:70px}.ln .lb2{flex:1 1 calc(100% - 90px)}.ln .lbt{flex:1 1 100%;justify-content:flex-start;padding-left:0}.ln .chip{white-space:normal}}
 .rg{display:flex;gap:7px;flex-wrap:wrap}.rg label{display:flex;gap:6px;align-items:center;background:var(--soft);padding:7px 11px;border-radius:12px;cursor:pointer;font-weight:700;font-size:.84rem;color:var(--tx)}
 .rg input{accent-color:var(--p2)}
 svg text{fill:var(--mut);font-family:inherit}
@@ -158,7 +158,7 @@ details summary{cursor:pointer;font-weight:700;padding:4px 0}
  input,select,textarea{font-size:16px}
  .ct,.ct[style]{min-width:0!important;flex:1 1 120px}.calbar{width:100%;justify-content:space-between}
  .tw .cal[style*="--n:7"]{min-width:620px}
- .toasts{top:8px}
+ .toasts{top:auto;bottom:calc(84px + env(safe-area-inset-bottom));left:10px;right:10px;max-width:none}
  h1{font-size:1.25rem}
  .mc{min-height:58px}
  .tw table.rs thead{display:none}
@@ -179,7 +179,7 @@ button,.btn,a,.nv{touch-action:manipulation;-webkit-tap-highlight-color:transpar
 <script>
 'use strict';
 /* ================= My Life Pilot V0.3.1 — noyau : utilitaires, stockage, calculs ================= */
-const VERSION = '0.6.0';
+const VERSION = '0.7.0';
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const uid = () => Math.random().toString(36).slice(2, 8) + Date.now().toString(36).slice(-4);
@@ -297,6 +297,20 @@ function log(type, text, ref) {
 }
 
 /* ---------------- accès / entités ---------------- */
+/* durées saisies librement : 1:40 · 1h40 · 1h · 40 min · 100 (minutes) · 1,5 (= 1h30) */
+function parseDur(s) {
+  s = String(s ?? '').trim().toLowerCase().replace(',', '.').replace(/\s+/g, ' ');
+  if (s === '') return 0;
+  let m;
+  if ((m = s.match(/^(\d+):(\d{1,2})$/))) return +m[1] * 60 + +m[2];
+  if ((m = s.match(/^(\d+(?:\.\d+)?) ?h(?: ?(\d{1,2}) ?(?:min|mn|m)?)?$/))) return Math.round(+m[1] * 60 + (+m[2] || 0));
+  if ((m = s.match(/^(\d+(?:\.\d+)?) ?(?:min|mn|m)$/))) return Math.round(+m[1]);
+  if (/^\d+$/.test(s)) return +s;
+  if (/^\d+\.\d+$/.test(s)) return Math.round(parseFloat(s) * 60);
+  return null;
+}
+const pd = s => { const v = parseDur(s); return v == null ? 0 : v; };
+const durInput = (name, min, ph = 'ex. 1:40') => `<input type="text" name="${name}" data-dur autocomplete="off" inputmode="text" value="${min ? fmtDur(min) : ''}" placeholder="${ph}"><span class="rt dh">${min ? '= ' + fmtDur(min) : ''}</span>`;
 const Q = id => S.quotas.find(q => q.id === id);
 const qLabel = id => { const q = Q(id); return q ? `${q.icon} ${q.label}` : '—'; };
 function fmtVal(q, v) { if (!q) return String(v); return q.kind === 'duration' ? fmtDur(v) : `${v}${q.unit ? ' ' + q.unit : ''}`; }
@@ -734,6 +748,7 @@ function renderTimerBar() {
 function fmtClock(ms) { const s = Math.floor(ms / 1000), h = Math.floor(s / 3600), m = Math.floor(s / 60) % 60; return (h ? h + ':' : '') + pad(m) + ':' + pad(s % 60); }
 /* ================= Écrans A : Cockpit, Calendrier, Quotas ================= */
 const A = (act, d = {}) => `data-act="${act}" ` + Object.entries(d).map(([k, v]) => `data-${k}="${esc(v)}"`).join(' ');
+const infoBtn = (k, d) => `<button class="btn sm ic" title="Comment ce score est calculé" aria-label="Comment ce score est calculé" ${A('scoreInfo', { k, d })}>ⓘ</button>`;
 const THM = { auto: ['🌓', 'Thème automatique'], light: ['☀️', 'Thème clair'], dark: ['🌙', 'Thème sombre'] };
 const themeBtn = () => { const t = (S.settings.theme || 'auto'); return `<button class="btn sm thbtn" title="${THM[t][1]} — toucher pour changer" aria-label="${THM[t][1]}" data-act="themeCycle">${THM[t][0]}<span class="thl">${t === 'auto' ? 'Auto' : t === 'light' ? 'Clair' : 'Sombre'}</span></button>`; };
 const greeting = () => { const h = NOWFN().getHours(); return (h >= 6 && h < 17 ? 'Bonjour' : 'Bonsoir') + ' ' + (S.settings.name || 'Hamza'); };
@@ -756,7 +771,7 @@ function habitCard(q) {
 }
 function blockRow(b) {
   const st = effStatus(b), q = Q(b.q), act = Math.round(blockActual(b));
-  return `<div class="ln"><div class="lt">${b.start}<br>${b.end}</div><div class="lb2"><div style="font-weight:700">${q ? q.icon + ' ' : ''}${esc(b.title)} ${stChip(st)}</div><div class="rt">${fmtDur(blockPlanned(b))} prévus${act ? ` · ${fmtDur(act)} réalisés` : ''}${b.reason ? ` · ${esc(b.reason)}` : ''}</div></div><div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end">${b.q && ['planned', 'inprogress', 'unfilled'].includes(st) ? `<button class="btn sm ic" title="Chrono" ${A('timerStart', { id: b.id })}>▶</button><button class="btn sm ic" title="Qualifier" ${A('qualify', { id: b.id })}>✔</button>` : ''}<button class="btn sm ic" ${A('blk', { id: b.id })}>⋯</button></div></div>`;
+  return `<div class="ln"><div class="lt">${b.start}<br>${b.end}</div><div class="lb2"><div style="font-weight:700">${q ? q.icon + ' ' : ''}${esc(b.title)} ${stChip(st)}</div><div class="rt">${fmtDur(blockPlanned(b))} prévus${act ? ` · ${fmtDur(act)} réalisés` : ''}${b.reason ? ` · ${esc(b.reason)}` : ''}</div></div><div class="lbt">${b.q && ['planned', 'inprogress', 'unfilled'].includes(st) ? `<button class="btn sm ic" title="Chrono" ${A('timerStart', { id: b.id })}>▶</button><button class="btn sm ic" title="Qualifier" ${A('qualify', { id: b.id })}>✔</button>` : ''}<button class="btn sm ic" ${A('blk', { id: b.id })}>⋯</button></div></div>`;
 }
 
 /* ---------- COCKPIT ---------- */
@@ -780,12 +795,12 @@ function vCockpit() {
   const sl = sq ? (() => { const e = S.entries.filter(e => e.cat === 'sommeil' && e.date === t)[0]; return `<div class="card"><div class="ch"><h3>😴 Sommeil (nuit dernière)</h3>${e ? `<span class="chip ${e.v >= (sq.day || 420) ? 'ok' : 'warn'}">objectif ${fmtDur(sq.day || 420)}</span>` : ''}</div>${e ? `<div class="big">${fmtDur(e.v)}</div><div class="rt">${esc(e.note || '')}</div><button class="btn sm" style="margin-top:8px" ${A('sleep')}>Modifier</button>` : `<div class="empty" style="padding:8px">Non renseigné</div><button class="btn pri" ${A('sleep')}>Saisir ma nuit</button>`}</div>`; })() : '';
   const ap = S.appts.filter(a => !a.done && (a.date + (a.time || '')) >= t).sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time)).slice(0, 3);
   const lib = S.libre.slice().sort((a, b) => (b.date + (b.from || '')).localeCompare(a.date + (a.from || ''))).slice(0, 3);
-  const welcome = (!S.blocks.length && !S.entries.length) ? `<div class="card" style="margin-bottom:14px;border-left:6px solid var(--p2)"><h2>Bienvenue dans My Life Pilot 🧭</h2><p class="sub">Tes quotas stricts sont déjà réglés (sport 3×, révision 7 h, freelance 20 h, apprentissage 12 h, café ≤ 20 h, sommeil 49 h, cigarettes ≤ 140/semaine et 20/jour). Commence par ajouter ton travail et laisse le conseiller proposer ta semaine.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn pri" ${A('go', { tab: 'settings' })}>1 · Régler mes créneaux libres & mon travail</button><button class="btn" ${A('autoplan', { id: '' })}>2 · Proposer ma semaine</button><button class="btn" ${A('demoLoad')}>Voir avec des données de démo</button></div></div>` : '';
+  const welcome = '';
   return pageTop(`${greeting()} 👋`, fmtDate(t) + ` · semaine ${isoWeek(t)}`, `<button class="btn" ${A('quick')}>＋ Saisie rapide</button><button class="btn" ${A('timerStart', { id: '' })}>⏱ Chrono libre</button><button class="btn pri" ${A('bilan')}>🌙 Bilan du soir</button>`) +
     welcome + `<div class="card" style="margin-bottom:14px"><div class="strip">${strip}</div></div>
     <div class="g g4">
-      <div class="card kpi">${ring((di.score || 0) / 100, { label: di.score == null ? '–' : di.score + '%', color: `var(--${di.score == null ? 'mut' : di.score >= 80 ? 'ok' : di.score >= 50 ? 'warn' : 'bad'})` })}<div><div class="l">Score du jour</div><div class="rt">${di.comps.map(c => `${esc(c.k)} ${Math.round(c.v * 100)}%`).join(' · ') || (di.incomplete ? 'À qualifier' : 'Rien d’enregistré')}</div></div></div>
-      <div class="card kpi">${ring((wi.score || 0) / 100, { label: wi.score == null ? '–' : wi.score + '%', color: 'var(--p2)' })}<div><div class="l">Score de la semaine (rythme)</div><div class="rt">jour ${wi.el}/7</div></div></div>
+      <div class="card kpi">${ring((di.score || 0) / 100, { label: di.score == null ? '–' : di.score + '%', color: `var(--${di.score == null ? 'mut' : di.score >= 80 ? 'ok' : di.score >= 50 ? 'warn' : 'bad'})` })}<div><div class="l">Score du jour ${infoBtn('day', todayStr())}</div><div class="rt">${di.comps.map(c => `${esc(c.k)} ${Math.round(c.v * 100)}%`).join(' · ') || (di.incomplete ? 'À qualifier' : 'Rien d’enregistré')}</div></div></div>
+      <div class="card kpi">${ring((wi.score || 0) / 100, { label: wi.score == null ? '–' : wi.score + '%', color: 'var(--p2)' })}<div><div class="l">Score de la semaine (rythme) ${infoBtn('week', todayStr())}</div><div class="rt">jour ${wi.el}/7</div></div></div>
       <div class="card kpi"><div><div class="v">${fmtDur(real)}</div><div class="l">réalisé aujourd’hui</div><div class="rt">prévu ${fmtDur(planned)} (${scored.length} bloc${scored.length > 1 ? 's' : ''})</div></div></div>
       <div class="card kpi" ${A('go', { tab: 'cockpit' })}><div><div class="v" style="color:${urgent.length ? 'var(--bad)' : 'var(--ok)'}">${urgent.length}</div><div class="l">alerte(s) à traiter</div></div></div>
     </div>
@@ -892,6 +907,28 @@ function vQuotas() {
   return pageTop('🎯 Quotas & Conseiller', 'Cibles strictes, alertes de dépassement, rattrapage et réalisme', '') +
     `<div class="tabs">${[['quotas', 'Quotas'], ['plan', 'Planificateur'], ['prop', 'Propositions & historique']].map(([k, l]) => `<button class="${sub === k ? 'on' : ''}" ${A('qsub', { v: k })}>${l}</button>`).join('')}</div>` + body;
 }
+
+/* ---------- explication des scores ---------- */
+function scoreInfo(k, d) {
+  const bar = r => `<div style="background:var(--soft);border-radius:99px;height:8px;min-width:70px"><div style="width:${Math.round(Math.min(1, r) * 100)}%;height:8px;border-radius:99px;background:var(--${r >= .8 ? 'ok' : r >= .5 ? 'warn' : 'bad'})"></div></div>`;
+  let h = '';
+  if (k === 'day') {
+    const i = dayInfo(d);
+    h = `<h2>Comment est calculé le score du jour ?</h2><p class="sub">Le score du ${fmtDate(d)} est la <b>moyenne</b> de plusieurs notes entre 0 et 100 %, une par critère :</p>
+    <ul style="margin:6px 0 10px 18px;line-height:1.5"><li><b>Planning</b> : temps réellement fait ÷ temps prévu, sur les blocs déjà terminés ou échus.</li><li><b>Quotas du jour</b> (sommeil, prières, cigarettes) : réalisé ÷ objectif du jour. Pour un plafond (cigarettes), 100 % tant que tu ne le dépasses pas, puis la note baisse.</li></ul>
+    <p class="sub">Un quota du jour ne compte que si tu as saisi quelque chose, ou si tu as clôturé le bilan du soir (alors « rien » veut dire zéro).</p>`;
+    h += i.future ? '<div class="empty">Jour futur : pas encore de score.</div>' : i.comps.length ? `<div class="tw"><table class="rs"><thead><tr><th>Critère</th><th>Détail</th><th>Note</th><th></th></tr></thead><tbody>${i.comps.map(c => `<tr><td>${esc(c.k)}</td><td>${esc(c.d)}</td><td><b>${Math.round(c.v * 100)} %</b></td><td>${bar(c.v)}</td></tr>`).join('')}</tbody></table></div><p><b>Score du jour = ${i.comps.map(c => Math.round(c.v * 100)).join(' + ')} ÷ ${i.comps.length} = ${i.score} %</b></p>` : `<div class="empty">${i.incomplete ? 'Des activités passées attendent d’être qualifiées (fait, reporté, manqué).' : 'Rien d’enregistré ce jour : pas de score. Fais une saisie ou clôture le bilan du soir.'}</div>`;
+  } else if (k === 'week') {
+    const ws = weekStartOf(d), w = weekInfo(ws);
+    h = `<h2>Comment est calculé le score de la semaine ?</h2><p class="sub">C’est le <b>rythme</b> : pour chaque quota, ce que tu as fait ÷ ce que tu devais avoir fait <b>à ce jour</b> (cible × jours écoulés ÷ 7). Un plafond (café, cigarettes) vaut 100 % tant qu’il n’est pas dépassé. Le score est la moyenne de ces notes.</p><p class="sub">Aujourd’hui, jour ${w.el} sur 7.</p>`;
+    h += w.score == null ? '<div class="empty">Pas encore de score pour cette semaine.</div>' : `<div class="tw"><table class="rs"><thead><tr><th>Quota</th><th>Réalisé</th><th>Attendu à ce jour</th><th>Cible semaine</th><th>Note</th><th></th></tr></thead><tbody>${w.rows.filter(r => r.ratio != null).map(r => `<tr><td>${r.q.icon} ${esc(r.q.label)}</td><td>${fmtVal(r.q, r.done)}</td><td>${r.q.mode === 'max' ? 'max ' : ''}${fmtTarget(r.q, r.pro)}</td><td>${fmtTarget(r.q, r.target)}</td><td><b>${Math.round(r.ratio * 100)} %</b></td><td>${bar(r.ratio)}</td></tr>`).join('')}</tbody></table></div><p><b>Score de la semaine = moyenne des notes = ${w.score} %</b></p>`;
+  } else {
+    const m = monthInfo(d);
+    h = `<h2>Comment est calculé le score du mois ?</h2><p class="sub">C’est la <b>moyenne des scores quotidiens</b> des jours qui ont un score${m.days ? ` (ici ${m.days} jour${m.days > 1 ? 's' : ''})` : ''}. Les jours sans donnée ne comptent pas, ce qui évite de te pénaliser pour un jour vide.</p>${m.score == null ? '<div class="empty">Pas encore de score ce mois-ci.</div>' : `<p><b>Score du mois = ${m.score} %</b>${m.weekAvg != null ? ` · moyenne des semaines : ${m.weekAvg} %` : ''}</p>`}`;
+  }
+  h += '<p class="rt">Repères : vert ≥ 80 %, orange 50–79 %, rouge &lt; 50 %.</p>';
+  modal(h, { wide: true });
+}
 /* ================= Écrans B : Journal, Libre, RDV, Recherche, Stats, Bilan, Réglages ================= */
 const norm = s => String(s ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 const catOptions = (sel = '', all = '') => (all ? `<option value="">${all}</option>` : '') + S.quotas.map(q => `<option value="${q.id}" ${q.id === sel ? 'selected' : ''}>${q.icon} ${esc(q.label)}</option>`).join('');
@@ -904,9 +941,11 @@ function journalRows() {
 }
 function journalTable() {
   const rows = journalRows();
+  const sel = new Set([...(UI.jSel || [])].filter(id => rows.some(e => e.id === id))), shown = rows.slice(0, 400), allSel = shown.length > 0 && shown.every(e => sel.has(e.id));
   const bycat = {}; rows.forEach(e => { bycat[e.cat] = (bycat[e.cat] || 0) + e.v; });
+  const selBar = sel.size ? `<div class="selbar"><b>${sel.size} sélectionnée${sel.size > 1 ? 's' : ''}</b><button class="btn danger sm" ${A('jDelSel')}>🗑 Supprimer la sélection</button><button class="btn sm" ${A('jNone')}>Tout désélectionner</button></div>` : '';
   const tot = Object.entries(bycat).map(([c, v]) => `<span class="chip p">${Q(c) ? Q(c).icon + ' ' + fmtVal(Q(c), v) : c}</span>`).join(' ');
-  return `<div class="rt" style="margin-bottom:8px">${rows.length} opération(s) ${tot ? '· ' + tot : ''}</div><div class="tw"><table class="rs"><thead><tr><th>Date</th><th>Heure</th><th>Catégorie</th><th>Valeur</th><th>Détail / note</th><th>Source</th><th></th></tr></thead><tbody>${rows.slice(0, 400).map(e => { const q = Q(e.cat); return `<tr><td data-l="Date">${fmtShort(e.date)}</td><td data-l="Heure">${e.time || ''}</td><td data-l="Catégorie">${q ? q.icon + ' ' + esc(q.label) : esc(e.cat)}</td><td data-l="Valeur"><b>${q ? fmtVal(q, e.v) : e.v}</b>${q && q.kind === 'count' && e.mins ? `<div class="rt">${fmtDur(e.mins)}</div>` : ''}</td><td data-l="Détail">${esc(e.sub || '')} ${esc(e.note || '')}</td><td data-l="Source"><span class="chip">${esc(e.src)}</span></td><td style="white-space:nowrap"><button class="btn sm ic" ${A('entryEdit', { id: e.id })}>✎</button><button class="btn sm ic" ${A('entryDel', { id: e.id })}>🗑</button></td></tr>`; }).join('') || '<tr><td colspan="7"><div class="empty">Aucune opération pour ces filtres</div></td></tr>'}</tbody></table></div>${rows.length > 400 ? '<div class="rt">400 premières lignes affichées — affinez les filtres.</div>' : ''}`;
+  return `<div class="rt" style="margin-bottom:8px">${rows.length} opération(s) ${tot ? '· ' + tot : ''} ${rows.length ? `<button class="btn sm" ${A('jAll')}>${allSel ? '☐ Tout désélectionner' : '☑ Tout sélectionner'}</button>` : ''}</div>${selBar}<div class="tw"><table class="rs"><thead><tr><th style="width:34px"><input type="checkbox" aria-label="Tout sélectionner" ${allSel ? 'checked' : ''} ${A('jAll')}></th><th>Date</th><th>Heure</th><th>Catégorie</th><th>Valeur</th><th>Détail / note</th><th>Source</th><th></th></tr></thead><tbody>${rows.slice(0, 400).map(e => { const q = Q(e.cat); return `<tr class="${sel.has(e.id) ? 'selrow' : ''}"><td data-l="Sél."><input type="checkbox" aria-label="Sélectionner" ${sel.has(e.id) ? 'checked' : ''} ${A('jToggle', { id: e.id })}></td><td data-l="Date">${fmtShort(e.date)}</td><td data-l="Heure">${e.time || ''}</td><td data-l="Catégorie">${q ? q.icon + ' ' + esc(q.label) : esc(e.cat)}</td><td data-l="Valeur"><b>${q ? fmtVal(q, e.v) : e.v}</b>${q && q.kind === 'count' && e.mins ? `<div class="rt">${fmtDur(e.mins)}</div>` : ''}</td><td data-l="Détail">${esc(e.sub || '')} ${esc(e.note || '')}</td><td data-l="Source"><span class="chip">${esc(e.src)}</span></td><td style="white-space:nowrap"><button class="btn sm ic" ${A('entryEdit', { id: e.id })}>✎</button><button class="btn sm ic" ${A('entryDel', { id: e.id })}>🗑</button></td></tr>`; }).join('') || '<tr><td colspan="8"><div class="empty">Aucune opération pour ces filtres</div></td></tr>'}</tbody></table></div>${rows.length > 400 ? '<div class="rt">400 premières lignes affichées — affinez les filtres.</div>' : ''}`;
 }
 function vJournal() {
   const sub = UI.jSub, f = UI.jf;
@@ -940,7 +979,7 @@ function apptRow(a) {
   const at = new Date(a.date + 'T' + (a.time || '09:00') + ':00').getTime(), diff = at - NOWFN().getTime();
   let rem = '';
   if (!a.done) rem = diff > 24 * 3600e3 ? `<span class="chip">rappels à J-1 et H-5</span>` : diff > 5 * 3600e3 ? `<span class="chip warn">⏰ rappel 24 h actif</span>` : diff > -3600e3 ? `<span class="chip bad">⏰ rappel 5 h actif</span>` : `<span class="chip warn">passé — à cocher</span>`;
-  return `<div class="ln"><div class="lt">${fmtShort(a.date)}<br>${a.time || ''}</div><div class="lb2"><div style="font-weight:700;${a.done ? 'text-decoration:line-through;opacity:.6' : ''}">${esc(a.title)}</div><div class="rt">${esc(a.place || '')} ${a.note ? '· ' + esc(a.note) : ''}</div><div style="margin-top:4px">${a.done ? '<span class="chip ok">✔ C’est bon</span>' : rem}</div></div><div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end">${a.done ? `<button class="btn sm" ${A('apptUndo', { id: a.id })}>↺</button>` : `<button class="btn sm ok" ${A('apptDone', { id: a.id })}>✔ C’est bon</button>`}<button class="btn sm ic" title="Ajouter à l’agenda du téléphone (rappels 24 h + 5 h)" ${A('apptIcs', { id: a.id })}>📲</button><button class="btn sm ic" ${A('apptEdit', { id: a.id })}>✎</button><button class="btn sm ic" ${A('apptDel', { id: a.id })}>🗑</button></div></div>`;
+  return `<div class="ln"><div class="lt">${fmtShort(a.date)}<br>${a.time || ''}</div><div class="lb2"><div style="font-weight:700;${a.done ? 'text-decoration:line-through;opacity:.6' : ''}">${esc(a.title)}</div><div class="rt">${esc(a.place || '')} ${a.note ? '· ' + esc(a.note) : ''}</div><div style="margin-top:4px">${a.done ? '<span class="chip ok">✔ C’est bon</span>' : rem}</div></div><div class="lbt">${a.done ? `<button class="btn sm" ${A('apptUndo', { id: a.id })}>↺</button>` : `<button class="btn sm ok" ${A('apptDone', { id: a.id })}>✔ C’est bon</button>`}<button class="btn sm ic" title="Ajouter à l’agenda du téléphone (rappels 24 h + 5 h)" ${A('apptIcs', { id: a.id })}>📲</button><button class="btn sm ic" ${A('apptEdit', { id: a.id })}>✎</button><button class="btn sm ic" ${A('apptDel', { id: a.id })}>🗑</button></div></div>`;
 }
 function vRdv() {
   const t = todayStr(), nowStr = t + (min2hm(nowMin()));
@@ -1017,7 +1056,7 @@ function vStats() {
   return pageTop('📊 Statistiques & scores', 'Un seul jeu de filtres : tous les chiffres et graphiques sont recalculés sur le même périmètre', `<button class="btn" ${A('goBilan', { k: kind === 'month' ? 'week' : kind })}>📑 Bilan détaillé</button><button class="btn pri" ${A('expOpen', {})}>⬇ Exporter…</button><button class="btn" onclick="window.print()">🖨 Imprimer</button>`) +
     `<div class="card" style="margin-bottom:14px"><div class="fr" style="margin:0"><div class="tabs" style="margin:0">${[['day', 'Jour'], ['week', 'Semaine'], ['month', 'Mois']].map(([k, l]) => `<button class="${kind === k ? 'on' : ''}" ${A('statP', { v: k })}>${l}</button>`).join('')}</div><div class="calbar"><button class="btn sm" ${A('statNav', { n: -step })}>‹</button><b class="ct" style="min-width:200px">${periodLabel(p)}</b><button class="btn sm" ${A('statNav', { n: step })}>›</button><button class="btn sm" ${A('statToday')}>Aujourd’hui</button></div><label>Domaine / quota<select data-live="stq" name="q"><option value="all">Tous les quotas</option>${catOptions(qf)}</select></label>${qf !== 'all' ? `<button class="btn sm" ${A('statQreset')}>✕ Réinitialiser le filtre</button>` : ''}</div></div>
     <div class="g g4">
-      <div class="card kpi">${ring((sc || 0) / 100, { size: 84, label: sc == null ? '–' : sc + '%', color: `var(--${sc == null ? 'mut' : sc >= 80 ? 'ok' : sc >= 50 ? 'warn' : 'bad'})` })}<div><div class="l">Score ${kind === 'day' ? 'du jour' : kind === 'week' ? 'de la semaine' : 'du mois'}</div><div>${delta(sc, sp.score, ' pts')} <span class="rt">vs précédent</span></div></div></div>
+      <div class="card kpi">${ring((sc || 0) / 100, { size: 84, label: sc == null ? '–' : sc + '%', color: `var(--${sc == null ? 'mut' : sc >= 80 ? 'ok' : sc >= 50 ? 'warn' : 'bad'})` })}<div><div class="l">Score ${kind === 'day' ? 'du jour' : kind === 'week' ? 'de la semaine' : 'du mois'} ${infoBtn(kind, date)}</div><div>${delta(sc, sp.score, ' pts')} <span class="rt">vs précédent</span></div></div></div>
       <div class="card"><div class="l rt">Réalisé / prévu (blocs terminés)</div><div class="v big">${fmtDur(st.realMin)}</div><div class="rt">sur ${fmtDur(st.plannedMin)} prévus · écart ${fmtDur(st.realMin - st.plannedMin)}</div></div>
       <div class="card"><div class="l rt">Régularité (blocs faits / traités)</div><div class="v big">${st.regularity == null ? '–' : Math.round(st.regularity * 100) + ' %'}</div><div class="rt">${(cnt.done || 0)} faits · ${cnt.partial || 0} partiels · ${cnt.missed || 0} non faits</div></div>
       <div class="card"><div class="l rt">Report & à qualifier</div><div class="v big">${st.reportRate == null ? '–' : Math.round(st.reportRate * 100) + ' %'}</div><div class="rt">${cnt.postponed || 0} reporté(s) · ${pend} non renseigné(s)/à venir</div></div>
@@ -1050,7 +1089,7 @@ function vBilan() {
   if (kind === 'day') {
     const di = dayInfo(date), rv = S.reviews[date] || {}, bl = S.blocks.filter(b => b.date === date && b.status !== 'cancelled').sort((a, b) => a.start.localeCompare(b.start));
     return pageTop(`🌙 Bilan du ${fmtDate(date)}`, rv.closed ? 'Bilan clôturé' : 'Bilan non clôturé', `<button class="btn" ${A('go', { tab: 'cockpit' })}>‹ Retour</button><button class="btn pri" ${A('bilan', { date })}>Faire / modifier le bilan</button>`) +
-      `<div class="g g2"><div class="card kpi">${ring((di.score || 0) / 100, { size: 90, label: di.score == null ? '–' : di.score + '%' })}<div><div class="l">Score du jour</div>${di.comps.map(c => `<div class="rt">${esc(c.k)} : ${esc(c.d)}</div>`).join('')}</div></div><div class="card"><h2>Humeur & énergie</h2><div class="big">${rv.mood ? ['😞', '😕', '😐', '🙂', '😄'][rv.mood - 1] : '–'} <span class="rt">énergie ${rv.energy || '–'}/5</span></div><div style="white-space:pre-wrap">${esc(rv.note || '')}</div></div></div><div class="card"><div class="ch"><h2>Activités</h2></div>${bl.length ? bl.map(blockRow).join('') : '<div class="empty">Aucune activité</div>'}</div>`;
+      `<div class="g g2"><div class="card kpi">${ring((di.score || 0) / 100, { size: 90, label: di.score == null ? '–' : di.score + '%' })}<div><div class="l">Score du jour ${infoBtn('day', date)}</div>${di.comps.map(c => `<div class="rt">${esc(c.k)} : ${esc(c.d)}</div>`).join('')}</div></div><div class="card"><h2>Humeur & énergie</h2><div class="big">${rv.mood ? ['😞', '😕', '😐', '🙂', '😄'][rv.mood - 1] : '–'} <span class="rt">énergie ${rv.energy || '–'}/5</span></div><div style="white-space:pre-wrap">${esc(rv.note || '')}</div></div></div><div class="card"><div class="ch"><h2>Activités</h2></div>${bl.length ? bl.map(blockRow).join('') : '<div class="empty">Aucune activité</div>'}</div>`;
   }
   const ws = weekStartOf(date), we = addDays(ws, 6), wi = weekInfo(ws), t = todayStr();
   const miss = S.blocks.filter(b => b.date >= ws && b.date <= we && b.q && ['missed', 'partial', 'postponed', 'unfilled'].includes(effStatus(b))).sort((a, b) => (a.date + a.start).localeCompare(b.date + b.start));
@@ -1065,7 +1104,7 @@ function vBilan() {
   const top = st.reasons && Object.entries(st.reasons).sort((a, b) => b[1] - a[1])[0];
   if (top) recos.push(`Cause la plus fréquente des écarts : « ${top[0]} » (${top[1]} fois).`);
   return pageTop(`📑 Bilan de la semaine`, `${fmtShort(ws)} → ${fmtShort(we)}`, `<button class="btn" ${A('bilanNav', { n: -7 })}>‹</button><button class="btn" ${A('bilanNav', { n: 7 })}>›</button><button class="btn" ${A('copyReport', { ws })}>📋 Copier</button><button class="btn" onclick="window.print()">🖨 PDF</button><button class="btn pri" ${A('wbDone', { ws })}>✔ Marquer comme lu</button>`) +
-    `<div class="g g2"><div class="card kpi">${ring((wi.score || 0) / 100, { size: 96, label: wi.score == null ? '–' : wi.score + '%' })}<div><div class="l">Score de la semaine</div><div class="rt">${wi.rows.filter(r => r.reached).length}/${wi.rows.length} objectifs tenus</div></div></div><div class="card"><div class="ch"><h2>Score par jour</h2></div><div class="tw">${barChart(days, { h: 140, showAvg: false, fmt: v => v + '%', minW: 44 })}</div></div></div>
+    `<div class="g g2"><div class="card kpi">${ring((wi.score || 0) / 100, { size: 96, label: wi.score == null ? '–' : wi.score + '%' })}<div><div class="l">Score de la semaine ${infoBtn('week', ws)}</div><div class="rt">${wi.rows.filter(r => r.reached).length}/${wi.rows.length} objectifs tenus</div></div></div><div class="card"><div class="ch"><h2>Score par jour</h2></div><div class="tw">${barChart(days, { h: 140, showAvg: false, fmt: v => v + '%', minW: 44 })}</div></div></div>
     <div class="card" style="margin-bottom:14px"><div class="ch"><h2>Objectifs : atteints ou non ?</h2></div><div class="tw"><table class="rs"><thead><tr><th>Quota</th><th>Réalisé</th><th>Cible</th><th>%</th><th>Verdict</th></tr></thead><tbody>${wi.rows.map(r => `<tr><td data-l="Quota">${r.q.icon} ${esc(r.q.label)}</td><td data-l="Réalisé"><b>${fmtVal(r.q, r.done)}</b></td><td data-l="Cible">${r.q.mode === 'max' ? 'max ' : ''}${fmtVal(r.q, r.target)}</td><td data-l="%">${Math.round(r.pct * 100)} %</td><td data-l="Verdict"><span class="chip ${r.reached ? 'ok' : 'bad'}">${r.reached ? (r.q.mode === 'max' ? '✔ Plafond respecté' : '✔ Objectif atteint') : (r.q.mode === 'max' ? '✘ Plafond dépassé' : '✘ Non atteint')}</span></td></tr>`).join('')}</tbody></table></div></div>
     <div class="card" style="margin-bottom:14px"><div class="ch"><h2>Tâches non faites, partielles ou reportées</h2></div>${miss.length ? miss.map(b => `<div class="ln"><div class="lt">${fmtShort(b.date)}<br>${b.start}</div><div class="lb2"><b>${qLabel(b.q)} — ${esc(b.title)}</b> ${stChip(effStatus(b))}<div class="rt">${b.reason ? esc(b.reason) : 'cause non renseignée'}${b.note ? ' — ' + esc(b.note) : ''}</div></div>${['unfilled', 'missed', 'partial'].includes(effStatus(b)) ? `<button class="btn sm" ${A('qualify', { id: b.id })}>Corriger</button><button class="btn sm" ${A('replan', { id: b.id })}>Reporter</button>` : ''}</div>`).join('') : '<div class="empty">Aucune tâche manquée cette semaine 🎉</div>'}</div>
     <div class="card"><div class="ch"><h2>💡 Recommandations (sans pression)</h2></div>${recos.map(r => `<div class="al info"><div class="ai">💡</div><div class="ax" style="color:var(--tx)">${esc(r)}</div></div>`).join('')}</div>`;
@@ -1075,7 +1114,7 @@ function vBilan() {
 function vSettings() {
   const s = S.settings, size = Math.round(JSON.stringify(S).length / 1024);
   return pageTop('⚙️ Réglages & données', `Stockage local (${storageMode === 'idb' ? 'IndexedDB' : 'localStorage'}) · ${size} Ko · V${VERSION}`) +
-    `<div class="g g2">
+    `<div class="card" style="margin-bottom:14px;border-left:6px solid var(--p2)"><div class="ch"><h2>🧭 Démarrage & guide</h2></div><p class="sub">Tes quotas stricts sont déjà réglés (sport 3×, révision 7 h, freelance 20 h, apprentissage 12 h, café ≤ 20 h, sommeil 49 h, cigarettes ≤ 140/semaine et 20/jour). Ajoute ton travail, puis laisse le conseiller proposer ta semaine.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn pri" ${A('go', { tab: 'settings' })}>1 · Régler mes créneaux libres & mon travail</button><button class="btn" ${A('autoplan', { id: '' })}>2 · Proposer ma semaine</button><button class="btn" ${A('demoLoad')}>Voir avec des données de démo</button></div></div>` + `<div class="g g2">
     <div class="card"><div class="ch"><h2>Apparence & bilan</h2></div><form class="fm" data-form="settingsSave"><div class="row"><label>Prénom (message d’accueil)<input name="name" value="${esc(s.name || 'Hamza')}"></label><label>Thème<select name="theme">${[['auto', 'Automatique'], ['light', 'Clair'], ['dark', 'Sombre']].map(([k, l]) => `<option value="${k}" ${s.theme === k ? 'selected' : ''}>${l}</option>`).join('')}</select></label><label>Heure du bilan du soir<input type="time" name="bilanHour" value="${pad(s.bilanHour)}:00"></label></div><div class="ch"><h3>Fenêtres libres (créneaux utilisables par le planificateur)</h3></div><div class="rt">Le temps de sommeil, de travail et de transport est protégé : ne mets ici que ce qui est vraiment disponible.</div>${DAYSL.map((d, i) => `<div class="frow"><b>${d}</b><input type="time" name="f${i}s" value="${s.free[i] ? s.free[i][0] : '18:45'}"><input type="time" name="f${i}e" value="${s.free[i] ? s.free[i][1] : '22:30'}"><label style="flex-direction:row;align-items:center;gap:5px"><input type="checkbox" name="f${i}n" ${s.free[i] ? '' : 'checked'}>aucune</label></div>`).join('')}<label>Causes d’imprévus / non-réalisation (une par ligne)<textarea name="reasons" rows="6">${esc(S.reasons.join('\n'))}</textarea></label><button class="btn pri" type="submit">Enregistrer</button></form></div>
     <div style="display:grid;gap:14px;align-content:start">
       <div class="card"><div class="ch"><h2>☁️ Synchronisation PC ↔ téléphone</h2></div>
@@ -1208,10 +1247,15 @@ async function fetchRemote(cfg) {
   const r = await ghFetch(cfg, 'GET', '/contents/' + SYNC_PATH);
   if (r.status === 404) { const rr = await ghFetch(cfg, 'GET', ''); if (rr.status === 200) return { sha: null, payload: null }; throw httpErr(rr.status); }
   if (!r.ok) throw httpErr(r.status);
-  const j = await r.json(); let text;
+  SYNC.etag = r.headers.get('ETag'); const j = await r.json(); let text;
   if (j.content && j.encoding === 'base64') text = syncTD.decode(b64d(j.content));
   else { const rr = await ghFetch(cfg, 'GET', '/contents/' + SYNC_PATH, null, true); if (!rr.ok) throw httpErr(rr.status); text = await rr.text(); }
   return { sha: j.sha, payload: await decJson(JSON.parse(text), cfg.pass) };
+}
+async function headEtag(cfg) { const r = await ghFetch(cfg, 'HEAD', '/contents/' + SYNC_PATH); return r.ok ? r.headers.get('ETag') : null; }
+async function syncPeek() {
+  if (!SYNC.cfg || !SYNC.cfg.on || SYNC.busy || document.hidden || navigator.onLine === false) return;
+  try { const e = await headEtag(SYNC.cfg); if (e === null) { if (Date.now() - SYNC.last > 60000) syncNow('peek'); } else if (e !== SYNC.etag) syncNow('peek'); } catch (_) { }
 }
 async function pushRemote(cfg, payload, sha) {
   const env = await encJson(payload, cfg.pass);
@@ -1303,6 +1347,7 @@ async function syncRun(reason) {
         try { await pushRemote(cfg, { app: 'mlp', ver: VERSION, mod: Date.now(), device: cfg.device || 'appareil', data: merged }, rem.sha); }
         catch (e) { if (e.code === 'RETRY' && tries < 3) continue; throw e; }
       }
+      if (needPush) { try { SYNC.etag = await headEtag(cfg); } catch (_) { } }
       await baseSet(JSON.stringify(merged));
       SYNC.last = Date.now(); SYNC.stats = stats; SYNC.changed = changed; result = { ok: true, changed, stats, pushed: needPush };
       break;
@@ -1313,13 +1358,15 @@ async function syncRun(reason) {
   finally { SYNC.busy = false; if (SYNC.again) { SYNC.again = false; syncSoon(2500); } }
   return result;
 }
-function syncSoon(ms = 15000) {
+function syncSoon(ms = 2500) {
   if (!SYNC.cfg || !SYNC.cfg.on) return;
   clearTimeout(SYNC.timer); SYNC.timer = setTimeout(() => syncNow('auto'), ms);
 }
 async function syncInit() {
   SYNC.cfg = await cfgLoad();
-  setInterval(() => { if (!document.hidden) syncNow('timer'); }, 180000);
+  setInterval(() => { if (!document.hidden) syncNow('timer'); }, 120000);
+  setInterval(syncPeek, 12000);
+  window.addEventListener('focus', () => { syncPeek(); });
   window.addEventListener('online', () => syncNow('online'));
   if (SYNC.cfg && SYNC.cfg.on) { setSync('busy'); setTimeout(() => syncNow('open'), 700); }
 }
@@ -1966,7 +2013,7 @@ function entryForm(e, pre = {}) {
   <div class="row"><label>Date<input type="date" name="date" value="${v.date}" required></label><label>Heure<input type="time" name="time" value="${v.time || ''}"></label></div>
   <div class="row k-dur"><label>Heures<input type="number" name="h" min="0" value="${q.kind === 'duration' ? Math.floor(v.v / 60) : 0}"></label><label>Minutes<input type="number" name="m" min="0" max="59" value="${q.kind === 'duration' ? v.v % 60 : 0}"></label></div>
   <div class="rg k-dur">${[15, 30, 45, 60, 90, 120].map(x => `<label><input type="radio" name="qd" value="${x}" data-qk="quickdur">${fmtDur(x)}</label>`).join('')}</div>
-  <div class="row k-cnt"><label>Quantité<input type="number" name="qty" min="0" step="1" value="${q.kind === 'count' ? (v.v || 1) : 1}"></label><label>Durée (min, facultatif)<input type="number" name="mins" min="0" value="${v.mins || 0}"></label></div>
+  <div class="row k-cnt"><label>Quantité<input type="number" name="qty" min="0" step="1" value="${q.kind === 'count' ? (v.v || 1) : 1}"></label><label>Durée (min, facultatif)${durInput('mins', v.mins || 0, 'ex. 1:40')}</label></div>
   <label class="k-pr">Prière<select name="sub">${PRAYERS.map(p => `<option ${v.sub === p ? 'selected' : ''}>${p}</option>`).join('')}</select></label>
   <label>Note<input name="note" value="${esc(v.note || '')}" placeholder="contexte, cause…"></label>
   <div class="fbtns"><button class="btn pri" type="submit">Enregistrer</button>${e ? `<button class="btn bad" type="button" ${A('entryDel', { id: e.id })}>🗑 Supprimer</button>` : ''}</div></form>`);
@@ -2006,7 +2053,7 @@ function qualifyModal(id, opts = {}) {
   modal(`<h2>Qualifier : ${esc(b.title)}</h2><div class="sub">${fmtDate(b.date)} · ${b.start}–${b.end} · prévu ${fmtDur(p)}${a ? ` · déjà ${fmtDur(a)} enregistrés` : ''}</div>
   <form class="fm" data-form="qualifySave" style="margin-top:12px"><input type="hidden" name="id" value="${id}">
   <div class="rg">${[['done', '✅ Fait'], ['partial', '🟡 Partiel'], ['missed', '❌ Non fait'], ['postponed', '↪ Reporter'], ['cancelled', '🚫 Annuler']].map(([k, l], i) => `<label><input type="radio" name="out" value="${k}" data-qk="outcome" ${(opts.pre || 'done') === k ? 'checked' : ''}>${l}</label>`).join('')}</div>
-  <div class="row" id="q-min"><label>Minutes à ajouter (réalisées)<input type="number" name="add" min="0" value="${Math.max(0, p - a)}"></label>${q && q.kind === 'count' ? '<label>&nbsp;<span class="rt">Une séance complète sera comptée si « Fait ».</span></label>' : ''}</div>
+  <div class="row" id="q-min"><label>Minutes à ajouter (réalisées)${durInput('add', Math.max(0, p - a), 'ex. 1:30')}</label>${q && q.kind === 'count' ? '<label>&nbsp;<span class="rt">Une séance complète sera comptée si « Fait ».</span></label>' : ''}</div>
   <div id="q-why"><label>Pourquoi ? (cause)<select name="reason"><option value="">—</option>${S.reasons.map(r => `<option>${esc(r)}</option>`).join('')}</select></label><label style="margin-top:8px">Note<textarea name="note" placeholder="Ce qui s’est passé, ce que je ferai différemment…">${esc(b.note || '')}</textarea></label></div>
   <div class="rg" id="q-rp"><label><input type="checkbox" name="rp" checked>Proposer un créneau de rattrapage</label></div>
   <button class="btn pri" type="submit">Valider</button></form>`);
@@ -2045,7 +2092,7 @@ function replanModal(id, opts = {}) {
   const o = replanOptions(bb);
   modal(`<h2>↪ Replanifier : ${esc(b.title)}</h2><div class="sub">Durée à replacer : ${fmtDur(dur)}${opts.remain ? ' (reste non réalisé)' : ''}. Aucun changement sans ton accord.</div>
   <div style="margin-top:12px">${o.length ? o.map((s, i) => `<div class="al info"><div class="ai">🗓️</div><div style="flex:1"><div class="at">${fmtDate(s.date)} · ${s.start}–${s.end}</div><div class="ax">${esc(consequenceText(b, s, dur))}</div><div class="aa"><button class="btn sm pri" ${A('replanPick', { id, date: s.date, s: s.start, e: s.end, mark: opts.remain ? 'keep' : 'postponed' })}>Choisir ce créneau</button></div></div></div>`).join('') : '<div class="al danger"><div class="ai">⚠️</div><div><div class="at">Aucun créneau libre trouvé sur 2 semaines</div><div class="ax">Élargis tes fenêtres libres (Réglages) ou choisis une date manuellement.</div></div></div>'}</div>
-  <details><summary>Choisir moi-même</summary><form class="fm" data-form="replanManual" style="margin-top:8px"><input type="hidden" name="id" value="${id}"><input type="hidden" name="mark" value="${opts.remain ? 'keep' : 'postponed'}"><div class="row"><label>Date<input type="date" name="date" value="${addDays(todayStr(), 1)}" required></label><label>Début<input type="time" name="s" value="${b.start}" required></label><label>Durée (min)<input type="number" name="dur" value="${dur}" min="15" step="5"></label></div><button class="btn" type="submit">Replanifier ici</button></form></details>
+  <details><summary>Choisir moi-même</summary><form class="fm" data-form="replanManual" style="margin-top:8px"><input type="hidden" name="id" value="${id}"><input type="hidden" name="mark" value="${opts.remain ? 'keep' : 'postponed'}"><div class="row"><label>Date<input type="date" name="date" value="${addDays(todayStr(), 1)}" required></label><label>Début<input type="time" name="s" value="${b.start}" required></label><label>Durée (min)${durInput('dur', dur, 'ex. 1:30')}</label></div><button class="btn" type="submit">Replanifier ici</button></form></details>
   <div style="margin-top:12px"><button class="btn" ${A('replanRefuse', { id })}>Ne pas reporter</button></div>`);
 }
 function applyReplan(id, date, start, dur, mark) {
@@ -2069,7 +2116,7 @@ function timerStartFor(id) {
     if (b.status === 'planned') b.status = 'inprogress';
     log('chrono', `Démarrage : ${b.title}`, b.id); save(); closeModal(); render(); timerModal(); return;
   }
-  modal(`<h2>⏱ Chrono libre</h2><form class="fm" data-form="timerNew"><label>Quota<select name="cat">${S.quotas.filter(q => !q.prayers && q.id !== 'sommeil' && q.id !== 'cigarette').map(q => `<option value="${q.id}">${q.icon} ${esc(q.label)}</option>`).join('')}</select></label><label>Titre (facultatif)<input name="label" placeholder="Ex. Révision TVA"></label><label>Alerte de dépassement après (min, facultatif)<input type="number" name="limit" min="1" placeholder="ex. 90"></label><button class="btn pri" type="submit">▶ Démarrer</button></form>`);
+  modal(`<h2>⏱ Chrono libre</h2><form class="fm" data-form="timerNew"><label>Quota<select name="cat">${S.quotas.filter(q => !q.prayers && q.id !== 'sommeil' && q.id !== 'cigarette').map(q => `<option value="${q.id}">${q.icon} ${esc(q.label)}</option>`).join('')}</select></label><label>Titre (facultatif)<input name="label" placeholder="Ex. Révision TVA"></label><label>Alerte de dépassement après (min, facultatif)${durInput('limit', 0, 'ex. 1:30')}</label><button class="btn pri" type="submit">▶ Démarrer</button></form>`);
 }
 function timerModal() {
   const T = S.timer; if (!T) return;
@@ -2091,7 +2138,7 @@ function timerStopModal() {
   if (T.running) { T.acc += NOWFN().getTime() - T.startedAt; T.running = false; }
   const min = Math.max(1, Math.round(T.acc / 60000)), q = Q(T.cat), b = T.blockId && S.blocks.find(x => x.id === T.blockId);
   const planned = b ? blockPlanned(b) : null;
-  modal(`<h2>■ Terminer : ${esc(T.label)}</h2><div class="sub">Durée mesurée : <b>${fmtClock(T.acc)}</b> · ${qLabel(T.cat)}</div><form class="fm" data-form="timerStopSave" style="margin-top:10px"><label>Minutes à enregistrer<input type="number" name="min" min="1" value="${min}"></label>${q.kind === 'count' ? `<div class="rg"><label><input type="checkbox" name="unit" ${planned && min >= planned * .5 || !planned ? 'checked' : ''}>Compter comme 1 ${esc(q.unit || 'unité')} complète</label></div>` : ''}${b ? `<div class="rg"><label><input type="radio" name="fin" value="done" checked>✅ Bloc terminé</label><label><input type="radio" name="fin" value="partial">🟡 Partiel — je continue plus tard</label></div>` : ''}<label>Note<input name="note" placeholder="facultatif"></label><button class="btn pri" type="submit">Enregistrer</button></form>`);
+  modal(`<h2>■ Terminer : ${esc(T.label)}</h2><div class="sub">Durée mesurée : <b>${fmtClock(T.acc)}</b> · ${qLabel(T.cat)}</div><form class="fm" data-form="timerStopSave" style="margin-top:10px"><label>Minutes à enregistrer${durInput('min', min, 'ex. 1:40')}</label>${q.kind === 'count' ? `<div class="rg"><label><input type="checkbox" name="unit" ${planned && min >= planned * .5 || !planned ? 'checked' : ''}>Compter comme 1 ${esc(q.unit || 'unité')} complète</label></div>` : ''}${b ? `<div class="rg"><label><input type="radio" name="fin" value="done" checked>✅ Bloc terminé</label><label><input type="radio" name="fin" value="partial">🟡 Partiel — je continue plus tard</label></div>` : ''}<label>Note<input name="note" placeholder="facultatif"></label><button class="btn pri" type="submit">Enregistrer</button></form>`);
 }
 
 /* ---------- sommeil / bilan du soir ---------- */
@@ -2127,7 +2174,7 @@ function quotaForm(q) {
   modal(`<h2>${q ? 'Modifier le quota' : 'Nouveau quota'}</h2><div class="sub">Une modification d’objectif est toujours une décision explicite de ta part et reste dans l’historique.</div><form class="fm" data-form="quotaSave" style="margin-top:10px"><input type="hidden" name="id" value="${q ? q.id : ''}">
   <div class="row"><label>Nom<input name="label" value="${esc(v.label)}" required></label><label>Icône<input name="icon" value="${esc(v.icon)}" maxlength="3"></label><label>Couleur<input type="color" name="color" value="${v.color}"></label></div>
   <div class="row"><label>Type<select name="kind"><option value="duration" ${h ? 'selected' : ''}>Durée (heures)</option><option value="count" ${!h ? 'selected' : ''}>Compteur (nombre)</option></select></label><label>Sens<select name="mode"><option value="min" ${v.mode === 'min' ? 'selected' : ''}>Objectif à atteindre (minimum)</option><option value="max" ${v.mode === 'max' ? 'selected' : ''}>Plafond à ne pas dépasser</option></select></label></div>
-  <div class="row"><label>Cible par semaine ${h ? '(heures)' : ''}<input type="number" step="0.25" min="0" name="week" value="${h ? v.week / 60 : v.week}" required></label><label>Cible par jour (facultatif)<input type="number" step="0.25" min="0" name="day" value="${v.day == null ? '' : (h ? v.day / 60 : v.day)}"></label><label>Durée d’une session (min)<input type="number" name="sessionMin" min="15" step="5" value="${v.sessionMin || 60}"></label></div>
+  <div class="row"><label>Cible par semaine ${h ? '(heures)' : ''}<input type="number" step="0.25" min="0" name="week" value="${h ? v.week / 60 : v.week}" required></label><label>Cible par jour (facultatif)<input type="number" step="0.25" min="0" name="day" value="${v.day == null ? '' : (h ? v.day / 60 : v.day)}"></label><label>Durée d’une session (min)${durInput('sessionMin', v.sessionMin || 60, 'ex. 1:30')}</label></div>
   <div class="rg"><label><input type="checkbox" name="noPlan" ${v.noPlan ? 'checked' : ''}>Suivi seulement (pas de blocs planifiés)</label><label><input type="checkbox" name="overlap" ${v.overlap ? 'checked' : ''}>Chevauche d’autres activités</label></div>
   <div style="display:flex;gap:8px"><button class="btn pri" type="submit">Enregistrer</button>${q ? `<button class="btn bad" type="button" ${A('qdel', { id: q.id })}>Supprimer</button>` : ''}</div></form>`);
 }
@@ -2146,7 +2193,7 @@ function libreForm(l, pre) {
 }
 function apptForm(a, pre) {
   const v = a || Object.assign({ title: '', date: addDays(todayStr(), 1), time: '10:00', dur: 60, place: '', note: '' }, pre || {});
-  modal(`<h2>${a ? 'Modifier le rendez-vous' : '🔔 Nouveau rendez-vous'}</h2><form class="fm" data-form="apptSave"><input type="hidden" name="id" value="${a ? a.id : ''}"><label>Titre<input name="title" value="${esc(v.title)}" required placeholder="Ex. Banque, médecin, client…"></label><div class="row"><label>Date<input type="date" name="date" value="${v.date}" required></label><label>Heure<input type="time" name="time" value="${v.time || ''}" required></label><label>Durée (min)<input type="number" name="dur" value="${v.dur || 60}" min="5" step="5"></label></div><label>Lieu<input name="place" value="${esc(v.place || '')}"></label><label>Note<input name="note" value="${esc(v.note || '')}"></label><div class="rt">Rappels automatiques : 24 h et 5 h avant, jusqu’à ce que tu coches « C’est bon ».</div><div class="fbtns"><button class="btn pri" type="submit">Enregistrer</button>${a ? `<button class="btn bad" type="button" ${A('apptDel', { id: a.id })}>🗑 Supprimer</button>` : ''}</div></form>`);
+  modal(`<h2>${a ? 'Modifier le rendez-vous' : '🔔 Nouveau rendez-vous'}</h2><form class="fm" data-form="apptSave"><input type="hidden" name="id" value="${a ? a.id : ''}"><label>Titre<input name="title" value="${esc(v.title)}" required placeholder="Ex. Banque, médecin, client…"></label><div class="row"><label>Date<input type="date" name="date" value="${v.date}" required></label><label>Heure<input type="time" name="time" value="${v.time || ''}" required></label><label>Durée (min)${durInput('dur', v.dur || 60, 'ex. 1:30')}</label></div><label>Lieu<input name="place" value="${esc(v.place || '')}"></label><label>Note<input name="note" value="${esc(v.note || '')}"></label><div class="rt">Rappels automatiques : 24 h et 5 h avant, jusqu’à ce que tu coches « C’est bon ».</div><div class="fbtns"><button class="btn pri" type="submit">Enregistrer</button>${a ? `<button class="btn bad" type="button" ${A('apptDel', { id: a.id })}>🗑 Supprimer</button>` : ''}</div></form>`);
 }
 
 /* ---------- démo ---------- */
@@ -2230,6 +2277,15 @@ const ACT = {
   entryDel: async d => { const e = S.entries.find(x => x.id === d.id); if (!e) return; if (!await ask(`${Q(e.cat) ? Q(e.cat).label : e.cat} · ${fmtVal(Q(e.cat), e.v)} · ${e.date} ${e.time || ''}`, { title: 'Supprimer cette saisie ?' })) return; S.entries = S.entries.filter(x => x.id !== d.id); log('saisie', `Supprimé : ${Q(e.cat) ? Q(e.cat).label : e.cat} ${e.date}`); save(); closeModal(); render(); toast('Saisie supprimée', 'good'); },
   csvEntries: () => { const rows = journalRows(); download('journal_mylifepilot.csv', '﻿' + ['date;heure;categorie;valeur;unite;duree_min;detail;note;source'].concat(rows.map(e => { const q = Q(e.cat); return [e.date, e.time, q ? q.label : e.cat, q && q.kind === 'duration' ? e.v : e.v, q ? (q.kind === 'duration' ? 'min' : q.unit || '') : '', entryMins(e), e.sub || '', e.note || '', e.src].map(csvEscape).join(';'); })).join('\r\n'), 'text/csv'); toast('Export CSV provisoire (les exports Word/Excel/PDF natifs arrivent au Lot 5).', 'info'); },
   csvSearch: () => { const rows = searchRows(); download('recherche_mylifepilot.csv', '﻿' + ['date;heure;type;contenu;valeur'].concat(rows.map(r => [r.date, r.time, r.type, r.text, r.val].map(csvEscape).join(';'))).join('\r\n'), 'text/csv'); },
+  jToggle: d => { const s = UI.jSel || (UI.jSel = new Set()); s.has(d.id) ? s.delete(d.id) : s.add(d.id); $('#jres').innerHTML = journalTable(); },
+  jAll: () => { const s = UI.jSel || (UI.jSel = new Set()), rows = journalRows().slice(0, 400), all = rows.every(e => s.has(e.id)); rows.forEach(e => (all ? s.delete(e.id) : s.add(e.id))); $('#jres').innerHTML = journalTable(); },
+  jNone: () => { UI.jSel = new Set(); $('#jres').innerHTML = journalTable(); },
+  jDelSel: async () => {
+    const ids = new Set(journalRows().filter(e => (UI.jSel || new Set()).has(e.id)).map(e => e.id)); if (!ids.size) return;
+    if (!await ask(`${ids.size} saisie${ids.size > 1 ? 's seront supprimées' : ' sera supprimée'} définitivement. Cette action est irréversible (sauf restauration d’une sauvegarde).`, { title: `Supprimer ${ids.size} saisie${ids.size > 1 ? 's' : ''} ?`, ok: 'Supprimer', danger: true })) return;
+    S.entries = S.entries.filter(e => !ids.has(e.id)); UI.jSel = new Set(); log('saisie', `Suppression groupée : ${ids.size} saisie(s)`); save(); toast(`${ids.size} saisie${ids.size > 1 ? 's supprimées' : ' supprimée'}`, 'good'); render(false);
+  },
+  scoreInfo: d => scoreInfo(d.k, d.d),
   jsub: d => { UI.jSub = d.v; render(); }, jfReset: () => { UI.jf = { from: '', to: '', cat: '', text: '' }; render(); }, sfReset: () => { UI.sf = { text: '', cat: '', type: '', from: '', to: '', status: '' }; render(); },
   libreNew: () => libreForm(null), libreEdit: d => libreForm(S.libre.find(x => x.id === d.id)),
   libreDel: async d => { const l = S.libre.find(x => x.id === d.id); if (!l) return; if (!await ask(`${fmtShort(l.date)} ${l.from || ''}${l.to ? '–' + l.to : ''} · ${l.text || ''}`, { title: 'Supprimer cette note ?' })) return; if (l.entryId) S.entries = S.entries.filter(e => e.id !== l.entryId); S.libre = S.libre.filter(x => x.id !== d.id); log('libre', 'Note libre supprimée'); save(); closeModal(); render(); toast('Note supprimée', 'good'); },
@@ -2287,7 +2343,7 @@ document.addEventListener('click', e => {
 const FORMS = {
   entrySave(fd) {
     const cat = fd.get('cat'), q = Q(cat), id = fd.get('id'); let v, mins = 0;
-    if (q.kind === 'duration') { v = (+fd.get('h') || 0) * 60 + (+fd.get('m') || 0); const qd = fd.get('qd'); if (!v && qd) v = +qd; } else { v = +fd.get('qty') || 0; mins = +fd.get('mins') || 0; }
+    if (q.kind === 'duration') { v = (+fd.get('h') || 0) * 60 + (+fd.get('m') || 0); const qd = fd.get('qd'); if (!v && qd) v = +qd; } else { v = +fd.get('qty') || 0; mins = pd(fd.get('mins')) || 0; }
     if (q.kind === 'duration' && v <= 0) return toast('Indique une durée.', 'warn');
     const o = { cat, date: fd.get('date'), time: fd.get('time') || '', v, mins, note: fd.get('note') || '', sub: q.prayers ? fd.get('sub') : '' };
     if (id) { Object.assign(S.entries.find(x => x.id === id), o); log('saisie', `Modifié : ${q.label} ${o.date}`); save(); }
@@ -2309,7 +2365,7 @@ const FORMS = {
     save(); closeModal(); render(); toast(id ? 'Bloc modifié' : `${dates.length} bloc(s) créé(s)`, 'good');
   },
   qualifySave(fd) {
-    const b = S.blocks.find(x => x.id === fd.get('id')), out = fd.get('out'), add = Math.max(0, +fd.get('add') || 0), reason = fd.get('reason') || '', note = fd.get('note') || '';
+    const b = S.blocks.find(x => x.id === fd.get('id')), out = fd.get('out'), add = Math.max(0, pd(fd.get('add')) || 0), reason = fd.get('reason') || '', note = fd.get('note') || '';
     const q = Q(b.q); b.note = note || b.note; if (reason) b.reason = reason;
     const back = UI.backToBilan; UI.backToBilan = null;
     let next = null;
@@ -2324,7 +2380,7 @@ const FORMS = {
     else if (back) { UI.backToBilan = null; render(); bilanModal(back); return; }
     render();
   },
-  replanManual(fd) { const id = fd.get('id'); applyReplan(id, fd.get('date'), fd.get('s'), +fd.get('dur'), fd.get('mark')); closeModal(); render(); },
+  replanManual(fd) { const id = fd.get('id'); applyReplan(id, fd.get('date'), fd.get('s'), pd(fd.get('dur')), fd.get('mark')); closeModal(); render(); },
   libreSave(fd) {
     const id = fd.get('id'), o = { date: fd.get('date'), from: fd.get('from') || '', to: fd.get('to') || '', text: (fd.get('text') || '').trim(), cat: fd.get('cat') || '' };
     if (o.from && o.to && hm2min(o.to) <= hm2min(o.from)) return toast('Heure de fin avant le début.', 'warn');
@@ -2335,13 +2391,13 @@ const FORMS = {
     log('libre', `Note libre : ${l.text.slice(0, 50)}`); save(); closeModal(); render(); toast('Enregistré', 'good');
   },
   apptSave(fd) {
-    const id = fd.get('id'), o = { title: fd.get('title').trim(), date: fd.get('date'), time: fd.get('time'), dur: +fd.get('dur') || 60, place: fd.get('place') || '', note: fd.get('note') || '' };
+    const id = fd.get('id'), o = { title: fd.get('title').trim(), date: fd.get('date'), time: fd.get('time'), dur: pd(fd.get('dur')) || 60, place: fd.get('place') || '', note: fd.get('note') || '' };
     if (id) Object.assign(S.appts.find(x => x.id === id), o, { done: false }); else S.appts.push({ id: uid(), done: false, ...o });
     log('rdv', `Rendez-vous : ${o.title} ${o.date} ${o.time}`); save(); closeModal(); render(); toast('Rendez-vous enregistré — rappels 24 h et 5 h programmés', 'good');
   },
   quotaSave(fd) {
     const id = fd.get('id'), kind = fd.get('kind'), h = kind === 'duration', mul = h ? 60 : 1;
-    const o = { label: fd.get('label').trim(), icon: fd.get('icon') || '⭐', color: fd.get('color'), kind, mode: fd.get('mode'), week: Math.round((+fd.get('week') || 0) * mul), day: fd.get('day') === '' ? null : Math.round(+fd.get('day') * mul), sessionMin: +fd.get('sessionMin') || 60, noPlan: !!fd.get('noPlan'), overlap: !!fd.get('overlap') };
+    const o = { label: fd.get('label').trim(), icon: fd.get('icon') || '⭐', color: fd.get('color'), kind, mode: fd.get('mode'), week: Math.round((+fd.get('week') || 0) * mul), day: fd.get('day') === '' ? null : Math.round(+fd.get('day') * mul), sessionMin: pd(fd.get('sessionMin')) || 60, noPlan: !!fd.get('noPlan'), overlap: !!fd.get('overlap') };
     if (id) { const q = Q(id); if (q.week !== o.week) { S.proposals.push({ id: uid(), ts: Date.now(), kind: 'objectif', q: id, text: `${q.label} : ${fmtTarget(q, q.week)} → ${fmtTarget({ ...q, ...o }, o.week)} (modification manuelle)`, decision: 'accepté' }); log('objectif', `Objectif modifié : ${q.label}`); } Object.assign(q, o); }
     else S.quotas.push({ id: 'q' + uid(), prio: 5, unit: kind === 'count' ? 'fois' : '', ...o });
     save(); closeModal(); render();
@@ -2379,9 +2435,9 @@ const FORMS = {
     addEntry({ cat: 'sommeil', v: m, date: d, time: fd.get('wake'), note: `${fd.get('bed')} → ${fd.get('wake')}` });
     const bd = UI.bilanForDate; closeModal(); render(); if (bd) bilanModal(bd); toast(`Sommeil : ${fmtDur(m)}`, m >= 420 ? 'good' : 'warn');
   },
-  timerNew(fd) { S.timer = { cat: fd.get('cat'), blockId: null, label: (fd.get('label') || '').trim() || Q(fd.get('cat')).label, startedAt: NOWFN().getTime(), acc: 0, running: true, limit: +fd.get('limit') || null, alerted: false }; log('chrono', `Démarrage : ${S.timer.label}`); save(); closeModal(); render(); timerModal(); },
+  timerNew(fd) { S.timer = { cat: fd.get('cat'), blockId: null, label: (fd.get('label') || '').trim() || Q(fd.get('cat')).label, startedAt: NOWFN().getTime(), acc: 0, running: true, limit: pd(fd.get('limit')) || null, alerted: false }; log('chrono', `Démarrage : ${S.timer.label}`); save(); closeModal(); render(); timerModal(); },
   timerStopSave(fd) {
-    const T = S.timer, q = Q(T.cat), min = Math.max(1, +fd.get('min') || 1), b = T.blockId && S.blocks.find(x => x.id === T.blockId), fin = fd.get('fin');
+    const T = S.timer, q = Q(T.cat), min = Math.max(1, pd(fd.get('min')) || 1), b = T.blockId && S.blocks.find(x => x.id === T.blockId), fin = fd.get('fin');
     if (q.kind === 'duration') addEntry({ cat: q.id, v: min, blockId: T.blockId || undefined, src: 'timer', note: fd.get('note') || '', date: b ? b.date : todayStr() });
     else addEntry({ cat: q.id, v: fd.get('unit') ? 1 : 0, mins: min, blockId: T.blockId || undefined, src: 'timer', note: fd.get('note') || '', date: b ? b.date : todayStr() });
     if (b) { b.status = fin === 'partial' ? 'inprogress' : 'done'; if (fin !== 'partial') b.reason = ''; }
@@ -2389,9 +2445,10 @@ const FORMS = {
     if (q.mode === 'max') checkLimitToast(q); toast(`✅ ${fmtDur(min)} enregistrées`, 'good');
   }
 };
-document.addEventListener('submit', e => { const f = e.target.closest('form[data-form]'); if (!f) return; e.preventDefault(); const h = FORMS[f.dataset.form]; if (h) h(new FormData(f), f); });
+document.addEventListener('submit', e => { const f = e.target.closest('form[data-form]'); if (!f) return; e.preventDefault(); const badD = [...f.querySelectorAll('input[data-dur]')].find(i => i.value.trim() !== '' && parseDur(i.value) == null); if (badD) { badD.focus(); return toast('Durée non reconnue. Écris par exemple 1:40, 1h40 ou 100 (minutes).', 'warn'); } const h = FORMS[f.dataset.form]; if (h) h(new FormData(f), f); });
 document.addEventListener('input', e => {
   const t = e.target;
+  if (t.dataset.dur !== undefined) { const m = parseDur(t.value), h = t.parentElement.querySelector('.dh'); if (h) h.textContent = t.value.trim() === '' ? '' : m == null ? '⚠ Format : 1:40, 1h40, 100' : '= ' + fmtDur(m); }
   if (t.dataset.live) {
     const k = t.dataset.live, n = t.name, v = t.value;
     if (k === 'jf') { UI.jf[n] = v; $('#jres').innerHTML = journalTable(); }
@@ -2417,6 +2474,15 @@ document.addEventListener('change', e => {
 });
 
 /* ================= Démarrage ================= */
+function openReminders(force) {
+  if (window.__NOREM) return;
+  if ($('#modal') || (!force && UI.remAt && Date.now() - UI.remAt < 180000)) return;
+  const al = alerts().filter(a => a.lvl === 'danger' || a.lvl === 'warn').slice(0, 6); if (!al.length) return;
+  UI.remAt = Date.now();
+  const now = Date.now(); al.forEach(a => { S.notified[a.key] = now; });
+  modal(`<h2>🔔 Rappels</h2><div style="display:grid;gap:8px;margin-top:6px">${al.map(a => `<div class="card" style="padding:12px;margin:0"><div><b>${a.icon} ${esc(a.title)}</b></div><div class="rt">${esc(a.text || '')}</div>${(a.acts || []).length ? `<div class="fbtns" style="margin-top:8px">${a.acts.map(x => { const { l, act, ...rest } = x; return `<button class="btn sm" ${A(act, rest)}>${l}</button>`; }).join('')}</div>` : ''}</div>`).join('')}</div><div class="fbtns" style="margin-top:12px"><button class="btn pri" ${A('mclose')}>OK, j’ai vu</button></div>`);
+  save();
+}
 function checkNotify() {
   const al = alerts().filter(a => a.notify); let shown = 0; const now = Date.now();
   for (const a of al) { if (S.notified[a.key]) continue; S.notified[a.key] = now; if (shown < 3) { toast(`${a.icon} <b>${esc(a.title)}</b><br><span class="rt">${esc(a.text)}</span>`, a.lvl === 'danger' ? 'danger' : 'warn', 7000); notify(a.title, a.text); shown++; } }
@@ -2427,10 +2493,10 @@ async function boot() {
   await load(); applyTheme();
   const h = location.hash.slice(1); if (VIEWS[h]) UI.tab = h;
   const fab = document.createElement('button'); fab.className = 'fab'; fab.textContent = '＋'; fab.title = 'Saisie rapide'; fab.dataset.act = 'quick'; fab.setAttribute('aria-label', 'Saisie rapide'); document.body.appendChild(fab);
-  voxInit(); render(false); checkNotify();
+  voxInit(); render(false); openReminders(true); checkNotify();
   setInterval(tick1s, 1000);
   setInterval(() => { if (!$('#modal') && !isTyping() && ['cockpit', 'cal'].includes(UI.tab)) render(); checkNotify(); renderNav(); }, 30000);
-  document.addEventListener('visibilitychange', () => { if (document.hidden) { persist(); syncNow('hide'); } else { if (!$('#modal') && !isTyping()) render(); checkNotify(); if (Date.now() - SYNC.last > 20000) syncNow('show'); } });
+  document.addEventListener('visibilitychange', () => { if (document.hidden) { UI.hidAt = Date.now(); persist(); syncNow('hide'); } else { if (!$('#modal') && !isTyping()) render(); if (UI.hidAt && Date.now() - UI.hidAt > 180000) openReminders(); checkNotify(); if (Date.now() - SYNC.last > 5000) syncNow('show'); } });
   window.addEventListener('pagehide', persist);
   let baseH = innerHeight, baseW = innerWidth;
   const kbCheck = () => {
@@ -2445,7 +2511,7 @@ async function boot() {
   matchMedia('(prefers-color-scheme:dark)').addEventListener('change', applyTheme);
   syncInit();
   if ('serviceWorker' in navigator && /^https?:/.test(location.protocol)) navigator.serviceWorker.register('sw.js').catch(() => { });
-  window.MLP = { EXP: { buildSheets, buildXlsx, buildReport, buildDocx, reportHtml, expData, zipStore, chartSvg, expRun }, ACT, SYNC, syncNow, merge3, syncable, get S() { return S; }, set S(v) { S = v; }, UI, render, alerts, dayInfo, weekInfo, statsFor, periodOf, autoPlan, effStatus, loadDemo, persist, load, DB, qDone };
+  window.MLP = { save, EXP: { buildSheets, buildXlsx, buildReport, buildDocx, reportHtml, expData, zipStore, chartSvg, expRun }, ACT, SYNC, syncNow, merge3, syncable, get S() { return S; }, set S(v) { S = v; }, UI, render, alerts, dayInfo, weekInfo, statsFor, periodOf, autoPlan, effStatus, loadDemo, persist, load, DB, qDone };
 }
 boot();
 </script>
