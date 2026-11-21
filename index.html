@@ -28,7 +28,7 @@ h1{font-size:1.45rem}h2{font-size:1.1rem}h3{font-size:.98rem}
 .main{padding:20px 22px 110px;max-width:1300px;width:100%;margin:0 auto}
 .top{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
 .top .sp{flex:1}
-.thbtn{gap:5px}.thl{font-size:.78rem}@media(max-width:700px){.thl{display:none}}
+.thbtn,.syb{gap:5px}.syb.bad{background:var(--bad);color:#fff}.thl{font-size:.78rem}@media(max-width:700px){.thl{display:none}}
 .sub{color:var(--mut);font-size:.88rem}
 .card{background:var(--card);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--cb);border-radius:var(--r);box-shadow:var(--sh);padding:16px;min-width:0}
 .card>h2,.card>.ch{margin-bottom:10px}
@@ -97,10 +97,10 @@ tr:hover td{background:var(--soft)}
 .toast{background:var(--cardsolid);border:1px solid var(--cb);border-left:5px solid var(--p2);padding:11px 14px;border-radius:13px;box-shadow:var(--sh);animation:in .25s}
 .toast.danger{border-left-color:var(--bad)}.toast.warn{border-left-color:var(--warn)}.toast.good{border-left-color:var(--ok)}
 @keyframes in{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
-.bnav{display:none;position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--card);backdrop-filter:blur(18px);border-top:1px solid var(--cb);padding:6px 6px calc(6px + env(safe-area-inset-bottom));justify-content:space-around}
-.bnav button{border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:1px;font-size:.68rem;font-weight:700;color:var(--mut);padding:4px 8px;border-radius:12px;cursor:pointer;position:relative}
+.bnav{display:none;position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--cardsolid);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-top:1px solid var(--cb);padding:6px calc(4px + env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) calc(4px + env(safe-area-inset-left));gap:2px;justify-content:space-between;box-sizing:border-box;width:100%}
+.bnav button{border:0;background:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;font-size:.68rem;line-height:1.15;font-weight:700;color:var(--mut);padding:5px 2px;border-radius:12px;cursor:pointer;position:relative;flex:1 1 0;min-width:0;min-height:50px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;-webkit-tap-highlight-color:transparent;touch-action:manipulation;font-family:inherit}
 .bnav button span{font-size:1.25rem}.bnav button.on{color:var(--p);background:var(--soft)}
-.bnav b{position:absolute;top:0;right:4px;background:var(--bad);color:#fff;border-radius:99px;font-size:.62rem;padding:0 5px}
+.bnav b{position:absolute;top:1px;right:calc(50% - 22px);background:var(--bad);color:#fff;border-radius:99px;font-size:.62rem;padding:0 5px}
 .fab{position:fixed;right:18px;bottom:24px;z-index:35;width:58px;height:58px;border-radius:50%;border:0;font-size:1.9rem;color:#fff;background:linear-gradient(135deg,var(--p),var(--p2));box-shadow:0 10px 26px rgba(45,52,139,.5);cursor:pointer}
 .tmb{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;z-index:36;background:#12163a;color:#fff;border-radius:99px;padding:9px 12px 9px 18px;display:flex;align-items:center;gap:12px;box-shadow:0 10px 30px rgba(0,0,0,.45);cursor:pointer;max-width:calc(100vw - 100px)}
 .tmb .tt{font-variant-numeric:tabular-nums;font-weight:800;font-size:1.1rem}
@@ -109,6 +109,7 @@ tr:hover td{background:var(--soft)}
 .cal .hc{position:relative}
 .cal .hc span{position:absolute;right:6px;font-size:.7rem;color:var(--mut);transform:translateY(-50%)}
 .cal .dc{position:relative;border-left:1px solid var(--cb);cursor:cell;background-image:linear-gradient(var(--cb) 1px,transparent 1px);background-size:100% calc(var(--sc) * 60px)}
+.calbar{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.ct{min-width:170px;text-align:center}
 .cdh{position:sticky;top:0;background:var(--cardsolid);z-index:3;text-align:center;font-weight:800;padding:6px 2px;border-bottom:1px solid var(--cb);font-size:.8rem}
 .cdh.today{color:var(--p)}
 .blk{--c:#4f5bd5;position:absolute;border-radius:10px;padding:3px 7px;color:#fff;font-size:.76rem;overflow:hidden;cursor:pointer;background:linear-gradient(180deg,var(--c),color-mix(in srgb,var(--c) 75%,#000));border:1px solid rgba(255,255,255,.25);box-shadow:0 3px 8px rgba(0,0,0,.2);line-height:1.2}
@@ -143,9 +144,17 @@ details summary{cursor:pointer;font-weight:700;padding:4px 0}
 .kpi{flex-wrap:wrap}
 @media(max-width:899px){
  .g4{grid-template-columns:1fr 1fr}.kpi .v{font-size:1.35rem}.big{font-size:1.8rem}.card{padding:13px}
- .app{grid-template-columns:1fr}.side{display:none}.bnav{display:flex}
- .main{padding:14px 12px 150px}
- .fab{bottom:84px}.tmb{bottom:86px}
+ .app{grid-template-columns:minmax(0,1fr)}.side{display:none}.bnav{display:flex}
+ html,body{overflow-x:hidden;max-width:100vw}
+ .main{padding:14px 12px calc(150px + env(safe-area-inset-bottom));min-width:0}
+ .g>*,.top>*,.card{min-width:0;max-width:100%}
+ .g2,.g3{grid-template-columns:minmax(0,1fr)}
+ .top{gap:8px}.top>div:first-child{flex:1 1 calc(100% - 64px)}.top .sp{display:none}.thbtn{order:-1}
+ .fab{bottom:calc(78px + env(safe-area-inset-bottom));right:14px;width:54px;height:54px;font-size:1.7rem}
+ .tmb{bottom:calc(80px + env(safe-area-inset-bottom));max-width:calc(100vw - 90px)}
+ input,select,textarea{font-size:16px}
+ .ct,.ct[style]{min-width:0!important;flex:1 1 120px}.calbar{width:100%;justify-content:space-between}
+ .tw .cal[style*="--n:7"]{min-width:620px}
  .toasts{top:8px}
  h1{font-size:1.25rem}
  .mc{min-height:58px}
@@ -154,6 +163,8 @@ details summary{cursor:pointer;font-weight:700;padding:4px 0}
  .tw table.rs td{display:flex;gap:8px;border:0;padding:2px 4px}
  .tw table.rs td:before{content:attr(data-l);font-weight:700;color:var(--mut);min-width:68px;font-size:.74rem}
 }
+body.kb .bnav,body.kb .fab,body.kb .tmb{display:none!important}
+button,.btn,a,.nv{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 @media print{.side,.bnav,.fab,.tmb,.top .btn,.noprint{display:none!important}.app{display:block}body{background:#fff;color:#000}.card{box-shadow:none;border:1px solid #ccc;backdrop-filter:none;background:#fff;break-inside:avoid}.main{padding:0}}
 </style>
 </head>
@@ -164,8 +175,8 @@ details summary{cursor:pointer;font-weight:700;padding:4px 0}
 <div id="tbar"></div>
 <script>
 'use strict';
-/* ================= My Life Pilot V0.3 — noyau : utilitaires, stockage, calculs ================= */
-const VERSION = '0.3.0';
+/* ================= My Life Pilot V0.3.1 — noyau : utilitaires, stockage, calculs ================= */
+const VERSION = '0.4.0';
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const uid = () => Math.random().toString(36).slice(2, 8) + Date.now().toString(36).slice(-4);
@@ -267,13 +278,13 @@ async function persist() {
     try { localStorage.setItem('mlp_state', JSON.stringify(S)); } catch (e2) { toast('⚠️ Échec de la sauvegarde locale. Exportez vos données.', 'danger'); }
   }
 }
-function save() { clearTimeout(saveT); saveT = setTimeout(persist, 250); }
+function save() { clearTimeout(saveT); saveT = setTimeout(persist, 250); S._mod = Date.now(); if (typeof syncSoon === 'function') syncSoon(); }
 async function dailyBackup() {
   if (storageMode !== 'idb') return;
   try {
     const k = 'bak-' + todayStr(), keys = await DB.keys();
     if (!keys.includes(k)) await DB.set(k, JSON.stringify(S));
-    const baks = keys.filter(x => String(x).startsWith('bak-')).sort();
+    const baks = keys.filter(x => /^bak-\d{4}-\d\d-\d\d$/.test(String(x))).sort();
     while (baks.length > 7) await DB.del(baks.shift());
   } catch (e) { }
 }
@@ -715,7 +726,7 @@ const A = (act, d = {}) => `data-act="${act}" ` + Object.entries(d).map(([k, v])
 const THM = { auto: ['🌓', 'Thème automatique'], light: ['☀️', 'Thème clair'], dark: ['🌙', 'Thème sombre'] };
 const themeBtn = () => { const t = (S.settings.theme || 'auto'); return `<button class="btn sm thbtn" title="${THM[t][1]} — toucher pour changer" aria-label="${THM[t][1]}" data-act="themeCycle">${THM[t][0]}<span class="thl">${t === 'auto' ? 'Auto' : t === 'light' ? 'Clair' : 'Sombre'}</span></button>`; };
 const greeting = () => { const h = NOWFN().getHours(); return (h >= 6 && h < 17 ? 'Bonjour' : 'Bonsoir') + ' ' + (S.settings.name || 'Hamza'); };
-const pageTop = (title, sub, right = '') => `<div class="top"><div><h1>${title}</h1>${sub ? `<div class="sub">${sub}</div>` : ''}</div><div class="sp"></div>${right}${themeBtn()}</div>`;
+const pageTop = (title, sub, right = '') => `<div class="top"><div><h1>${title}</h1>${sub ? `<div class="sub">${sub}</div>` : ''}</div><div class="sp"></div>${right}${syncChip()}${themeBtn()}</div>`;
 const stChip = st => { const [l, i] = STATUS[st] || ['?', '']; const c = st === 'done' ? 'ok' : st === 'missed' ? 'bad' : st === 'unfilled' || st === 'partial' ? 'warn' : 'p'; return `<span class="chip ${c}">${i} ${l}</span>`; };
 const scoreDot = (s, lbl) => `<div class="dot ${scoreCls(s)}">${s == null ? '–' : s}</div>`;
 
@@ -839,7 +850,7 @@ function vCal() {
     body = `<div class="mg">${g}</div><div class="lg"><span>✓ ≥ 80 %</span><span>≈ 50–79 %</span><span>✗ &lt; 50 %</span><span>❓ à qualifier</span></div>`;
   }
   return pageTop('📅 Calendrier intelligent', 'Planning journalier fixé → bilan à ' + S.settings.bilanHour + 'h → rattrapage assisté', `<button class="btn" ${A('autoplan', { id: '' })}>✨ Proposer ma semaine</button><button class="btn pri" ${A('newBlock', { date: d })}>＋ Nouveau bloc</button>`) +
-    `<div class="card"><div class="ch" style="margin-bottom:12px"><div class="tabs" style="margin:0">${[['day', 'Jour'], ['week', 'Semaine'], ['month', 'Mois']].map(([k, l]) => `<button class="${v === k ? 'on' : ''}" ${A('calView', { v: k })}>${l}</button>`).join('')}</div><div style="display:flex;gap:6px;align-items:center"><button class="btn sm" ${A('calNav', { n: -step })}>‹</button><b style="min-width:170px;text-align:center">${title}</b><button class="btn sm" ${A('calNav', { n: step })}>›</button><button class="btn sm" ${A('calDay', { date: t })}>Aujourd’hui</button></div></div>${body}${v !== 'month' ? '<div class="lg"><span><i style="background:#6d7399"></i>Fixe / autre</span><span><i style="background:#f0a30a"></i>Rendez-vous</span><span><i style="background:#8a63d2"></i>Libre</span><span>❓ bordure pointillée = non renseignée</span><span class="rt">Touchez une zone vide pour créer un bloc.</span></div>' : ''}</div>`;
+    `<div class="card"><div class="ch" style="margin-bottom:12px"><div class="tabs" style="margin:0">${[['day', 'Jour'], ['week', 'Semaine'], ['month', 'Mois']].map(([k, l]) => `<button class="${v === k ? 'on' : ''}" ${A('calView', { v: k })}>${l}</button>`).join('')}</div><div class="calbar"><button class="btn sm" ${A('calNav', { n: -step })}>‹</button><b class="ct">${title}</b><button class="btn sm" ${A('calNav', { n: step })}>›</button><button class="btn sm" ${A('calDay', { date: t })}>Aujourd’hui</button></div></div>${body}${v !== 'month' ? '<div class="lg"><span><i style="background:#6d7399"></i>Fixe / autre</span><span><i style="background:#f0a30a"></i>Rendez-vous</span><span><i style="background:#8a63d2"></i>Libre</span><span>❓ bordure pointillée = non renseignée</span><span class="rt">Touchez une zone vide pour créer un bloc.</span></div>' : ''}</div>`;
 }
 
 /* ---------- QUOTAS & CONSEILLER ---------- */
@@ -993,7 +1004,7 @@ function vStats() {
     <tr><td>Activités reportées</td><td>${cnt.postponed || 0}</td><td>${sp.cnt.postponed || 0}</td><td>${delta(-(cnt.postponed || 0), -(sp.cnt.postponed || 0))}</td></tr>`;
   const sdet = kind === 'day' ? dayInfo(p.from, qf) : null;
   return pageTop('📊 Statistiques & scores', 'Un seul jeu de filtres : tous les chiffres et graphiques sont recalculés sur le même périmètre', `<button class="btn" ${A('goBilan', { k: kind === 'month' ? 'week' : kind })}>📑 Bilan détaillé</button><button class="btn" onclick="window.print()">🖨 PDF / Imprimer</button>`) +
-    `<div class="card" style="margin-bottom:14px"><div class="fr" style="margin:0"><div class="tabs" style="margin:0">${[['day', 'Jour'], ['week', 'Semaine'], ['month', 'Mois']].map(([k, l]) => `<button class="${kind === k ? 'on' : ''}" ${A('statP', { v: k })}>${l}</button>`).join('')}</div><div style="display:flex;gap:6px;align-items:center"><button class="btn sm" ${A('statNav', { n: -step })}>‹</button><b style="min-width:200px;text-align:center">${periodLabel(p)}</b><button class="btn sm" ${A('statNav', { n: step })}>›</button><button class="btn sm" ${A('statToday')}>Aujourd’hui</button></div><label>Domaine / quota<select data-live="stq" name="q"><option value="all">Tous les quotas</option>${catOptions(qf)}</select></label>${qf !== 'all' ? `<button class="btn sm" ${A('statQreset')}>✕ Réinitialiser le filtre</button>` : ''}</div></div>
+    `<div class="card" style="margin-bottom:14px"><div class="fr" style="margin:0"><div class="tabs" style="margin:0">${[['day', 'Jour'], ['week', 'Semaine'], ['month', 'Mois']].map(([k, l]) => `<button class="${kind === k ? 'on' : ''}" ${A('statP', { v: k })}>${l}</button>`).join('')}</div><div class="calbar"><button class="btn sm" ${A('statNav', { n: -step })}>‹</button><b class="ct" style="min-width:200px">${periodLabel(p)}</b><button class="btn sm" ${A('statNav', { n: step })}>›</button><button class="btn sm" ${A('statToday')}>Aujourd’hui</button></div><label>Domaine / quota<select data-live="stq" name="q"><option value="all">Tous les quotas</option>${catOptions(qf)}</select></label>${qf !== 'all' ? `<button class="btn sm" ${A('statQreset')}>✕ Réinitialiser le filtre</button>` : ''}</div></div>
     <div class="g g4">
       <div class="card kpi">${ring((sc || 0) / 100, { size: 84, label: sc == null ? '–' : sc + '%', color: `var(--${sc == null ? 'mut' : sc >= 80 ? 'ok' : sc >= 50 ? 'warn' : 'bad'})` })}<div><div class="l">Score ${kind === 'day' ? 'du jour' : kind === 'week' ? 'de la semaine' : 'du mois'}</div><div>${delta(sc, sp.score, ' pts')} <span class="rt">vs précédent</span></div></div></div>
       <div class="card"><div class="l rt">Réalisé / prévu (blocs terminés)</div><div class="v big">${fmtDur(st.realMin)}</div><div class="rt">sur ${fmtDur(st.plannedMin)} prévus · écart ${fmtDur(st.realMin - st.plannedMin)}</div></div>
@@ -1056,11 +1067,250 @@ function vSettings() {
     `<div class="g g2">
     <div class="card"><div class="ch"><h2>Apparence & bilan</h2></div><form class="fm" data-form="settingsSave"><div class="row"><label>Prénom (message d’accueil)<input name="name" value="${esc(s.name || 'Hamza')}"></label><label>Thème<select name="theme">${[['auto', 'Automatique'], ['light', 'Clair'], ['dark', 'Sombre']].map(([k, l]) => `<option value="${k}" ${s.theme === k ? 'selected' : ''}>${l}</option>`).join('')}</select></label><label>Heure du bilan du soir<input type="time" name="bilanHour" value="${pad(s.bilanHour)}:00"></label></div><div class="ch"><h3>Fenêtres libres (créneaux utilisables par le planificateur)</h3></div><div class="rt">Le temps de sommeil, de travail et de transport est protégé : ne mets ici que ce qui est vraiment disponible.</div>${DAYSL.map((d, i) => `<div class="row" style="align-items:center;grid-template-columns:90px 1fr 1fr auto"><b>${d}</b><input type="time" name="f${i}s" value="${s.free[i] ? s.free[i][0] : '18:45'}"><input type="time" name="f${i}e" value="${s.free[i] ? s.free[i][1] : '22:30'}"><label style="flex-direction:row;align-items:center;gap:5px"><input type="checkbox" name="f${i}n" ${s.free[i] ? '' : 'checked'}>aucune</label></div>`).join('')}<label>Causes d’imprévus / non-réalisation (une par ligne)<textarea name="reasons" rows="6">${esc(S.reasons.join('\n'))}</textarea></label><button class="btn pri" type="submit">Enregistrer</button></form></div>
     <div style="display:grid;gap:14px;align-content:start">
+      <div class="card"><div class="ch"><h2>☁️ Synchronisation PC ↔ téléphone</h2></div>
+        <div class="sub" id="syncstat" style="margin-bottom:8px">${esc(syncStatusText())}</div>
+        <form class="fm" data-form="syncSave" autocomplete="off"><div class="row"><label>Propriétaire GitHub<input name="owner" value="${esc((SYNC.cfg && SYNC.cfg.owner) || (/\.github\.io$/.test(location.hostname) ? location.hostname.split('.')[0] : ''))}" placeholder="hamzaazeiz7-ctrl" autocapitalize="off" autocorrect="off"></label><label>Dépôt de données (privé)<input name="repo" value="${esc((SYNC.cfg && SYNC.cfg.repo) || 'my-life-pilot-data')}" autocapitalize="off" autocorrect="off"></label></div>
+        <label>Jeton GitHub ${SYNC.cfg && SYNC.cfg.token ? '<span class="rt">(déjà enregistré — laisse vide pour le garder)</span>' : ''}<input name="token" type="password" autocomplete="new-password" placeholder="github_pat_…"></label>
+        <label>Mot de passe de chiffrement ${SYNC.cfg && SYNC.cfg.pass ? '<span class="rt">(déjà enregistré — laisse vide pour le garder)</span>' : '<span class="rt">(le même sur PC et téléphone ; non récupérable si perdu)</span>'}<input name="pass" type="password" autocomplete="new-password" placeholder="••••••"></label>
+        <label>Nom de cet appareil<input name="device" value="${esc((SYNC.cfg && SYNC.cfg.device) || (/Android|iPhone|iPad|Mobile/i.test(navigator.userAgent) ? 'Téléphone' : 'PC'))}"></label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn pri" type="submit">Enregistrer et synchroniser</button>${SYNC.cfg && SYNC.cfg.on ? `<button class="btn" type="button" ${A('syncNow')}>Synchroniser maintenant</button><button class="btn bad" type="button" ${A('syncOff')}>Désactiver ici</button>` : ''}</div></form>
+        <details style="margin-top:10px"><summary><b>Comment obtenir le dépôt et le jeton ?</b></summary><ol class="rt" style="line-height:1.6;padding-left:18px">
+          <li>GitHub → <b>New repository</b> → nom <code>my-life-pilot-data</code> → <b>Private</b> → cocher « Add a README » → Create.</li>
+          <li>GitHub → ta photo → <b>Settings</b> → tout en bas <b>Developer settings</b> → <b>Personal access tokens</b> → <b>Fine-grained tokens</b> → <b>Generate new token</b>.</li>
+          <li>Nom : <code>My Life Pilot</code> · Expiration : 1 an · <b>Only select repositories</b> → <code>my-life-pilot-data</code>.</li>
+          <li><b>Permissions → Repository permissions → Contents → Read and write</b> → Generate token → copie-le (il ne s’affiche qu’une fois).</li>
+          <li>Colle le jeton ici, choisis un mot de passe, puis refais <b>exactement pareil</b> sur l’autre appareil.</li></ol>
+          <div class="rt">Les données sont chiffrées avant l’envoi : même dans un dépôt GitHub, personne ne peut les lire sans ton mot de passe. Le jeton et le mot de passe restent uniquement dans ce navigateur et ne sont jamais inclus dans les sauvegardes JSON.</div></details></div>
       <div class="card"><div class="ch"><h2>Notifications</h2></div><div class="sub" style="margin-bottom:8px">Statut : <b>${'Notification' in window ? Notification.permission : 'non supporté'}</b>. Les notifications fonctionnent app ouverte (ou en arrière-plan sur le navigateur). Pour les rendez-vous app fermée, utilise l’export 📲 vers l’agenda du téléphone.</div><button class="btn" ${A('notifAsk')}>Autoriser les notifications</button></div>
       <div class="card"><div class="ch"><h2>Mon travail (bloc fixe)</h2></div><form class="fm" data-form="workAdd"><div class="row"><label>Début<input type="time" name="s" value="08:30"></label><label>Fin<input type="time" name="e" value="17:00"></label><label>Semaines<input type="number" name="w" value="8" min="1" max="52"></label></div><button class="btn" type="submit">Ajouter lun–ven (bloc fixe, hors score)</button></form></div>
       <div class="card"><div class="ch"><h2>Sauvegarde & restauration</h2></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn pri" ${A('exportJson')}>⬇ Exporter (JSON)</button><label class="btn" style="cursor:pointer">⬆ Importer<input type="file" accept=".json" id="impfile" class="hide"></label><button class="btn" ${A('backups')}>🕘 Copies automatiques</button></div><div class="sub" style="margin-top:8px">Une copie automatique est gardée chaque jour (7 derniers jours) dans le navigateur. Pense à exporter régulièrement un fichier JSON sur ton PC/Drive.</div></div>
       <div class="card"><div class="ch"><h2>Données de démonstration</h2></div><div class="sub" style="margin-bottom:8px">4 semaines d’historique fictif pour tester graphiques et bilans. Retirables en un clic sans toucher à tes vraies données.</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" ${A('demoLoad')}>Charger la démo</button><button class="btn" ${A('demoClear')}>Retirer la démo</button><button class="btn bad" ${A('resetAll')}>Tout effacer</button></div></div>
     </div></div>`;
+}
+/* ================= Synchronisation PC ↔ téléphone =================
+   Principe : un dépôt GitHub PRIVÉ ne contient qu'un fichier chiffré (AES-GCM, clé dérivée d'un mot de passe).
+   Fusion à 3 voies (base = dernier état synchronisé) : aucune saisie n'est écrasée ; une modification gagne sur une suppression.
+   Rien de ce qui est propre à l'appareil (thème, chrono en cours, notifications déjà montrées, données de démo) ne voyage. */
+const SYNC = { cfg: null, status: 'off', msg: '', last: 0, busy: false, again: false, timer: null, stats: null, changed: false };
+const SYNC_PATH = 'mlp-data.json';
+const SYNC_ID_COLS = ['quotas', 'blocks', 'entries', 'libre', 'appts', 'proposals', 'audit'];
+const SYNC_MAP_COLS = ['reviews', 'wreviews'];
+const SYNC_LOCAL_SETTINGS = ['theme', 'notif'];
+
+/* ---------- utilitaires purs (testés en unitaire) ---------- */
+function stable(v) {
+  if (Array.isArray(v)) return '[' + v.map(stable).join(',') + ']';
+  if (v && typeof v === 'object') return '{' + Object.keys(v).sort().map(k => JSON.stringify(k) + ':' + stable(v[k])).join(',') + '}';
+  return JSON.stringify(v === undefined ? null : v);
+}
+/* forme canonique : l'ordre des listes ne compte pas (sinon deux appareils s'enverraient la même chose en boucle) */
+function syncCanon(o) {
+  const c = {}, key = x => (x && x.id != null ? 'i:' + x.id : 'h:' + stable(x));
+  for (const k of SYNC_ID_COLS) c[k] = (o[k] || []).slice().sort((x, y) => (key(x) < key(y) ? -1 : key(x) > key(y) ? 1 : 0));
+  for (const k of SYNC_MAP_COLS) c[k] = o[k] || {};
+  c.reasons = (o.reasons || []).slice().sort(); c.settings = o.settings || {};
+  return stable(c);
+}
+const isDemo = x => !!(x && typeof x === 'object' && x.demo);
+function syncable(st) {
+  const o = {};
+  for (const k of SYNC_ID_COLS) o[k] = JSON.parse(JSON.stringify((st[k] || []).filter(x => !isDemo(x))));
+  for (const k of SYNC_MAP_COLS) { o[k] = {}; for (const [d, v] of Object.entries(st[k] || {})) if (!isDemo(v)) o[k][d] = JSON.parse(JSON.stringify(v)); }
+  o.reasons = (st.reasons || []).slice();
+  const se = JSON.parse(JSON.stringify(st.settings || {})); for (const k of SYNC_LOCAL_SETTINGS) delete se[k];
+  o.settings = se;
+  return o;
+}
+function mergeMaps(bm, lm, rm, pref, stats) {
+  const out = {}, keys = new Set([...Object.keys(lm), ...Object.keys(rm)]);
+  for (const k of keys) {
+    const l = lm[k], r = rm[k], b = bm[k], hl = l !== undefined, hr = r !== undefined, hb = b !== undefined;
+    const sl = hl ? stable(l) : null, sr = hr ? stable(r) : null, sb = hb ? stable(b) : null;
+    if (hl && hr) {
+      if (sl === sr) out[k] = l;
+      else if (hb && sl === sb) { out[k] = r; stats.fromRemote++; }
+      else if (hb && sr === sb) out[k] = l;
+      else { stats.conflicts++; out[k] = pref === 'remote' ? r : l; }
+    } else if (hl && !hr) {
+      if (!hb) out[k] = l;
+      else if (sl === sb) stats.removed++;
+      else { out[k] = l; stats.conflicts++; }
+    } else if (!hl && hr) {
+      if (!hb) { out[k] = r; stats.fromRemote++; }
+      else if (sr === sb) stats.removed++;
+      else { out[k] = r; stats.conflicts++; }
+    }
+  }
+  return out;
+}
+function mergeArr(ba, la, ra, pref, stats) {
+  const key = x => (x && x.id != null ? 'i:' + x.id : 'h:' + stable(x));
+  const mp = a => { const m = {}; for (const x of a) m[key(x)] = x; return m; };
+  const out = mergeMaps(mp(ba), mp(la), mp(ra), pref, stats), res = [], seen = new Set();
+  for (const x of [...la, ...ra]) { const k = key(x); if (!seen.has(k) && out[k] !== undefined) { seen.add(k); res.push(out[k]); } }
+  return res;
+}
+function mergeStrs(ba, la, ra, stats) {
+  const mp = a => { const m = {}; for (const x of a) m[x] = x; return m; };
+  const out = mergeMaps(mp(ba), mp(la), mp(ra), 'local', stats);
+  return [...new Set([...la, ...ra])].filter(x => out[x] !== undefined);
+}
+/* base = dernier état synchronisé (ou null), L = local, R = distant, pref = 'local' | 'remote' en cas de modification des deux côtés */
+function merge3(base, L, R, pref = 'local') {
+  const b = base || {}, stats = { fromRemote: 0, conflicts: 0, removed: 0 }, out = {};
+  for (const k of SYNC_ID_COLS) out[k] = mergeArr(b[k] || [], L[k] || [], R[k] || [], pref, stats);
+  for (const k of SYNC_MAP_COLS) out[k] = mergeMaps(b[k] || {}, L[k] || {}, R[k] || {}, pref, stats);
+  out.reasons = mergeStrs(b.reasons || [], L.reasons || [], R.reasons || [], stats);
+  out.settings = mergeMaps(b.settings || {}, L.settings || {}, R.settings || {}, pref, stats);
+  return { merged: out, stats };
+}
+
+/* ---------- chiffrement (WebCrypto) ---------- */
+const syncTE = new TextEncoder(), syncTD = new TextDecoder();
+function b64e(u8) { let s = ''; for (let i = 0; i < u8.length; i += 0x8000) s += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000)); return btoa(s); }
+function b64d(s) { return Uint8Array.from(atob(String(s).replace(/\s/g, '')), c => c.charCodeAt(0)); }
+async function deriveKey(pass, salt) {
+  const km = await crypto.subtle.importKey('raw', syncTE.encode(pass), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey({ name: 'PBKDF2', salt, iterations: 200000, hash: 'SHA-256' }, km, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+}
+async function encJson(obj, pass) {
+  const salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12)), key = await deriveKey(pass, salt);
+  const ct = new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, syncTE.encode(JSON.stringify(obj))));
+  return { app: 'mylifepilot', v: 1, alg: 'AES-GCM/PBKDF2-SHA256-200k', s: b64e(salt), i: b64e(iv), d: b64e(ct) };
+}
+async function decJson(env, pass) {
+  try {
+    const key = await deriveKey(pass, b64d(env.s));
+    return JSON.parse(syncTD.decode(await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64d(env.i) }, key, b64d(env.d))));
+  } catch (e) { const er = new Error('BADPASS'); er.code = 'BADPASS'; throw er; }
+}
+
+/* ---------- accès GitHub ---------- */
+function httpErr(status) { const e = new Error('HTTP ' + status); e.code = status; return e; }
+async function ghFetch(cfg, method, path, body, raw) {
+  const url = `https://api.github.com/repos/${encodeURIComponent(cfg.owner)}/${encodeURIComponent(cfg.repo)}${path}`;
+  const headers = { Authorization: 'Bearer ' + cfg.token, Accept: raw ? 'application/vnd.github.raw+json' : 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' };
+  if (body) headers['Content-Type'] = 'application/json';
+  return fetch(url, { method, headers, cache: 'no-store', body: body ? JSON.stringify(body) : undefined });
+}
+async function fetchRemote(cfg) {
+  const r = await ghFetch(cfg, 'GET', '/contents/' + SYNC_PATH);
+  if (r.status === 404) { const rr = await ghFetch(cfg, 'GET', ''); if (rr.status === 200) return { sha: null, payload: null }; throw httpErr(rr.status); }
+  if (!r.ok) throw httpErr(r.status);
+  const j = await r.json(); let text;
+  if (j.content && j.encoding === 'base64') text = syncTD.decode(b64d(j.content));
+  else { const rr = await ghFetch(cfg, 'GET', '/contents/' + SYNC_PATH, null, true); if (!rr.ok) throw httpErr(rr.status); text = await rr.text(); }
+  return { sha: j.sha, payload: await decJson(JSON.parse(text), cfg.pass) };
+}
+async function pushRemote(cfg, payload, sha) {
+  const env = await encJson(payload, cfg.pass);
+  const body = { message: `sync ${payload.device} ${new Date().toISOString()}`, content: b64e(syncTE.encode(JSON.stringify(env))) };
+  if (sha) body.sha = sha;
+  const r = await ghFetch(cfg, 'PUT', '/contents/' + SYNC_PATH, body);
+  if (r.status === 409 || r.status === 422) { const e = new Error('retry'); e.code = 'RETRY'; throw e; }
+  if (!r.ok) throw httpErr(r.status);
+}
+function syncErrMsg(e) {
+  const c = e && e.code;
+  if (c === 401) return 'Jeton GitHub invalide ou expiré.';
+  if (c === 403) return 'Accès refusé : le jeton doit avoir le droit « Contents : lecture et écriture » sur le dépôt (ou limite GitHub atteinte).';
+  if (c === 404) return 'Dépôt introuvable : vérifie le propriétaire, le nom du dépôt et que le jeton a accès à ce dépôt.';
+  if (c === 'BADPASS') return 'Mot de passe de chiffrement incorrect (il doit être identique sur tous les appareils).';
+  if (c === 'RETRY') return 'GitHub était occupé, réessaie dans un instant.';
+  if (e instanceof TypeError) return 'Hors ligne ou GitHub injoignable.';
+  return 'Erreur de synchronisation : ' + (e && e.message ? e.message : e);
+}
+
+/* ---------- stockage local de la configuration (jamais exportée) ---------- */
+async function cfgLoad() { try { if (storageMode === 'idb') return (await DB.get('syncCfg')) || null; return JSON.parse(localStorage.getItem('mlp_sync_cfg') || 'null'); } catch (e) { return null; } }
+async function cfgSave(c) { try { if (storageMode === 'idb') { if (c) await DB.set('syncCfg', c); else await DB.del('syncCfg'); } else if (c) localStorage.setItem('mlp_sync_cfg', JSON.stringify(c)); else localStorage.removeItem('mlp_sync_cfg'); } catch (e) { } }
+async function baseGet() { try { return storageMode === 'idb' ? await DB.get('syncBase') : localStorage.getItem('mlp_sync_base'); } catch (e) { return null; } }
+async function baseSet(v) { try { if (storageMode === 'idb') { if (v == null) await DB.del('syncBase'); else await DB.set('syncBase', v); } else if (v == null) localStorage.removeItem('mlp_sync_base'); else localStorage.setItem('mlp_sync_base', v); } catch (e) { } }
+async function presyncBackup() {
+  if (storageMode !== 'idb') return;
+  try { await DB.set('bak-presync-' + Date.now(), JSON.stringify(S)); const ks = (await DB.keys()).filter(k => String(k).startsWith('bak-presync-')).sort(); while (ks.length > 3) await DB.del(ks.shift()); } catch (e) { }
+}
+
+/* ---------- application de l'état fusionné ---------- */
+function applySync(m) {
+  for (const k of SYNC_ID_COLS) S[k] = m[k].concat((S[k] || []).filter(isDemo));
+  for (const k of SYNC_MAP_COLS) { const keep = {}; for (const [d, v] of Object.entries(S[k] || {})) if (isDemo(v)) keep[d] = v; S[k] = Object.assign({}, m[k], keep); }
+  S.reasons = m.reasons.length ? m.reasons : DEFAULT_REASONS.slice();
+  for (const k of Object.keys(S.settings)) if (!SYNC_LOCAL_SETTINGS.includes(k) && !(k in m.settings)) delete S.settings[k];
+  Object.assign(S.settings, m.settings);
+  migrate();
+}
+
+/* ---------- état affiché ---------- */
+const syncClock = t => { const d = new Date(t); return pad(d.getHours()) + ':' + pad(d.getMinutes()); };
+function syncChip() {
+  const c = SYNC.cfg;
+  if (!c || !c.on) return `<button class="btn sm syb" ${A('go', { tab: 'settings' })} title="Synchronisation PC ↔ téléphone : non configurée" aria-label="Configurer la synchronisation">☁️<span class="thl">Synchro</span></button>`;
+  const st = SYNC.status, ic = st === 'busy' ? '⟳' : st === 'err' ? '⚠️' : st === 'offline' ? '⏸' : '✓';
+  const lab = st === 'busy' ? 'En cours' : st === 'err' ? 'Erreur' : st === 'offline' ? 'Hors ligne' : (SYNC.last ? syncClock(SYNC.last) : '…');
+  return `<button class="btn sm syb ${st === 'err' ? 'bad' : ''}" data-act="syncNow" title="${esc(SYNC.msg || 'Synchronisé')}" aria-label="Synchroniser maintenant">☁️ ${ic}<span class="thl">${lab}</span></button>`;
+}
+function syncStatusText() {
+  const c = SYNC.cfg; if (!c || !c.on) return 'Non configurée.';
+  const st = SYNC.status;
+  if (st === 'busy') return 'Synchronisation en cours…';
+  if (st === 'err') return '⚠️ ' + SYNC.msg;
+  if (st === 'offline') return '⏸ Hors ligne — la synchronisation reprendra dès le retour d’Internet.';
+  const s = SYNC.stats;
+  return SYNC.last ? `✓ Dernière synchronisation à ${syncClock(SYNC.last)}${s ? ` · ${s.fromRemote} élément(s) reçu(s)${s.conflicts ? ` · ${s.conflicts} modification(s) simultanée(s) fusionnée(s)` : ''}` : ''}` : 'Prête, pas encore synchronisée.';
+}
+function setSync(st, msg = '') {
+  SYNC.status = st; SYNC.msg = msg;
+  $$('.syb').forEach(el => { el.outerHTML = syncChip(); });
+  const el = $('#syncstat'); if (el) el.textContent = syncStatusText();
+}
+
+/* ---------- moteur ---------- */
+function syncNow(reason) {
+  if (!SYNC.cfg || !SYNC.cfg.on) return Promise.resolve({ ok: false, msg: 'non configurée' });
+  if (SYNC.busy) { SYNC.again = true; return SYNC.promise; }
+  SYNC.promise = syncRun(reason); return SYNC.promise;
+}
+async function syncRun(reason) {
+  const cfg = SYNC.cfg;
+  if (typeof navigator !== 'undefined' && navigator.onLine === false) { setSync('offline'); return { ok: false, msg: 'hors ligne' }; }
+  SYNC.busy = true; setSync('busy');
+  let result = { ok: true };
+  try {
+    for (let tries = 1; ; tries++) {
+      const rem = await fetchRemote(cfg);
+      const loc = syncable(S), braw = await baseGet(), base = braw ? JSON.parse(braw) : null;
+      let merged = loc, stats = { fromRemote: 0, conflicts: 0, removed: 0 }, needPush = true;
+      if (rem.payload) {
+        const pref = (rem.payload.mod || 0) > (S._mod || 0) ? 'remote' : 'local';
+        const res = merge3(base, loc, rem.payload.data, pref); merged = res.merged; stats = res.stats;
+        needPush = syncCanon(merged) !== syncCanon(rem.payload.data);
+      }
+      const changed = syncCanon(merged) !== syncCanon(loc);
+      if (changed) { await presyncBackup(); applySync(merged); await persist(); }
+      if (needPush) {
+        try { await pushRemote(cfg, { app: 'mlp', ver: VERSION, mod: Date.now(), device: cfg.device || 'appareil', data: merged }, rem.sha); }
+        catch (e) { if (e.code === 'RETRY' && tries < 3) continue; throw e; }
+      }
+      await baseSet(JSON.stringify(merged));
+      SYNC.last = Date.now(); SYNC.stats = stats; SYNC.changed = changed; result = { ok: true, changed, stats, pushed: needPush };
+      break;
+    }
+    setSync('ok');
+    if (result.changed) { if (!$('#modal') && !isTyping()) render(); toast('☁️ Données mises à jour depuis l’autre appareil', 'good', 3000, 'sync'); }
+  } catch (e) { result = { ok: false, msg: syncErrMsg(e) }; setSync(e instanceof TypeError ? 'offline' : 'err', result.msg); }
+  finally { SYNC.busy = false; if (SYNC.again) { SYNC.again = false; syncSoon(2500); } }
+  return result;
+}
+function syncSoon(ms = 15000) {
+  if (!SYNC.cfg || !SYNC.cfg.on) return;
+  clearTimeout(SYNC.timer); SYNC.timer = setTimeout(() => syncNow('auto'), ms);
+}
+async function syncInit() {
+  SYNC.cfg = await cfgLoad();
+  setInterval(() => { if (!document.hidden) syncNow('timer'); }, 180000);
+  window.addEventListener('online', () => syncNow('online'));
+  if (SYNC.cfg && SYNC.cfg.on) { setSync('busy'); setTimeout(() => syncNow('open'), 700); }
 }
 /* ================= Actions, formulaires, rendu, démarrage ================= */
 const VIEWS = { cockpit: vCockpit, cal: vCal, quotas: vQuotas, journal: vJournal, libre: vLibre, rdv: vRdv, search: vSearch, stats: vStats, bilan: vBilan, settings: vSettings };
@@ -1315,6 +1565,8 @@ function csvEscape(x) { x = String(x ?? ''); return /[;"\n]/.test(x) ? '"' + x.r
 const ACT = {
   go: d => setTab(d.tab), mclose: () => closeModal(true),
   themeCycle: () => { const o = ['auto', 'light', 'dark'], c = S.settings.theme || 'auto'; S.settings.theme = o[(o.indexOf(c) + 1) % 3]; save(); applyTheme(); render(); toast(THM[S.settings.theme][1], 'good', 1500); },
+  syncNow: async () => { if (!SYNC.cfg || !SYNC.cfg.on) return setTab('settings'); const r = await syncNow('manual'); toast(r.ok ? (r.changed ? '☁️ Synchronisé : données reçues de l’autre appareil' : '☁️ Synchronisé ✓') : '⚠️ ' + r.msg, r.ok ? 'good' : 'warn', 3500, 'sync'); },
+  syncOff: async () => { if (!confirm('Désactiver la synchronisation sur cet appareil ? (tes données locales restent ici, le fichier chiffré reste sur GitHub)')) return; SYNC.cfg = null; await cfgSave(null); await baseSet(null); setSync('off'); render(); toast('Synchronisation désactivée sur cet appareil', 'warn'); },
   moreMenu: () => modal(`<h2>Menu</h2><div style="display:grid;gap:8px">${NAV.filter(n => ['quotas', 'libre', 'rdv', 'search', 'settings'].includes(n[0])).map(n => `<button class="btn" style="justify-content:flex-start" ${A('go', { tab: n[0] })}>${n[2]} ${n[1]}</button>`).join('')}</div>`),
   calDay: d => { UI.calDate = d.date; UI.calView = 'day'; setTab('cal'); },
   calView: d => { UI.calView = d.v; render(); },
@@ -1460,6 +1712,16 @@ const FORMS = {
     else S.quotas.push({ id: 'q' + uid(), prio: 5, unit: kind === 'count' ? 'fois' : '', ...o });
     save(); closeModal(); render();
   },
+  async syncSave(fd) {
+    const old = SYNC.cfg || {};
+    const c = { owner: (fd.get('owner') || '').trim(), repo: (fd.get('repo') || '').trim().replace(/^.*\//, ''), token: (fd.get('token') || '').trim() || old.token || '', pass: fd.get('pass') || old.pass || '', on: true, device: (fd.get('device') || '').trim() || old.device || (/Android|iPhone|iPad|Mobile/i.test(navigator.userAgent) ? 'Téléphone' : 'PC') };
+    if (!c.owner || !c.repo) return toast('Indique le propriétaire et le nom du dépôt de données.', 'warn');
+    if (!c.token) return toast('Colle le jeton GitHub.', 'warn');
+    if (c.pass.length < 6) return toast('Mot de passe de chiffrement : 6 caractères minimum.', 'warn');
+    SYNC.cfg = c; await cfgSave(c); setSync('busy');
+    const r = await syncNow('setup');
+    if (r.ok) { toast('☁️ Synchronisation activée ✓', 'good'); render(); } else toast('⚠️ ' + r.msg, 'warn', 6000);
+  },
   settingsSave(fd) {
     const s = S.settings; s.theme = fd.get('theme'); s.name = (fd.get('name') || '').trim() || 'Hamza'; s.bilanHour = clamp(parseInt((fd.get('bilanHour') || '23:00').split(':')[0], 10) || 23, 18, 23);
     for (let i = 0; i < 7; i++) s.free[i] = fd.get('f' + i + 'n') ? null : [fd.get('f' + i + 's'), fd.get('f' + i + 'e')];
@@ -1534,12 +1796,16 @@ async function boot() {
   render(false); checkNotify();
   setInterval(tick1s, 1000);
   setInterval(() => { if (!$('#modal') && !isTyping() && ['cockpit', 'cal'].includes(UI.tab)) render(); checkNotify(); renderNav(); }, 30000);
-  document.addEventListener('visibilitychange', () => { if (document.hidden) persist(); else { if (!$('#modal') && !isTyping()) render(); checkNotify(); } });
+  document.addEventListener('visibilitychange', () => { if (document.hidden) { persist(); syncNow('hide'); } else { if (!$('#modal') && !isTyping()) render(); checkNotify(); if (Date.now() - SYNC.last > 20000) syncNow('show'); } });
   window.addEventListener('pagehide', persist);
+  const kbOn = e => { if (e.target && e.target.matches && e.target.matches('input:not([type=checkbox]):not([type=radio]):not([type=file]),textarea,select')) document.body.classList.add('kb'); };
+  document.addEventListener('focusin', kbOn);
+  document.addEventListener('focusout', () => setTimeout(() => { if (!isTyping()) document.body.classList.remove('kb'); }, 120));
   window.addEventListener('hashchange', () => { const h = location.hash.slice(1); if (VIEWS[h] && h !== UI.tab) { UI.tab = h; render(false); } });
   matchMedia('(prefers-color-scheme:dark)').addEventListener('change', applyTheme);
+  syncInit();
   if ('serviceWorker' in navigator && /^https?:/.test(location.protocol)) navigator.serviceWorker.register('sw.js').catch(() => { });
-  window.MLP = { get S() { return S; }, set S(v) { S = v; }, UI, render, alerts, dayInfo, weekInfo, statsFor, periodOf, autoPlan, effStatus, loadDemo, persist, load, DB, qDone };
+  window.MLP = { SYNC, syncNow, merge3, syncable, get S() { return S; }, set S(v) { S = v; }, UI, render, alerts, dayInfo, weekInfo, statsFor, periodOf, autoPlan, effStatus, loadDemo, persist, load, DB, qDone };
 }
 boot();
 </script>
