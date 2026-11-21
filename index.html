@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>My Life Pilot</title>
+<meta name="theme-color" content="#2D348B">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--p:#2D348B;--p2:#5560d8;--bg:#eceffb;--bg2:#d9def5;--card:rgba(255,255,255,.74);--cardsolid:#fff;--cb:rgba(45,52,139,.13);--tx:#151938;--mut:#596090;--ok:#1d9b62;--warn:#dd9200;--bad:#d4314a;--sh:0 8px 28px rgba(45,52,139,.11);--r:18px;--soft:rgba(45,52,139,.07)}
+[data-th=dark]{--bg:#0b0d1c;--bg2:#12163a;--card:rgba(27,31,66,.66);--cardsolid:#1b1f42;--cb:rgba(140,150,255,.17);--tx:#eceefc;--mut:#9ba2d3;--sh:0 8px 28px rgba(0,0,0,.42);--soft:rgba(140,150,255,.09);--p:#6f7af0}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0}
+body{font-family:Inter,"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;color:var(--tx);background:radial-gradient(1100px 600px at 8% -10%,var(--bg2),transparent 60%),radial-gradient(900px 500px at 100% 0%,rgba(85,96,216,.16),transparent 55%),var(--bg);background-attachment:fixed;min-height:100vh;font-size:15px;line-height:1.4}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3{margin:0;line-height:1.2}
+h1{font-size:1.45rem}h2{font-size:1.1rem}h3{font-size:.98rem}
+.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+.side{position:sticky;top:0;height:100vh;padding:18px 14px;display:flex;flex-direction:column;gap:6px;background:var(--card);backdrop-filter:blur(18px);border-right:1px solid var(--cb)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.05rem;padding:6px 8px 14px;color:var(--tx)}
+.logo i{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,var(--p),var(--p2));display:grid;place-items:center;color:#fff;font-style:normal;box-shadow:0 6px 16px rgba(45,52,139,.4)}
+.nv{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:12px;border:0;background:none;cursor:pointer;text-align:left;width:100%;color:var(--mut);font-weight:600}
+.nv:hover{background:var(--soft)}
+.nv.on{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;box-shadow:0 6px 16px rgba(45,52,139,.32)}
+.nv b{margin-left:auto;background:var(--bad);color:#fff;border-radius:99px;font-size:.72rem;padding:1px 7px}
+.main{padding:20px 22px 110px;max-width:1300px;width:100%;margin:0 auto}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.top .sp{flex:1}
+.thbtn{gap:5px}.thl{font-size:.78rem}@media(max-width:700px){.thl{display:none}}
+.sub{color:var(--mut);font-size:.88rem}
+.card{background:var(--card);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--cb);border-radius:var(--r);box-shadow:var(--sh);padding:16px;min-width:0}
+.card>h2,.card>.ch{margin-bottom:10px}
+.ch{display:flex;align-items:center;gap:8px;justify-content:space-between;flex-wrap:wrap}
+.g{display:grid;gap:14px;margin-bottom:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(310px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.btn{border:1px solid var(--cb);background:var(--cardsolid);border-radius:12px;padding:8px 14px;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:7px;transition:.15s}
+.btn:hover{transform:translateY(-1px);box-shadow:var(--sh)}
+.btn.pri{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;border:0;box-shadow:0 6px 16px rgba(45,52,139,.3)}
+.btn.ok{background:var(--ok);color:#fff;border:0}.btn.bad{background:var(--bad);color:#fff;border:0}
+.btn.sm{padding:5px 10px;font-size:.82rem;border-radius:10px}
+.btn.ghost{background:transparent}
+.btn.ic{padding:6px 9px}
+.chip{display:inline-flex;align-items:center;gap:5px;border-radius:99px;padding:3px 10px;font-size:.78rem;font-weight:700;background:var(--soft);color:var(--mut);white-space:nowrap}
+.chip.ok{background:rgba(29,155,98,.15);color:var(--ok)}.chip.warn{background:rgba(221,146,0,.17);color:var(--warn)}.chip.bad{background:rgba(212,49,74,.15);color:var(--bad)}.chip.p{background:rgba(85,96,216,.16);color:var(--p)}
+.kpi{display:flex;gap:12px;align-items:center}
+.kpi .v{font-size:1.7rem;font-weight:800;line-height:1}
+.kpi .l{font-size:.8rem;color:var(--mut);font-weight:600}
+.strip{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.sd{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 2px;border-radius:14px;cursor:pointer;border:1px solid transparent;background:var(--soft)}
+.sd.today{border-color:var(--p);background:rgba(85,96,216,.14)}
+.sd small{font-weight:700;color:var(--mut);font-size:.7rem}
+.dot{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:.82rem;color:#fff;background:#8a90b8}
+.dot.s3{background:var(--ok)}.dot.s2{background:var(--warn)}.dot.s1{background:var(--bad)}.dot.s0{background:transparent;border:2px dashed var(--mut);color:var(--mut)}
+.hab{--c:#4f5bd5;--pct:0%;border-radius:18px;padding:13px 15px;color:#fff;cursor:pointer;display:flex;align-items:center;gap:12px;background:linear-gradient(90deg,var(--c) var(--pct),color-mix(in srgb,var(--c) 38%,#12142b) var(--pct));box-shadow:0 6px 16px rgba(0,0,0,.18);position:relative;overflow:hidden}
+.hab .hi{font-size:1.5rem;width:38px;text-align:center}
+.hab .hn{font-weight:800;line-height:1.15}
+.hab .hs{font-size:.84rem;opacity:.92}
+.hab .hr{margin-left:auto;text-align:right;font-size:.74rem;font-weight:700;display:flex;flex-direction:column;gap:3px;align-items:flex-end}
+.hab .tag{background:rgba(255,255,255,.2);border-radius:99px;padding:2px 9px}
+.hab.over{outline:3px solid var(--bad)}
+.bar{height:9px;border-radius:9px;background:var(--soft);overflow:hidden}.bar>i{display:block;height:100%;border-radius:9px;background:var(--p2)}
+.al{display:flex;gap:11px;padding:11px 12px;border-radius:14px;margin-bottom:8px;background:var(--soft);border-left:5px solid var(--mut)}
+.al.danger{border-color:var(--bad);background:rgba(212,49,74,.1)}.al.warn{border-color:var(--warn);background:rgba(221,146,0,.1)}.al.info{border-color:var(--p2);background:rgba(85,96,216,.1)}.al.good{border-color:var(--ok);background:rgba(29,155,98,.1)}
+.al .ai{font-size:1.2rem}.al .at{font-weight:700}.al .ax{font-size:.86rem;color:var(--mut)}.al .aa{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}
+.cnt{display:flex;align-items:center;gap:10px}
+.cnt .n{font-size:2rem;font-weight:800;min-width:2.2ch;text-align:center}
+.cnt .rb{width:44px;height:44px;border-radius:50%;font-size:1.4rem;font-weight:800;border:0;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;cursor:pointer}
+.cnt .rb.m{background:var(--soft);color:var(--tx)}
+.pr{display:flex;gap:7px;flex-wrap:wrap}
+.pr button{flex:1;min-width:58px;padding:9px 4px;border-radius:13px;border:1px solid var(--cb);background:var(--soft);cursor:pointer;font-weight:700;font-size:.8rem}
+.pr button.on{background:var(--ok);color:#fff;border-color:var(--ok)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.tabs button{border:1px solid var(--cb);background:var(--soft);padding:6px 13px;border-radius:99px;cursor:pointer;font-weight:700;font-size:.84rem;color:var(--mut)}
+.tabs button.on{background:var(--p);color:#fff;border-color:var(--p)}
+.fr{display:flex;gap:9px;flex-wrap:wrap;align-items:end;margin-bottom:12px}
+.fr label,.fm label{display:flex;flex-direction:column;gap:3px;font-size:.76rem;font-weight:700;color:var(--mut)}
+input,select,textarea{background:var(--cardsolid);border:1px solid var(--cb);border-radius:11px;padding:8px 10px;min-width:0;color:var(--tx)}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--p2)}
+textarea{resize:vertical;min-height:70px}
+.fm{display:grid;gap:11px}
+.fm .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+table{border-collapse:collapse;width:100%;font-size:.88rem}
+th{text-align:left;color:var(--mut);font-size:.74rem;text-transform:uppercase;letter-spacing:.04em;padding:7px 8px;border-bottom:1px solid var(--cb)}
+td{padding:8px;border-bottom:1px solid var(--cb);vertical-align:top}
+tr:hover td{background:var(--soft)}
+.tw{overflow-x:auto}
+.mod{position:fixed;inset:0;background:rgba(8,10,30,.55);backdrop-filter:blur(4px);z-index:50;display:grid;place-items:center;padding:14px;overflow:auto}
+.mbox{background:var(--cardsolid);border:1px solid var(--cb);border-radius:22px;padding:20px;width:min(520px,100%);max-height:92vh;overflow:auto;position:relative;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+.mbox.wide{width:min(780px,100%)}
+.mbox .x{position:absolute;right:12px;top:10px;border:0;background:var(--soft);width:32px;height:32px;border-radius:50%;cursor:pointer}
+.mbox h2{margin-bottom:12px;padding-right:34px}
+.toasts{position:fixed;top:12px;right:12px;z-index:70;display:flex;flex-direction:column;gap:8px;max-width:min(380px,calc(100vw - 24px))}
+.toast{background:var(--cardsolid);border:1px solid var(--cb);border-left:5px solid var(--p2);padding:11px 14px;border-radius:13px;box-shadow:var(--sh);animation:in .25s}
+.toast.danger{border-left-color:var(--bad)}.toast.warn{border-left-color:var(--warn)}.toast.good{border-left-color:var(--ok)}
+@keyframes in{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.bnav{display:none;position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--card);backdrop-filter:blur(18px);border-top:1px solid var(--cb);padding:6px 6px calc(6px + env(safe-area-inset-bottom));justify-content:space-around}
+.bnav button{border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:1px;font-size:.68rem;font-weight:700;color:var(--mut);padding:4px 8px;border-radius:12px;cursor:pointer;position:relative}
+.bnav button span{font-size:1.25rem}.bnav button.on{color:var(--p);background:var(--soft)}
+.bnav b{position:absolute;top:0;right:4px;background:var(--bad);color:#fff;border-radius:99px;font-size:.62rem;padding:0 5px}
+.fab{position:fixed;right:18px;bottom:24px;z-index:35;width:58px;height:58px;border-radius:50%;border:0;font-size:1.9rem;color:#fff;background:linear-gradient(135deg,var(--p),var(--p2));box-shadow:0 10px 26px rgba(45,52,139,.5);cursor:pointer}
+.tmb{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;z-index:36;background:#12163a;color:#fff;border-radius:99px;padding:9px 12px 9px 18px;display:flex;align-items:center;gap:12px;box-shadow:0 10px 30px rgba(0,0,0,.45);cursor:pointer;max-width:calc(100vw - 100px)}
+.tmb .tt{font-variant-numeric:tabular-nums;font-weight:800;font-size:1.1rem}
+.tmb.over{background:var(--bad)}
+.cal{display:grid;grid-template-columns:48px repeat(var(--n),1fr);gap:0;position:relative}
+.cal .hc{position:relative}
+.cal .hc span{position:absolute;right:6px;font-size:.7rem;color:var(--mut);transform:translateY(-50%)}
+.cal .dc{position:relative;border-left:1px solid var(--cb);cursor:cell;background-image:linear-gradient(var(--cb) 1px,transparent 1px);background-size:100% calc(var(--sc) * 60px)}
+.cdh{position:sticky;top:0;background:var(--cardsolid);z-index:3;text-align:center;font-weight:800;padding:6px 2px;border-bottom:1px solid var(--cb);font-size:.8rem}
+.cdh.today{color:var(--p)}
+.blk{--c:#4f5bd5;position:absolute;border-radius:10px;padding:3px 7px;color:#fff;font-size:.76rem;overflow:hidden;cursor:pointer;background:linear-gradient(180deg,var(--c),color-mix(in srgb,var(--c) 75%,#000));border:1px solid rgba(255,255,255,.25);box-shadow:0 3px 8px rgba(0,0,0,.2);line-height:1.2}
+.blk b{display:block;font-size:.78rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.blk.st-done{opacity:.72}.blk.st-missed,.blk.st-cancelled,.blk.st-postponed{opacity:.5;text-decoration:line-through}
+.blk.st-unfilled{outline:2px dashed var(--warn);outline-offset:-2px}
+.blk.fx{background:repeating-linear-gradient(135deg,#6d7399,#6d7399 6px,#5d6388 6px,#5d6388 12px)}
+.blk.ap{background:linear-gradient(180deg,#f0a30a,#c98100)}
+.blk.lb{background:linear-gradient(180deg,#8a63d2,#6a46b0)}
+.nowl{position:absolute;left:0;right:0;height:2px;background:var(--bad);z-index:2}.nowl:before{content:"";position:absolute;left:-4px;top:-3px;width:8px;height:8px;border-radius:50%;background:var(--bad)}
+.mg{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.mc{min-height:74px;border-radius:12px;padding:5px 6px;background:var(--soft);cursor:pointer;border:1px solid transparent;display:flex;flex-direction:column;gap:2px;font-size:.74rem}
+.mc.today{border-color:var(--p)}.mc.out{opacity:.4}
+.mc .dn{font-weight:800;font-size:.84rem}
+.mk{font-size:1.3rem;font-weight:800;text-align:center}
+.mk.y{color:var(--ok)}.mk.n{color:var(--bad)}.mk.q{color:var(--warn)}
+.hm{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,14px);gap:3px}
+.hm i{width:14px;height:14px;border-radius:4px;background:var(--soft);display:block}
+.lg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.8rem;margin-top:8px}.lg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px}
+.empty{text-align:center;color:var(--mut);padding:22px 8px}
+.ln{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--cb)}.ln:last-child{border:0}
+.ln .lt{min-width:62px;font-weight:700;font-size:.82rem;color:var(--mut)}
+.ln .lb2{flex:1;min-width:0}
+.rg{display:flex;gap:7px;flex-wrap:wrap}.rg label{display:flex;gap:6px;align-items:center;background:var(--soft);padding:7px 11px;border-radius:12px;cursor:pointer;font-weight:700;font-size:.84rem;color:var(--tx)}
+.rg input{accent-color:var(--p2)}
+svg text{fill:var(--mut);font-family:inherit}
+.hide{display:none!important}
+.rt{font-size:.8rem;color:var(--mut)}
+.big{font-size:2.4rem;font-weight:800}
+details summary{cursor:pointer;font-weight:700;padding:4px 0}
+@media(min-width:1180px){.span2{grid-column:span 2}}
+.kpi{flex-wrap:wrap}
+@media(max-width:899px){
+ .g4{grid-template-columns:1fr 1fr}.kpi .v{font-size:1.35rem}.big{font-size:1.8rem}.card{padding:13px}
+ .app{grid-template-columns:1fr}.side{display:none}.bnav{display:flex}
+ .main{padding:14px 12px 150px}
+ .fab{bottom:84px}.tmb{bottom:86px}
+ .toasts{top:8px}
+ h1{font-size:1.25rem}
+ .mc{min-height:58px}
+ .tw table.rs thead{display:none}
+ .tw table.rs tr{display:block;border-bottom:1px solid var(--cb);padding:6px 0}
+ .tw table.rs td{display:flex;gap:8px;border:0;padding:2px 4px}
+ .tw table.rs td:before{content:attr(data-l);font-weight:700;color:var(--mut);min-width:68px;font-size:.74rem}
+}
+@media print{.side,.bnav,.fab,.tmb,.top .btn,.noprint{display:none!important}.app{display:block}body{background:#fff;color:#000}.card{box-shadow:none;border:1px solid #ccc;backdrop-filter:none;background:#fff;break-inside:avoid}.main{padding:0}}
+</style>
+</head>
+<body>
+<div class="app"><nav class="side" id="side"></nav><main class="main" id="main"></main></div>
+<nav class="bnav" id="bnav"></nav>
+<div class="toasts" id="toasts"></div>
+<div id="tbar"></div>
+<script>
+'use strict';
+/* ================= My Life Pilot V0.3 — noyau : utilitaires, stockage, calculs ================= */
+const VERSION = '0.3.0';
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const uid = () => Math.random().toString(36).slice(2, 8) + Date.now().toString(36).slice(-4);
+const pad = n => String(n).padStart(2, '0');
+const NOWFN = () => (window.__NOW ? new Date(window.__NOW) : new Date());
+const ymd = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const parseYmd = s => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
+const addDays = (s, n) => { const d = parseYmd(s); d.setDate(d.getDate() + n); return ymd(d); };
+const daysBetween = (a, b) => Math.round((parseYmd(b) - parseYmd(a)) / 864e5);
+const todayStr = () => ymd(NOWFN());
+const nowMin = () => { const d = NOWFN(); return d.getHours() * 60 + d.getMinutes(); };
+const hm2min = t => { const [h, m] = String(t).split(':').map(Number); return h * 60 + (m || 0); };
+const min2hm = m => `${pad(Math.floor(m / 60) % 24)}:${pad(m % 60)}`;
+const fmtDur = m => { m = Math.round(m); if (m < 0) return '-' + fmtDur(-m); const h = Math.floor(m / 60), r = m % 60; return h ? `${h}h${r ? pad(r) : ''}` : `${r} min`; };
+const dow = s => (parseYmd(s).getDay() + 6) % 7;
+const weekStartOf = s => addDays(s, -dow(s));
+const monthRange = s => { const d = parseYmd(s); return [ymd(new Date(d.getFullYear(), d.getMonth(), 1)), ymd(new Date(d.getFullYear(), d.getMonth() + 1, 0))]; };
+const DAYS = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+const DAYSL = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+const MONTHS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+const fmtDate = s => { const d = parseYmd(s); return `${DAYSL[dow(s)].toLowerCase()} ${d.getDate()} ${MONTHS[d.getMonth()]}`; };
+const fmtShort = s => { const d = parseYmd(s); return `${DAYS[dow(s)]} ${d.getDate()}/${pad(d.getMonth() + 1)}`; };
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+const sum = a => a.reduce((x, y) => x + y, 0);
+const avg = a => (a.length ? sum(a) / a.length : null);
+
+const STATUS = { planned: ['Prévue', '🕒'], inprogress: ['En cours', '▶️'], done: ['Terminée', '✅'], partial: ['Partielle', '🟡'], postponed: ['Reportée', '↪️'], cancelled: ['Annulée', '🚫'], missed: ['Non réalisée', '❌'], unfilled: ['Non renseignée', '❓'] };
+const PRAYERS = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+const DEFAULT_REASONS = ['Imprévu professionnel', 'Fatigue', 'Famille / social', 'Déplacement', 'Santé', 'Oubli', 'Manque de motivation', 'Autre'];
+
+/* ---------------- données par défaut ---------------- */
+function defaults() {
+  const free = {};
+  for (let i = 0; i < 7; i++) free[i] = i < 5 ? ['18:45', '22:30'] : ['09:00', '22:30'];
+  return {
+    v: 1, created: Date.now(),
+    settings: { theme: 'auto', bilanHour: 23, free, notif: false },
+    quotas: [
+      { id: 'sport', label: 'Sport', icon: '🏃', color: '#e5383b', kind: 'count', mode: 'min', week: 3, day: null, unit: 'séance', sessionMin: 120, prio: 1 },
+      { id: 'revision', label: 'Révision', icon: '📚', color: '#4f5bd5', kind: 'duration', mode: 'min', week: 420, day: null, sessionMin: 90, prio: 2 },
+      { id: 'freelance', label: 'Freelance', icon: '💼', color: '#0f9d9a', kind: 'duration', mode: 'min', week: 1200, day: null, sessionMin: 120, prio: 3 },
+      { id: 'apprentissage', label: 'Apprentissage & formation', icon: '🎓', color: '#2e9e49', kind: 'duration', mode: 'min', week: 720, day: null, sessionMin: 60, prio: 4 },
+      { id: 'cafe', label: 'Café hors maison', icon: '☕', color: '#b8742a', kind: 'duration', mode: 'max', week: 1200, day: null, overlap: true, sessionMin: 60, prio: 9 },
+      { id: 'sommeil', label: 'Sommeil', icon: '😴', color: '#7c5cff', kind: 'duration', mode: 'min', week: 2940, day: 420, noPlan: true, prio: 9 },
+      { id: 'cigarette', label: 'Cigarettes', icon: '🚬', color: '#7a7f99', kind: 'count', mode: 'max', week: 140, day: 20, unit: 'cig.', noPlan: true, prio: 9 },
+      { id: 'priere', label: 'Prières', icon: '🕌', color: '#14956b', kind: 'count', mode: 'min', week: 35, day: 5, unit: 'prière', noPlan: true, prayers: true, prio: 9 }
+    ],
+    blocks: [], entries: [], libre: [], appts: [], reviews: {}, wreviews: {}, proposals: [], audit: [],
+    reasons: DEFAULT_REASONS.slice(), timer: null, notified: {}
+  };
+}
+
+/* ---------------- stockage IndexedDB (+ repli localStorage) ---------------- */
+const DB = {
+  db: null,
+  open() {
+    return new Promise((res, rej) => {
+      if (!window.indexedDB) return rej(new Error('no idb'));
+      const r = indexedDB.open('mylifepilot', 1);
+      r.onupgradeneeded = () => r.result.createObjectStore('kv');
+      r.onsuccess = () => { this.db = r.result; res(); };
+      r.onerror = () => rej(r.error);
+    });
+  },
+  tx(mode, fn) {
+    return new Promise((res, rej) => {
+      const t = this.db.transaction('kv', mode), s = t.objectStore('kv'), r = fn(s);
+      t.oncomplete = () => res(r && r.result);
+      t.onerror = () => rej(t.error);
+    });
+  },
+  get(k) { return this.tx('readonly', s => s.get(k)); },
+  set(k, v) { return this.tx('readwrite', s => s.put(v, k)); },
+  del(k) { return this.tx('readwrite', s => s.delete(k)); },
+  keys() { return this.tx('readonly', s => s.getAllKeys()); }
+};
+let S = null, saveT = null, storageMode = 'idb';
+async function load() {
+  try { await DB.open(); S = await DB.get('state'); } catch (e) { storageMode = 'ls'; }
+  if (!S) { try { S = JSON.parse(localStorage.getItem('mlp_state') || 'null'); } catch (e) { } }
+  if (!S) S = defaults();
+  migrate();
+  try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) { }
+  dailyBackup();
+}
+function migrate() {
+  const d = defaults();
+  for (const k of Object.keys(d)) if (S[k] === undefined) S[k] = d[k];
+  for (const k of Object.keys(d.settings)) if (S.settings[k] === undefined) S.settings[k] = d.settings[k];
+  S.blocks.forEach(b => { if (b.q === undefined) b.q = null; });
+}
+async function persist() {
+  clearTimeout(saveT); saveT = null;
+  try {
+    if (storageMode === 'idb') await DB.set('state', JSON.parse(JSON.stringify(S)));
+    else localStorage.setItem('mlp_state', JSON.stringify(S));
+  } catch (e) {
+    try { localStorage.setItem('mlp_state', JSON.stringify(S)); } catch (e2) { toast('⚠️ Échec de la sauvegarde locale. Exportez vos données.', 'danger'); }
+  }
+}
+function save() { clearTimeout(saveT); saveT = setTimeout(persist, 250); }
+async function dailyBackup() {
+  if (storageMode !== 'idb') return;
+  try {
+    const k = 'bak-' + todayStr(), keys = await DB.keys();
+    if (!keys.includes(k)) await DB.set(k, JSON.stringify(S));
+    const baks = keys.filter(x => String(x).startsWith('bak-')).sort();
+    while (baks.length > 7) await DB.del(baks.shift());
+  } catch (e) { }
+}
+function log(type, text, ref) {
+  S.audit.push({ id: uid(), ts: Date.now(), type, text, ref: ref || null });
+  if (S.audit.length > 3000) S.audit.splice(0, S.audit.length - 3000);
+}
+
+/* ---------------- accès / entités ---------------- */
+const Q = id => S.quotas.find(q => q.id === id);
+const qLabel = id => { const q = Q(id); return q ? `${q.icon} ${q.label}` : '—'; };
+function fmtVal(q, v) { if (!q) return String(v); return q.kind === 'duration' ? fmtDur(v) : `${v}${q.unit ? ' ' + q.unit : ''}`; }
+function fmtTarget(q, v) { return q.kind === 'duration' ? fmtDur(v) : `${Math.round(v * 10) / 10}`; }
+function entryMins(e) { const q = Q(e.cat); return q ? (q.kind === 'duration' ? e.v : (e.mins || 0)) : 0; }
+function addEntry(o) {
+  const e = Object.assign({ id: uid(), date: todayStr(), time: min2hm(nowMin()), v: 0, src: 'manual', note: '', ts: Date.now() }, o);
+  S.entries.push(e);
+  const q = Q(e.cat);
+  log('saisie', `${q ? q.label : e.cat} : ${q ? fmtVal(q, e.v) : e.v}${e.sub ? ' (' + e.sub + ')' : ''} — ${e.date} ${e.time}`, e.id);
+  save();
+  return e;
+}
+function qDone(q, from, to) { let t = 0; for (const e of S.entries) if (e.cat === q.id && e.date >= from && e.date <= to) t += e.v; return t; }
+
+/* ---------------- blocs de planning ---------------- */
+const blockPlanned = b => hm2min(b.end) - hm2min(b.start);
+const blockActual = b => sum(S.entries.filter(e => e.blockId === b.id).map(entryMins));
+function blockEnded(b) { const t = todayStr(); return b.date < t || (b.date === t && hm2min(b.end) <= nowMin()); }
+function blockStarted(b) { const t = todayStr(); return b.date < t || (b.date === t && hm2min(b.start) <= nowMin()); }
+function effStatus(b) {
+  if ((b.status === 'planned' || b.status === 'inprogress') && blockEnded(b)) return 'unfilled';
+  if (b.status === 'planned' && blockActual(b) > 0) return 'inprogress';
+  return b.status;
+}
+function blockColor(b) { const q = Q(b.q); return q ? q.color : '#6d7399'; }
+
+/* ---------------- créneaux libres & planificateur ---------------- */
+function busyOf(date, excludeId) {
+  const out = [];
+  for (const b of S.blocks) if (b.date === date && b.id !== excludeId && ['planned', 'inprogress', 'done', 'partial'].includes(b.status)) out.push([hm2min(b.start), hm2min(b.end), b.title]);
+  for (const a of S.appts) if (a.date === date && !a.done && a.time) out.push([hm2min(a.time), hm2min(a.time) + (a.dur || 60), a.title]);
+  for (const l of S.libre) if (l.date === date && l.from && l.to) out.push([hm2min(l.from), hm2min(l.to), l.text]);
+  return out.sort((a, b) => a[0] - b[0]);
+}
+function freeSlots(date, { notBefore = 0, margin = 10, excludeId, extra = [] } = {}) {
+  const w = S.settings.free[dow(date)]; if (!w) return [];
+  const e = hm2min(w[1]); let cur = Math.max(hm2min(w[0]), notBefore);
+  const busy = busyOf(date, excludeId).concat(extra.map(x => [x[0], x[1]])).sort((a, b) => a[0] - b[0]);
+  const out = [];
+  for (const [bs, be] of busy) {
+    if (be + margin <= cur) continue;
+    if (bs - margin > cur) out.push([cur, Math.min(bs - margin, e)]);
+    cur = Math.max(cur, be + margin);
+    if (cur >= e) break;
+  }
+  if (cur < e) out.push([cur, e]);
+  return out.filter(x => x[1] - x[0] > 0);
+}
+function findSlot(dur, date, opts = {}) {
+  for (const [s, e] of freeSlots(date, opts)) {
+    const st = Math.ceil(s / 5) * 5;
+    if (st + dur <= e) return { date, start: min2hm(st), end: min2hm(st + dur) };
+  }
+  return null;
+}
+function nextQuarter() { return Math.ceil((nowMin() + 10) / 15) * 15; }
+function freeMinutes(from, to) {
+  let t = 0; const today = todayStr();
+  for (let d = from; d <= to; d = addDays(d, 1)) {
+    if (d < today) continue;
+    t += sum(freeSlots(d, { notBefore: d === today ? nextQuarter() : 0, margin: 0 }).map(x => x[1] - x[0]));
+  }
+  return t;
+}
+function weekProgress(q, ws) {
+  const we = addDays(ws, 6), done = qDone(q, ws, we);
+  const fut = S.blocks.filter(b => b.q === q.id && b.date >= ws && b.date <= we && ['planned', 'inprogress'].includes(b.status) && !blockEnded(b));
+  const plannedFut = q.kind === 'duration' ? sum(fut.map(b => Math.max(0, blockPlanned(b) - blockActual(b)))) : fut.length;
+  const rem = Math.max(0, q.week - done);
+  return { done, rem, plannedFut, unscheduled: Math.max(0, rem - plannedFut) };
+}
+function autoPlan(qids) {
+  const t = todayStr(), ws = weekStartOf(t), we = addDays(ws, 6);
+  const need = [];
+  for (const q of S.quotas.filter(q => q.mode === 'min' && !q.noPlan && (!qids || qids.includes(q.id))).sort((a, b) => a.prio - b.prio)) {
+    const r = weekProgress(q, ws), size = q.sessionMin || 90;
+    let left = q.kind === 'duration' ? r.unscheduled : r.unscheduled * size;
+    const chunks = [];
+    while (left > 14) { const c = Math.min(size, left); chunks.push(Math.round(c)); left -= c; }
+    if (chunks.length) need.push({ q, chunks });
+  }
+  const prop = [], extra = {};
+  const dates = []; for (let d = t; d <= we; d = addDays(d, 1)) dates.push(d);
+  let progressed = true, pass = 0;
+  while (progressed && pass < 4) {
+    progressed = false; pass++;
+    for (const date of dates) for (const n of need) {
+      if (!n.chunks.length) continue;
+      const dur = n.chunks[0];
+      const slot = findSlot(dur, date, { notBefore: date === t ? nextQuarter() : 0, extra: extra[date] || [] });
+      if (slot) { prop.push({ ...slot, q: n.q.id, title: n.q.label }); (extra[date] = extra[date] || []).push([hm2min(slot.start), hm2min(slot.end)]); n.chunks.shift(); progressed = true; }
+    }
+  }
+  const unplaced = need.map(n => ({ q: n.q.id, min: sum(n.chunks) })).filter(x => x.min > 0);
+  prop.sort((a, b) => a.date.localeCompare(b.date) || a.start.localeCompare(b.start));
+  return { prop, unplaced };
+}
+/* propositions de report pour un bloc (3 créneaux max, sur des jours différents) */
+function replanOptions(b, max = 3) {
+  const dur = blockPlanned(b), t = todayStr(), out = [];
+  const lim = addDays(weekStartOf(t), 13);
+  let from = b.date < t ? t : b.date;
+  for (let d = from; d <= lim && out.length < max; d = addDays(d, 1)) {
+    const nb = d === t ? nextQuarter() : 0;
+    if (d === b.date && b.date === t && hm2min(b.end) > nb) { /* même jour : après la fin */ }
+    const s = findSlot(dur, d, { notBefore: d === b.date ? Math.max(nb, hm2min(b.end) + 10) : nb, excludeId: b.id });
+    if (s) out.push(s);
+  }
+  return out;
+}
+
+/* ---------------- score & agrégats (une seule source de calcul) ---------------- */
+function dayRatio(q, date) {
+  const val = qDone(q, date, date);
+  if (q.day != null) { const rec = !!(S.reviews[date] && S.reviews[date].closed) || S.entries.some(e => e.cat === q.id && e.date === date); if (!rec) return null; return q.mode === 'max' ? (val <= q.day ? 1 : Math.max(0, 1 - (val - q.day) / q.day)) : Math.min(1, val / q.day); }
+  const bl = S.blocks.filter(b => b.date === date && b.q === q.id && b.status !== 'cancelled');
+  let pl = 0, ac = 0;
+  for (const b of bl) { const st = effStatus(b); if (st === 'unfilled' || st === 'planned' || st === 'inprogress') continue; const p = blockPlanned(b); pl += p; ac += Math.min(p, st === 'done' ? Math.max(blockActual(b), blockActual(b) ? 0 : p) : blockActual(b)); }
+  if (pl > 0) return ac / pl;
+  return val > 0 ? 1 : null;
+}
+function dayInfo(date, qf = 'all') {
+  const t = todayStr();
+  if (date > t) return { score: null, comps: [], incomplete: false, future: true };
+  const comps = []; let incomplete = false;
+  let pl = 0, ac = 0;
+  for (const b of S.blocks) {
+    if (b.date !== date || !b.q || b.status === 'cancelled' || (qf !== 'all' && b.q !== qf)) continue;
+    const st = effStatus(b);
+    if (st === 'unfilled') { incomplete = true; continue; }
+    if (st === 'planned' || st === 'inprogress') continue;
+    const p = blockPlanned(b); pl += p;
+    const a = blockActual(b);
+    ac += Math.min(p, st === 'done' ? (a || p) : a);
+  }
+  if (pl > 0) comps.push({ k: 'Planning', v: ac / pl, d: `${fmtDur(ac)} / ${fmtDur(pl)}` });
+  const rec = !!(S.reviews[date] && S.reviews[date].closed);
+  for (const q of S.quotas) {
+    if (q.day == null || (qf !== 'all' && q.id !== qf)) continue;
+    const val = qDone(q, date, date), has = S.entries.some(e => e.cat === q.id && e.date === date);
+    if (!(has || rec)) continue;
+    const v = q.mode === 'max' ? (val <= q.day ? 1 : Math.max(0, 1 - (val - q.day) / q.day)) : Math.min(1, val / q.day);
+    comps.push({ k: q.label, v, d: `${fmtVal(q, val)} / ${q.mode === 'max' ? 'max ' : ''}${fmtVal(q, q.day)}` });
+  }
+  return { score: comps.length ? Math.round(100 * avg(comps.map(c => c.v))) : null, comps, incomplete };
+}
+function weekInfo(ws, qf = 'all') {
+  const t = todayStr(), we = addDays(ws, 6);
+  const el = t < ws ? 0 : t > we ? 7 : daysBetween(ws, t) + 1;
+  const rows = [];
+  for (const q of S.quotas) {
+    if (qf !== 'all' && q.id !== qf) continue;
+    const done = qDone(q, ws, we), target = q.week, pro = el >= 7 ? target : target * el / 7;
+    let ratio = null;
+    if (pro > 0) ratio = q.mode === 'max' ? (done <= pro ? 1 : Math.max(0, 1 - (done - pro) / pro)) : Math.min(1, done / pro);
+    rows.push({ q, done, target, pro, ratio, pct: target ? done / target : 0, reached: q.mode === 'max' ? done <= target : done >= target });
+  }
+  const rs = rows.filter(r => r.ratio != null);
+  return { ws, we, el, rows, score: el > 0 && rs.length ? Math.round(100 * avg(rs.map(r => r.ratio))) : null };
+}
+function monthInfo(date, qf = 'all') {
+  const [f, l] = monthRange(date), sc = [];
+  for (let d = f; d <= l; d = addDays(d, 1)) { const i = dayInfo(d, qf); if (i.score != null) sc.push(i.score); }
+  const ws = []; for (let d = weekStartOf(f); d <= l; d = addDays(d, 7)) { const w = weekInfo(d, qf); if (w.score != null) ws.push(w.score); }
+  return { score: sc.length ? Math.round(avg(sc)) : null, days: sc.length, weekAvg: ws.length ? Math.round(avg(ws)) : null };
+}
+const scoreCls = s => (s == null ? 's0' : s >= 80 ? 's3' : s >= 50 ? 's2' : 's1');
+
+/* ---------------- période & statistiques filtrées ---------------- */
+function periodOf(kind, date) {
+  if (kind === 'day') return { kind, from: date, to: date, days: 1 };
+  if (kind === 'week') { const ws = weekStartOf(date); return { kind, from: ws, to: addDays(ws, 6), days: 7 }; }
+  const [f, l] = monthRange(date); return { kind, from: f, to: l, days: daysBetween(f, l) + 1 };
+}
+function prevPeriod(p, date) {
+  if (p.kind === 'day') return periodOf('day', addDays(date, -1));
+  if (p.kind === 'week') return periodOf('week', addDays(date, -7));
+  const d = parseYmd(date); return periodOf('month', ymd(new Date(d.getFullYear(), d.getMonth() - 1, 1)));
+}
+function statsFor(p, qf = 'all') {
+  const qs = S.quotas.filter(q => qf === 'all' || q.id === qf);
+  const per = qs.map(q => {
+    const done = qDone(q, p.from, p.to);
+    const target = p.kind === 'day' ? (q.day != null ? q.day : q.week / 7) : q.week * p.days / 7;
+    return { q, done, target, pct: target ? done / target : 0 };
+  });
+  const bl = S.blocks.filter(b => b.date >= p.from && b.date <= p.to && b.q && (qf === 'all' || b.q === qf) && b.status !== 'cancelled');
+  const cnt = {}; let plannedMin = 0, realMin = 0;
+  const reasons = {};
+  for (const b of bl) {
+    const st = effStatus(b); cnt[st] = (cnt[st] || 0) + 1;
+    if (['done', 'partial', 'missed', 'postponed'].includes(st)) { const pm = blockPlanned(b); plannedMin += pm; realMin += Math.min(pm, blockActual(b) || (st === 'done' ? pm : 0)); }
+    if (['missed', 'partial', 'postponed'].includes(b.status) && b.reason) reasons[b.reason] = (reasons[b.reason] || 0) + 1;
+  }
+  const ended = bl.filter(b => effStatus(b) !== 'unfilled' && !['planned', 'inprogress'].includes(effStatus(b)));
+  const okb = bl.filter(b => ['done', 'partial'].includes(b.status));
+  const regularity = ended.length ? okb.length / ended.length : null;
+  const reportRate = bl.length ? (cnt.postponed || 0) / bl.length : null;
+  const timeBy = {};
+  for (const e of S.entries) {
+    if (e.date < p.from || e.date > p.to) continue;
+    const q = Q(e.cat); if (!q || q.id === 'sommeil' || q.overlap || (qf !== 'all' && q.id !== qf)) continue;
+    const m = entryMins(e); if (m > 0) timeBy[q.id] = (timeBy[q.id] || 0) + m;
+  }
+  const series = [];
+  for (let d = p.from; d <= p.to; d = addDays(d, 1)) {
+    let v;
+    if (qf === 'all') v = sum(S.entries.filter(e => e.date === d && Q(e.cat) && Q(e.cat).id !== 'sommeil' && !Q(e.cat).overlap).map(entryMins));
+    else v = qDone(Q(qf), d, d);
+    series.push({ d, v });
+  }
+  let score;
+  if (p.kind === 'day') score = dayInfo(p.from, qf).score;
+  else if (p.kind === 'week') score = weekInfo(p.from, qf).score;
+  else score = monthInfo(p.from, qf).score;
+  return { per, bl, cnt, plannedMin, realMin, regularity, reportRate, reasons, timeBy, series, score };
+}
+function streak(q) {
+  if (q.day == null) return null;
+  let n = 0, d = todayStr();
+  const ok = x => { const r = dayRatio(q, x); return r == null ? null : r >= 1; };
+  if (ok(d) == null) d = addDays(d, -1);
+  while (ok(d)) { n++; d = addDays(d, -1); }
+  return n;
+}
+function weekStreak(q) {
+  let n = 0, ws = addDays(weekStartOf(todayStr()), -7);
+  while (n < 200) { const done = qDone(q, ws, addDays(ws, 6)); const reached = q.mode === 'max' ? (done <= q.week && S.entries.some(e => e.cat === q.id && e.date >= ws && e.date <= addDays(ws, 6))) : done >= q.week; if (!reached) break; n++; ws = addDays(ws, -7); }
+  return n;
+}
+
+/* suggestions d'ajustement d'objectifs (jamais appliquées sans accord explicite) */
+function adjustSuggestions() {
+  const out = [], ws = weekStartOf(todayStr());
+  for (const q of S.quotas) {
+    if (q.mode !== 'min' || q.noPlan) continue;
+    const vals = [1, 2, 3].map(i => qDone(q, addDays(ws, -7 * i), addDays(ws, -7 * i + 6)));
+    const has = [1, 2, 3].map(i => S.entries.some(e => e.cat === q.id && e.date >= addDays(ws, -7 * i) && e.date <= addDays(ws, -7 * i + 6)));
+    if (!has.every(Boolean)) continue;
+    if (vals.every(v => v < q.week * 0.85)) {
+      const m = avg(vals);
+      let to = q.kind === 'duration' ? Math.round(Math.ceil((m * 1.15) / 30) * 30) : Math.max(1, Math.round(m + 0.5));
+      if (to >= q.week) continue;
+      if (S.proposals.some(pr => pr.kind === 'objectif' && pr.q === q.id && pr.week === ws)) continue;
+      out.push({ q, from: q.week, to, avg: m, why: `Sur les 3 dernières semaines : ${vals.map(v => fmtTarget(q, v)).join(' · ')} pour une cible de ${fmtTarget(q, q.week)}.` });
+    }
+  }
+  return out;
+}
+
+/* ---------------- alertes & conseiller ---------------- */
+function alerts() {
+  const A = [], t = todayStr(), nm = nowMin(), ws = weekStartOf(t), we = addDays(ws, 6), now = NOWFN().getTime();
+  // chronomètre
+  if (S.timer) {
+    const el = timerElapsed();
+    if (S.timer.limit && el / 60000 > S.timer.limit) A.push({ key: 'tm:' + S.timer.startedAt, lvl: 'danger', icon: '⏱️', title: `Chronomètre dépassé : ${S.timer.label}`, text: `Durée prévue ${fmtDur(S.timer.limit)} — déjà ${fmtDur(el / 60000)}.`, acts: [{ l: 'Arrêter', act: 'timerOpen' }], notify: true });
+  }
+  // blocs à qualifier
+  const pend = S.blocks.filter(b => effStatus(b) === 'unfilled').sort((a, b) => (a.date + a.start).localeCompare(b.date + b.start));
+  for (const b of pend.filter(b => b.date === t)) {
+    A.push({ key: 'pend:' + b.id, lvl: 'warn', icon: '❓', title: `Prévu ${b.start}–${b.end} : ${b.title}`, text: `Rien n’est enregistré. Tu devais faire cette activité maintenant ou plus tôt — fais-la, reporte-la ou note pourquoi.`, acts: [{ l: 'Qualifier', act: 'qualify', id: b.id }, { l: 'Reporter', act: 'replan', id: b.id }, { l: '▶ Démarrer', act: 'timerStart', id: b.id }], notify: true });
+  }
+  const old = pend.filter(b => b.date < t);
+  if (old.length) A.push({ key: 'old:' + t, lvl: 'danger', icon: '🗂️', title: `${old.length} activité(s) des jours passés à corriger`, text: old.slice(0, 4).map(b => `${fmtShort(b.date)} ${b.title}`).join(' · ') + (old.length > 4 ? '…' : ''), acts: [{ l: 'Corriger', act: 'fixOld' }] });
+  // bloc en cours
+  for (const b of S.blocks.filter(b => b.date === t && b.status === 'planned' && blockStarted(b) && !blockEnded(b) && b.q)) A.push({ key: 'now:' + b.id, lvl: 'info', icon: '▶️', title: `Maintenant : ${b.title} (jusqu’à ${b.end})`, text: 'Lance le chrono pour mesurer le temps réel.', acts: [{ l: '▶ Démarrer', act: 'timerStart', id: b.id }, { l: 'Fait', act: 'qualify', id: b.id }], notify: true });
+  // limites
+  for (const q of S.quotas.filter(q => q.mode === 'max')) {
+    if (q.day != null) {
+      const v = qDone(q, t, t);
+      if (v > q.day) A.push({ key: `lim:${q.id}:d:${t}`, lvl: 'danger', icon: q.icon, title: `${q.label} : limite du jour dépassée`, text: `${fmtVal(q, v)} aujourd’hui pour un maximum de ${fmtVal(q, q.day)}.`, acts: [], notify: true });
+      else if (v >= q.day * 0.8) A.push({ key: `lim:${q.id}:d80:${t}`, lvl: 'warn', icon: q.icon, title: `${q.label} : proche de la limite du jour`, text: `${fmtVal(q, v)} / ${fmtVal(q, q.day)} (${Math.round(100 * v / q.day)} %).`, acts: [], notify: true });
+    }
+    const w = qDone(q, ws, we);
+    if (w > q.week) A.push({ key: `lim:${q.id}:w:${ws}`, lvl: 'danger', icon: q.icon, title: `${q.label} : limite de la semaine dépassée`, text: `${fmtVal(q, w)} cette semaine pour un maximum de ${fmtVal(q, q.week)}.`, acts: [], notify: true });
+    else if (w >= q.week * 0.85) A.push({ key: `lim:${q.id}:w85:${ws}`, lvl: 'warn', icon: q.icon, title: `${q.label} : ${Math.round(100 * w / q.week)} % du plafond hebdomadaire`, text: `${fmtVal(q, w)} / ${fmtVal(q, q.week)}. Il reste ${fmtVal(q, q.week - w)} jusqu’à dimanche.`, acts: [] });
+  }
+  // rendez-vous
+  for (const a of S.appts) {
+    if (a.done) continue;
+    const at = new Date(a.date + 'T' + (a.time || '09:00') + ':00').getTime(), diff = at - now;
+    if (diff <= 5 * 3600e3 && diff > -3600e3) A.push({ key: `rdv5:${a.id}`, lvl: 'danger', icon: '🔔', title: `Rendez-vous ${diff > 0 ? 'dans ' + fmtDur(diff / 60000) : 'en cours'} : ${a.title}`, text: `${a.time}${a.place ? ' · ' + a.place : ''}`, acts: [{ l: '✔ C’est bon', act: 'apptDone', id: a.id }], notify: true });
+    else if (diff <= 24 * 3600e3 && diff > 5 * 3600e3) A.push({ key: `rdv24:${a.id}`, lvl: 'warn', icon: '🔔', title: `Rendez-vous dans moins de 24 h : ${a.title}`, text: `${fmtDate(a.date)} à ${a.time}${a.place ? ' · ' + a.place : ''}`, acts: [{ l: '✔ C’est bon', act: 'apptDone', id: a.id }], notify: true });
+    else if (diff <= -3600e3) A.push({ key: `rdvp:${a.id}`, lvl: 'warn', icon: '🔔', title: `Rendez-vous passé non coché : ${a.title}`, text: `${fmtDate(a.date)} à ${a.time}`, acts: [{ l: '✔ C’est bon', act: 'apptDone', id: a.id }] });
+  }
+  // bilan du soir
+  const hr = S.settings.bilanHour * 60;
+  if (nm >= hr && !(S.reviews[t] && S.reviews[t].closed)) A.push({ key: 'bilan:' + t, lvl: 'warn', icon: '🌙', title: 'C’est l’heure du bilan du soir', text: 'Vérifie la journée, corrige les oublis et note les imprévus.', acts: [{ l: 'Faire le bilan', act: 'bilan' }], notify: true });
+  if (dow(t) === 6 && nm >= hr && !S.wreviews[ws]) A.push({ key: 'wb:' + ws, lvl: 'info', icon: '📑', title: 'Bilan de la semaine disponible', text: 'Objectifs atteints ou non, tâches non faites et recommandations.', acts: [{ l: 'Ouvrir', act: 'goBilanWeek' }] });
+  // conseiller hebdo
+  const cap = freeMinutes(t, we);
+  let totalUns = 0;
+  for (const q of S.quotas.filter(q => q.mode === 'min' && !q.noPlan)) {
+    const r = weekProgress(q, ws);
+    if (r.rem <= 0 || r.unscheduled <= 0) continue;
+    const unsMin = q.kind === 'duration' ? r.unscheduled : r.unscheduled * (q.sessionMin || 120);
+    totalUns += unsMin;
+    const dl = daysBetween(t, we) + 1;
+    A.push({ key: `adv:${q.id}:${ws}`, lvl: 'info', icon: '💡', title: `${q.label} : ${fmtVal(q, r.rem)} à faire, ${fmtVal(q, r.unscheduled)} pas encore planifié(s)`, text: `${dl} jour(s) restant(s) cette semaine${q.kind === 'duration' ? ` — environ ${fmtDur(r.rem / dl)} par jour` : ''}.`, acts: [{ l: 'Proposer des créneaux', act: 'autoplan', id: q.id }], advisor: true });
+  }
+  if (totalUns > cap + 1) A.push({ key: `real:${ws}`, lvl: 'danger', icon: '⚖️', title: 'Objectifs irréalistes pour la semaine restante', text: `Il reste ${fmtDur(totalUns)} à placer pour seulement ${fmtDur(cap)} de créneaux libres. Hiérarchise ou ajuste (avec ton accord).`, acts: [{ l: 'Voir les quotas', act: 'go', tab: 'quotas' }], advisor: true });
+  return A;
+}
+const lvlOrder = { danger: 0, warn: 1, info: 2, good: 3 };
+
+/* ---------------- chronomètre ---------------- */
+function timerElapsed() { const T = S.timer; if (!T) return 0; return T.acc + (T.running ? NOWFN().getTime() - T.startedAt : 0); }
+
+/* ---------------- export agenda (.ics) avec rappels 24 h et 5 h ---------------- */
+function icsFor(list) {
+  const f = (d, t) => d.replace(/-/g, '') + 'T' + t.replace(':', '') + '00';
+  const L = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//My Life Pilot//FR', 'CALSCALE:GREGORIAN'];
+  for (const a of list) {
+    const st = hm2min(a.time || '09:00'), en = st + (a.dur || 60);
+    L.push('BEGIN:VEVENT', 'UID:' + a.id + '@mylifepilot', 'DTSTAMP:' + f(todayStr(), '00:00'), 'DTSTART:' + f(a.date, a.time || '09:00'), 'DTEND:' + f(a.date, min2hm(Math.min(en, 1439))), 'SUMMARY:' + String(a.title).replace(/[,;\n]/g, ' '));
+    if (a.place) L.push('LOCATION:' + a.place.replace(/[,;\n]/g, ' '));
+    if (a.note) L.push('DESCRIPTION:' + a.note.replace(/\n/g, ' ').replace(/[,;]/g, ' '));
+    L.push('BEGIN:VALARM', 'TRIGGER:-P1D', 'ACTION:DISPLAY', 'DESCRIPTION:Rendez-vous demain', 'END:VALARM', 'BEGIN:VALARM', 'TRIGGER:-PT5H', 'ACTION:DISPLAY', 'DESCRIPTION:Rendez-vous dans 5 heures', 'END:VALARM', 'END:VEVENT');
+  }
+  L.push('END:VCALENDAR');
+  return L.join('\r\n');
+}
+/* ================= UI : graphiques SVG, modales, toasts, navigation ================= */
+const UI = { tab: 'cockpit', calView: 'day', calDate: null, statP: 'week', statDate: null, statQ: 'all', jSub: 'saisies', jf: { from: '', to: '', cat: '', text: '' }, sf: { text: '', cat: '', type: '', from: '', to: '', status: '' }, qSub: 'quotas', bilanDate: null, bilanKind: 'day', libreDate: null, rdvSub: 'a_venir', calAuto: null };
+const NAV = [['cockpit', 'Cockpit', '🏠'], ['cal', 'Calendrier', '📅'], ['quotas', 'Quotas & Conseiller', '🎯'], ['journal', 'Journal', '📒'], ['libre', 'Libre / Bloc-notes', '📝'], ['rdv', 'Rendez-vous', '🔔'], ['search', 'Recherche', '🔎'], ['stats', 'Statistiques', '📊'], ['settings', 'Réglages & données', '⚙️']];
+
+/* ---------- graphiques ---------- */
+function ring(pct, { size = 72, color = 'var(--p2)', label = '', sw = 9 } = {}) {
+  const r = (size - sw) / 2, c = 2 * Math.PI * r, p = clamp(pct, 0, 1), fs = size * (String(label).length > 5 ? 0.17 : 0.27);
+  return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}"><circle cx="${size / 2}" cy="${size / 2}" r="${r}" fill="none" stroke="var(--soft)" stroke-width="${sw}"/><circle cx="${size / 2}" cy="${size / 2}" r="${r}" fill="none" stroke="${color}" stroke-width="${sw}" stroke-linecap="round" stroke-dasharray="${c * p} ${c}" transform="rotate(-90 ${size / 2} ${size / 2})"/><text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" font-weight="800" font-size="${fs}" style="fill:var(--tx)">${label}</text></svg>`;
+}
+function barChart(items, { h = 190, target = null, showAvg = true, fmt = v => v, color = 'var(--p2)', minW = 30 } = {}) {
+  const n = items.length, w = Math.max(320, n * minW), pl = 34, pb = 26, pt = 18;
+  const mx = Math.max(1, ...items.map(i => i.v), target || 0) * 1.12, bw = (w - pl) / n;
+  const y = v => pt + (h - pt - pb) * (1 - v / mx);
+  let s = `<svg viewBox="0 0 ${w} ${h}" style="width:100%;min-width:${Math.min(w, 560)}px;height:auto">`;
+  for (const g of [0, .5, 1]) { const v = mx * g / 1.12; s += `<line x1="${pl}" x2="${w}" y1="${y(v)}" y2="${y(v)}" stroke="var(--cb)"/><text x="${pl - 5}" y="${y(v) + 4}" text-anchor="end" font-size="10">${fmt(Math.round(v * 10) / 10)}</text>`; }
+  items.forEach((it, i) => {
+    const x = pl + i * bw + bw * .18, ww = bw * .64, yy = y(it.v), hh = Math.max(0, h - pb - yy);
+    s += `<rect x="${x}" y="${yy}" width="${ww}" height="${hh}" rx="${Math.min(8, ww / 2)}" fill="${it.c || color}" opacity="${it.dim ? .35 : 1}"><title>${esc(it.l)} : ${esc(fmt(it.v))}</title></rect>`;
+    if (n <= 16 && it.v > 0) s += `<text x="${x + ww / 2}" y="${yy - 4}" text-anchor="middle" font-size="10" font-weight="700" style="fill:var(--tx)">${fmt(Math.round(it.v * 10) / 10)}</text>`;
+    s += `<text x="${x + ww / 2}" y="${h - 8}" text-anchor="middle" font-size="10">${esc(it.l)}</text>`;
+  });
+  const vals = items.filter(i => i.v > 0).map(i => i.v);
+  if (showAvg && vals.length > 1) { const a = avg(vals); s += `<line x1="${pl}" x2="${w}" y1="${y(a)}" y2="${y(a)}" stroke="var(--warn)" stroke-dasharray="5 4"/><text x="${w - 2}" y="${y(a) - 4}" text-anchor="end" font-size="10" style="fill:var(--warn)">moy. ${fmt(Math.round(a * 10) / 10)}</text>`; }
+  if (target) s += `<line x1="${pl}" x2="${w}" y1="${y(target)}" y2="${y(target)}" stroke="var(--ok)" stroke-dasharray="2 3" stroke-width="1.6"/><text x="${pl + 2}" y="${y(target) - 4}" font-size="10" style="fill:var(--ok)">cible ${fmt(Math.round(target * 10) / 10)}</text>`;
+  return s + '</svg>';
+}
+function lineChart(pts, { h = 170, color = 'var(--p2)', max = 100 } = {}) {
+  const n = pts.length, w = Math.max(320, n * 56), pl = 30, pb = 24, pt = 12;
+  const x = i => pl + (n === 1 ? (w - pl) / 2 : (i * (w - pl - 14)) / (n - 1)), y = v => pt + (h - pt - pb) * (1 - v / max);
+  let s = `<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:auto;min-width:300px">`;
+  for (const g of [0, 50, 100]) s += `<line x1="${pl}" x2="${w}" y1="${y(g * max / 100)}" y2="${y(g * max / 100)}" stroke="var(--cb)"/><text x="${pl - 4}" y="${y(g * max / 100) + 4}" text-anchor="end" font-size="10">${g}%</text>`;
+  const ok = pts.map((p, i) => ({ ...p, i })).filter(p => p.v != null);
+  if (ok.length > 1) s += `<polyline fill="none" stroke="${color}" stroke-width="2.6" stroke-linejoin="round" points="${ok.map(p => `${x(p.i)},${y(p.v)}`).join(' ')}"/>`;
+  pts.forEach((p, i) => { s += `<text x="${x(i)}" y="${h - 6}" text-anchor="middle" font-size="10">${esc(p.l)}</text>`; if (p.v != null) s += `<circle cx="${x(i)}" cy="${y(p.v)}" r="4.5" fill="${color}"><title>${esc(p.l)} : ${p.v}%</title></circle>`; });
+  return s + '</svg>';
+}
+function donut(items, size = 150) {
+  const tot = sum(items.map(i => i.v)); if (!tot) return '<div class="empty">Aucune donnée</div>';
+  const r = size / 2 - 14, c = size / 2; let a0 = -Math.PI / 2, s = `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">`;
+  for (const it of items) {
+    const a1 = a0 + 2 * Math.PI * it.v / tot, big = a1 - a0 > Math.PI ? 1 : 0;
+    if (items.length === 1) s += `<circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="${it.c}" stroke-width="24"/>`;
+    else s += `<path d="M${c + r * Math.cos(a0)} ${c + r * Math.sin(a0)} A${r} ${r} 0 ${big} 1 ${c + r * Math.cos(a1)} ${c + r * Math.sin(a1)}" fill="none" stroke="${it.c}" stroke-width="24"><title>${esc(it.l)} : ${esc(fmtDur(it.v))}</title></path>`;
+    a0 = a1;
+  }
+  return s + `<text x="50%" y="48%" text-anchor="middle" font-weight="800" font-size="17" style="fill:var(--tx)">${fmtDur(tot)}</text><text x="50%" y="62%" text-anchor="middle" font-size="10">au total</text></svg>`;
+}
+function heat(map, from, to, color) {
+  const f0 = weekStartOf(from); let s = '<div class="hm">';
+  for (let d = f0; d <= to; d = addDays(d, 1)) {
+    const v = map[d];
+    if (d < from || d > todayStr() || v == null) { s += `<i title="${d}" style="${d < from ? 'visibility:hidden' : ''}"></i>`; continue; }
+    s += `<i title="${fmtShort(d)} : ${Math.round(v * 100)} %" style="background:${color};opacity:${.18 + .82 * clamp(v, 0, 1)}"></i>`;
+  }
+  return s + '</div>';
+}
+
+/* ---------- modales / toasts ---------- */
+function modal(html, { wide = false } = {}) {
+  closeModal();
+  const m = document.createElement('div'); m.className = 'mod'; m.id = 'modal';
+  m.innerHTML = `<div class="mbox ${wide ? 'wide' : ''}" role="dialog"><button class="x" data-act="mclose" aria-label="Fermer">✕</button>${html}</div>`;
+  m.addEventListener('mousedown', e => { if (e.target === m) closeModal(true); });
+  document.body.appendChild(m);
+  const f = m.querySelector('input:not([type=hidden]):not([type=checkbox]):not([type=radio]),select,textarea'); if (f && matchMedia('(pointer:fine)').matches) f.focus();
+  return m;
+}
+function closeModal(manual) { const m = $('#modal'); if (m) m.remove(); if (manual) { UI.actDate = null; UI.bilanForDate = null; UI.backToBilan = null; } }
+function toast(msg, lvl = 'info', ms = 4200, key = '') {
+  if (key) $$('#toasts .toast').filter(x => x.dataset.k === key).forEach(x => x.remove());
+  const t = document.createElement('div'); t.className = 'toast ' + lvl; t.dataset.k = key; t.innerHTML = msg; $('#toasts').appendChild(t);
+  setTimeout(() => t.remove(), ms);
+}
+function notify(title, body) {
+  try { if ('Notification' in window && Notification.permission === 'granted') new Notification(title, { body, icon: 'icon-192.png', tag: title }); } catch (e) { }
+  try { if (navigator.vibrate && (!navigator.userActivation || navigator.userActivation.hasBeenActive)) navigator.vibrate([120, 60, 120]); } catch (e) { }
+}
+function download(name, text, type = 'application/json') {
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type })); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
+
+/* ---------- barre de navigation ---------- */
+function alertCount() { return alerts().filter(a => a.lvl === 'danger' || a.lvl === 'warn').length; }
+function renderNav() {
+  const n = alertCount();
+  $('#side').innerHTML = `<div class="logo"><i>🧭</i>My Life Pilot</div>` + NAV.map(([k, l, i]) => `<button class="nv ${UI.tab === k ? 'on' : ''}" data-act="go" data-tab="${k}"><span>${i}</span>${l}${k === 'cockpit' && n ? `<b>${n}</b>` : ''}</button>`).join('') + `<div style="flex:1"></div><div class="rt" style="padding:8px">V${VERSION} · données locales</div>`;
+  const mob = [['cockpit', 'Cockpit', '🏠'], ['cal', 'Calendrier', '📅'], ['journal', 'Journal', '📒'], ['stats', 'Stats', '📊'], ['more', 'Plus', '☰']];
+  $('#bnav').innerHTML = mob.map(([k, l, i]) => `<button class="${UI.tab === k || (k === 'more' && ['quotas', 'libre', 'rdv', 'search', 'settings', 'bilan'].includes(UI.tab)) ? 'on' : ''}" data-act="${k === 'more' ? 'moreMenu' : 'go'}" data-tab="${k}"><span>${i}</span>${l}${k === 'cockpit' && n ? `<b>${n}</b>` : ''}</button>`).join('');
+}
+function renderTimerBar() {
+  const T = S.timer, el = $('#tbar'); if (!el) return;
+  if (!T) { el.innerHTML = ''; return; }
+  const ms = timerElapsed(), over = T.limit && ms / 60000 > T.limit;
+  const txt = fmtClock(ms);
+  let b = $('#tbar .tmb');
+  if (!b) { el.innerHTML = `<div class="tmb" data-act="timerOpen"><span>${T.running ? '⏱️' : '⏸️'}</span><div><div class="tl" style="font-size:.74rem;opacity:.8"></div><div class="tt"></div></div><button class="btn sm" data-act="timerToggle">${T.running ? '⏸' : '▶'}</button></div>`; b = $('#tbar .tmb'); }
+  b.classList.toggle('over', !!over);
+  b.children[0].textContent = T.running ? '⏱️' : '⏸️';
+  b.querySelector('.tl').textContent = T.label + (T.limit ? ` · prévu ${fmtDur(T.limit)}` : '');
+  b.querySelector('.tt').textContent = txt;
+  b.querySelector('button').textContent = T.running ? '⏸' : '▶';
+}
+function fmtClock(ms) { const s = Math.floor(ms / 1000), h = Math.floor(s / 3600), m = Math.floor(s / 60) % 60; return (h ? h + ':' : '') + pad(m) + ':' + pad(s % 60); }
+/* ================= Écrans A : Cockpit, Calendrier, Quotas ================= */
+const A = (act, d = {}) => `data-act="${act}" ` + Object.entries(d).map(([k, v]) => `data-${k}="${esc(v)}"`).join(' ');
+const THM = { auto: ['🌓', 'Thème automatique'], light: ['☀️', 'Thème clair'], dark: ['🌙', 'Thème sombre'] };
+const themeBtn = () => { const t = (S.settings.theme || 'auto'); return `<button class="btn sm thbtn" title="${THM[t][1]} — toucher pour changer" aria-label="${THM[t][1]}" data-act="themeCycle">${THM[t][0]}<span class="thl">${t === 'auto' ? 'Auto' : t === 'light' ? 'Clair' : 'Sombre'}</span></button>`; };
+const greeting = () => { const h = NOWFN().getHours(); return (h >= 6 && h < 17 ? 'Bonjour' : 'Bonsoir') + ' ' + (S.settings.name || 'Hamza'); };
+const pageTop = (title, sub, right = '') => `<div class="top"><div><h1>${title}</h1>${sub ? `<div class="sub">${sub}</div>` : ''}</div><div class="sp"></div>${right}${themeBtn()}</div>`;
+const stChip = st => { const [l, i] = STATUS[st] || ['?', '']; const c = st === 'done' ? 'ok' : st === 'missed' ? 'bad' : st === 'unfilled' || st === 'partial' ? 'warn' : 'p'; return `<span class="chip ${c}">${i} ${l}</span>`; };
+const scoreDot = (s, lbl) => `<div class="dot ${scoreCls(s)}">${s == null ? '–' : s}</div>`;
+
+function alertHtml(a) {
+  return `<div class="al ${a.lvl}"><div class="ai">${a.icon}</div><div style="flex:1;min-width:0"><div class="at">${esc(a.title)}</div><div class="ax">${esc(a.text)}</div>${a.acts && a.acts.length ? `<div class="aa">${a.acts.map(x => `<button class="btn sm" ${A(x.act, { id: x.id || '', tab: x.tab || '' })}>${x.l}</button>`).join('')}</div>` : ''}</div></div>`;
+}
+function habitCard(q) {
+  const t = todayStr(), ws = weekStartOf(t), wi = weekInfo(ws), row = wi.rows.find(r => r.q.id === q.id);
+  const done = row.done, pct = q.week ? clamp(done / q.week, 0, 1) : 0;
+  const over = q.mode === 'max' && done > q.week;
+  let tag;
+  if (q.mode === 'max') tag = over ? 'Plafond dépassé' : done >= q.week * .85 ? 'Proche du plafond' : 'Sous le plafond';
+  else tag = done >= q.week ? 'Atteint ✓' : done >= row.pro - 0.01 ? 'Dans le rythme' : 'En retard';
+  const sub = q.mode === 'max' ? `${fmtVal(q, done)} / max ${fmtTarget(q, q.week)}` : `${fmtVal(q, done)} / ${fmtTarget(q, q.week)}`;
+  return `<div class="hab ${over ? 'over' : ''}" style="--c:${q.color};--pct:${(pct * 100).toFixed(1)}%" ${A('qdetail', { id: q.id })}><div class="hi">${q.icon}</div><div><div class="hn">${esc(q.label)}</div><div class="hs">${sub}</div></div><div class="hr"><span class="tag">${tag}</span><span>${Math.round(pct * 100)} %</span></div></div>`;
+}
+function blockRow(b) {
+  const st = effStatus(b), q = Q(b.q), act = Math.round(blockActual(b));
+  return `<div class="ln"><div class="lt">${b.start}<br>${b.end}</div><div class="lb2"><div style="font-weight:700">${q ? q.icon + ' ' : ''}${esc(b.title)} ${stChip(st)}</div><div class="rt">${fmtDur(blockPlanned(b))} prévus${act ? ` · ${fmtDur(act)} réalisés` : ''}${b.reason ? ` · ${esc(b.reason)}` : ''}</div></div><div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end">${b.q && ['planned', 'inprogress', 'unfilled'].includes(st) ? `<button class="btn sm ic" title="Chrono" ${A('timerStart', { id: b.id })}>▶</button><button class="btn sm ic" title="Qualifier" ${A('qualify', { id: b.id })}>✔</button>` : ''}<button class="btn sm ic" ${A('blk', { id: b.id })}>⋯</button></div></div>`;
+}
+
+/* ---------- COCKPIT ---------- */
+function vCockpit() {
+  const t = todayStr(), ws = weekStartOf(t), di = dayInfo(t), wi = weekInfo(ws);
+  const al = alerts().sort((a, b) => lvlOrder[a.lvl] - lvlOrder[b.lvl]);
+  const urgent = al.filter(a => (a.lvl === 'danger' || a.lvl === 'warn') && !a.advisor), advice = al.filter(a => a.advisor);
+  const dbl = S.blocks.filter(b => b.date === t && b.status !== 'cancelled').sort((a, b) => a.start.localeCompare(b.start));
+  const scored = dbl.filter(b => b.q);
+  const planned = sum(scored.map(blockPlanned));
+  const real = sum(S.entries.filter(e => e.date === t && Q(e.cat) && e.cat !== 'sommeil' && !Q(e.cat).overlap).map(entryMins));
+  const next = scored.filter(b => ['planned', 'inprogress'].includes(b.status) && hm2min(b.end) > nowMin()).sort((a, b) => a.start.localeCompare(b.start))[0];
+  const strip = [...Array(7)].map((_, i) => { const d = addDays(ws, i), s = dayInfo(d); return `<div class="sd ${d === t ? 'today' : ''}" ${A('calDay', { date: d })}><small>${DAYS[i].toUpperCase()}</small><div class="dot ${scoreCls(s.score)}" title="${s.score == null ? 'Non renseigné' : s.score + ' %'}">${parseYmd(d).getDate()}</div><small>${s.score == null ? (s.incomplete ? '❓' : '·') : s.score + '%'}</small></div>`; }).join('');
+  const counters = S.quotas.filter(q => q.noPlan && q.kind === 'count' && !q.prayers).map(q => {
+    const v = qDone(q, t, t), w = qDone(q, ws, addDays(ws, 6)), over = q.mode === 'max' && ((q.day != null && v > q.day) || w > q.week);
+    return `<div class="card"><div class="ch"><h3>${q.icon} ${esc(q.label)}</h3><span class="chip ${over ? 'bad' : 'p'}">semaine ${w}/${q.week}</span></div><div class="cnt"><button class="rb m" ${A('cnt', { q: q.id, d: -1 })}>−</button><div class="n" style="${over ? 'color:var(--bad)' : ''}">${v}${q.day != null ? `<span class="rt" style="font-size:.9rem"> /${q.day}</span>` : ''}</div><button class="rb" ${A('cnt', { q: q.id, d: 1 })}>+</button></div><div class="bar" style="margin-top:10px"><i style="width:${clamp(w / q.week, 0, 1) * 100}%;background:${w > q.week ? 'var(--bad)' : q.color}"></i></div></div>`;
+  }).join('');
+  const pq = Q('priere');
+  const prayers = pq ? (() => { const done = S.entries.filter(e => e.cat === 'priere' && e.date === t).map(e => e.sub); return `<div class="card"><div class="ch"><h3>🕌 Prières</h3><span class="chip ${done.length >= 5 ? 'ok' : 'p'}">${done.length}/5</span></div><div class="pr">${PRAYERS.map(p => `<button class="${done.includes(p) ? 'on' : ''}" ${A('prayer', { n: p })}>${done.includes(p) ? '✓ ' : ''}${p}</button>`).join('')}</div></div>`; })() : '';
+  const sq = Q('sommeil');
+  const sl = sq ? (() => { const e = S.entries.filter(e => e.cat === 'sommeil' && e.date === t)[0]; return `<div class="card"><div class="ch"><h3>😴 Sommeil (nuit dernière)</h3>${e ? `<span class="chip ${e.v >= (sq.day || 420) ? 'ok' : 'warn'}">objectif ${fmtDur(sq.day || 420)}</span>` : ''}</div>${e ? `<div class="big">${fmtDur(e.v)}</div><div class="rt">${esc(e.note || '')}</div><button class="btn sm" style="margin-top:8px" ${A('sleep')}>Modifier</button>` : `<div class="empty" style="padding:8px">Non renseigné</div><button class="btn pri" ${A('sleep')}>Saisir ma nuit</button>`}</div>`; })() : '';
+  const ap = S.appts.filter(a => !a.done && (a.date + (a.time || '')) >= t).sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time)).slice(0, 3);
+  const lib = S.libre.slice().sort((a, b) => (b.date + (b.from || '')).localeCompare(a.date + (a.from || ''))).slice(0, 3);
+  const welcome = (!S.blocks.length && !S.entries.length) ? `<div class="card" style="margin-bottom:14px;border-left:6px solid var(--p2)"><h2>Bienvenue dans My Life Pilot 🧭</h2><p class="sub">Tes quotas stricts sont déjà réglés (sport 3×, révision 7 h, freelance 20 h, apprentissage 12 h, café ≤ 20 h, sommeil 49 h, cigarettes ≤ 140/semaine et 20/jour). Commence par ajouter ton travail et laisse le conseiller proposer ta semaine.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn pri" ${A('go', { tab: 'settings' })}>1 · Régler mes créneaux libres & mon travail</button><button class="btn" ${A('autoplan', { id: '' })}>2 · Proposer ma semaine</button><button class="btn" ${A('demoLoad')}>Voir avec des données de démo</button></div></div>` : '';
+  return pageTop(`${greeting()} 👋`, fmtDate(t) + ` · semaine ${isoWeek(t)}`, `<button class="btn" ${A('quick')}>＋ Saisie rapide</button><button class="btn" ${A('timerStart', { id: '' })}>⏱ Chrono libre</button><button class="btn pri" ${A('bilan')}>🌙 Bilan du soir</button>`) +
+    welcome + `<div class="card" style="margin-bottom:14px"><div class="strip">${strip}</div></div>
+    <div class="g g4">
+      <div class="card kpi">${ring((di.score || 0) / 100, { label: di.score == null ? '–' : di.score + '%', color: `var(--${di.score == null ? 'mut' : di.score >= 80 ? 'ok' : di.score >= 50 ? 'warn' : 'bad'})` })}<div><div class="l">Score du jour</div><div class="rt">${di.comps.map(c => `${esc(c.k)} ${Math.round(c.v * 100)}%`).join(' · ') || (di.incomplete ? 'À qualifier' : 'Rien d’enregistré')}</div></div></div>
+      <div class="card kpi">${ring((wi.score || 0) / 100, { label: wi.score == null ? '–' : wi.score + '%', color: 'var(--p2)' })}<div><div class="l">Score de la semaine (rythme)</div><div class="rt">jour ${wi.el}/7</div></div></div>
+      <div class="card kpi"><div><div class="v">${fmtDur(real)}</div><div class="l">réalisé aujourd’hui</div><div class="rt">prévu ${fmtDur(planned)} (${scored.length} bloc${scored.length > 1 ? 's' : ''})</div></div></div>
+      <div class="card kpi" ${A('go', { tab: 'cockpit' })}><div><div class="v" style="color:${urgent.length ? 'var(--bad)' : 'var(--ok)'}">${urgent.length}</div><div class="l">alerte(s) à traiter</div></div></div>
+    </div>
+    ${urgent.length ? `<div class="card" style="margin-bottom:14px"><div class="ch"><h2>🚨 Alertes</h2></div>${urgent.map(alertHtml).join('')}</div>` : ''}
+    ${next ? `<div class="card" style="margin-bottom:14px;border-left:6px solid ${blockColor(next)}"><div class="ch"><div><div class="rt">Prochaine activité</div><h2>${qLabel(next.q)}${next.title !== (Q(next.q) || {}).label ? ' — ' + esc(next.title) : ''}</h2><div class="sub">${next.start}–${next.end} · ${fmtDur(blockPlanned(next))}${hm2min(next.start) > nowMin() ? ' · dans ' + fmtDur(hm2min(next.start) - nowMin()) : ' · en cours'}</div></div><div style="display:flex;gap:6px"><button class="btn pri" ${A('timerStart', { id: next.id })}>▶ Démarrer</button><button class="btn" ${A('qualify', { id: next.id })}>✔ Fait</button></div></div></div>` : ''}
+    <div class="g g2">
+      <div class="card"><div class="ch"><h2>🎯 Quotas de la semaine</h2><button class="btn sm ghost" ${A('go', { tab: 'quotas' })}>Détail ›</button></div><div style="display:grid;gap:9px">${S.quotas.map(habitCard).join('')}</div></div>
+      <div style="display:grid;gap:14px;align-content:start">
+        ${counters}${prayers}${sl}
+        <div class="card"><div class="ch"><h2>💡 Conseiller</h2></div>${advice.length ? advice.slice(0, 4).map(alertHtml).join('') : '<div class="al good"><div class="ai">✅</div><div><div class="at">Tout est sous contrôle</div><div class="ax">Aucune dérive détectée sur la semaine.</div></div></div>'}${al.filter(a => a.lvl === 'info' && !a.advisor).map(alertHtml).join('')}</div>
+      </div>
+    </div>
+    <div class="g g3">
+      <div class="card"><div class="ch"><h2>📅 Planning du jour</h2><button class="btn sm" ${A('newBlock', { date: t })}>＋ Bloc</button></div>${dbl.length ? dbl.map(blockRow).join('') : '<div class="empty">Aucun bloc aujourd’hui.<br><button class="btn sm" style="margin-top:8px" ' + A('autoplan', { id: '' }) + '>Proposer un planning</button></div>'}</div>
+      <div class="card"><div class="ch"><h2>🔔 Rendez-vous</h2><button class="btn sm" ${A('apptNew')}>＋</button></div>${ap.length ? ap.map(a => `<div class="ln"><div class="lt">${fmtShort(a.date)}<br>${a.time || ''}</div><div class="lb2"><b>${esc(a.title)}</b><div class="rt">${esc(a.place || '')}</div></div><button class="btn sm ic" title="C’est bon" ${A('apptDone', { id: a.id })}>✔</button></div>`).join('') : '<div class="empty">Aucun rendez-vous à venir</div>'}</div>
+      <div class="card"><div class="ch"><h2>📝 Libre / bloc-notes</h2><button class="btn sm" ${A('libreNew')}>＋</button></div>${lib.length ? lib.map(l => `<div class="ln"><div class="lt">${fmtShort(l.date)}<br>${l.from ? l.from + '–' + l.to : ''}</div><div class="lb2">${esc(l.text)}</div></div>`).join('') : '<div class="empty">Rien de noté</div>'}</div>
+    </div>`;
+}
+function isoWeek(s) { const d = parseYmd(s); d.setDate(d.getDate() + 3 - ((d.getDay() + 6) % 7)); const w1 = new Date(d.getFullYear(), 0, 4); return 1 + Math.round(((d - w1) / 864e5 - 3 + ((w1.getDay() + 6) % 7)) / 7); }
+
+/* ---------- CALENDRIER ---------- */
+function dayItems(date) {
+  const it = [];
+  S.blocks.filter(b => b.date === date).forEach(b => it.push({ k: 'b', id: b.id, s: hm2min(b.start), e: hm2min(b.end), title: b.title, b }));
+  S.appts.filter(a => a.date === date && a.time).forEach(a => it.push({ k: 'a', id: a.id, s: hm2min(a.time), e: hm2min(a.time) + (a.dur || 60), title: '🔔 ' + a.title, a }));
+  S.libre.filter(l => l.date === date && l.from && l.to).forEach(l => it.push({ k: 'l', id: l.id, s: hm2min(l.from), e: hm2min(l.to), title: '📝 ' + l.text, l }));
+  return it.sort((x, y) => x.s - y.s || x.e - y.e);
+}
+function layoutCols(items) {
+  const out = []; let cl = [], end = -1;
+  const flush = () => { const cols = []; cl.forEach(i => { let c = cols.findIndex(ce => ce <= i.s); if (c < 0) { c = cols.length; cols.push(0); } cols[c] = i.e; i.col = c; }); cl.forEach(i => i.n = cols.length); out.push(...cl); cl = []; };
+  for (const i of items) { if (cl.length && i.s >= end) { flush(); end = -1; } cl.push(i); end = Math.max(end, i.e); }
+  if (cl.length) flush();
+  return out;
+}
+function timeline(dates, sc = 1.1) {
+  const H0 = 360, H1 = 1440, ht = (H1 - H0) * sc, t = todayStr(), nm = nowMin();
+  let h = `<div class="cal" style="--n:${dates.length};--sc:${sc}"><div class="cdh"></div>` + dates.map(d => `<div class="cdh ${d === t ? 'today' : ''}" ${A('calDay', { date: d })} style="cursor:pointer">${dates.length > 1 ? fmtShort(d) : fmtDate(d)}</div>`).join('');
+  h += `<div class="hc" style="height:${ht}px">${[...Array(19)].map((_, i) => `<span style="top:${i * 60 * sc}px">${pad(6 + i)}h</span>`).join('')}</div>`;
+  for (const d of dates) {
+    const items = layoutCols(dayItems(d));
+    h += `<div class="dc" ${A('colclick', { date: d })} style="height:${ht}px">`;
+    for (const i of items) {
+      const top = (Math.max(i.s, H0) - H0) * sc, hh = Math.max(22, (Math.min(i.e, H1) - Math.max(i.s, H0)) * sc - 2), w = 100 / i.n;
+      let cls = 'blk', st = '', c = '#6d7399', ic = '', extra = '';
+      if (i.k === 'b') { const b = i.b; st = effStatus(b); c = blockColor(b); cls += ` st-${st}` + (b.q ? '' : ' fx'); ic = STATUS[st][1]; const a = Math.round(blockActual(b)); if (a) extra = ` · ${fmtDur(a)}`; }
+      else if (i.k === 'a') { cls += ' ap'; ic = i.a.done ? '✅' : ''; }
+      else cls += ' lb';
+      h += `<div class="${cls}" style="top:${top}px;height:${hh}px;left:calc(${i.col * w}% + 1px);width:calc(${w}% - 3px);--c:${c}" ${A('calItem', { k: i.k, id: i.id })}><b>${ic} ${esc(i.title)}</b>${hh > 34 ? `<span>${min2hm(i.s)}–${min2hm(i.e)}${extra}</span>` : ''}</div>`;
+    }
+    if (d === t && nm >= H0) h += `<div class="nowl" style="top:${(nm - H0) * sc}px"></div>`;
+    h += '</div>';
+  }
+  return h + '</div>';
+}
+function vCal() {
+  const t = todayStr(), d = UI.calDate || t, v = UI.calView;
+  const step = v === 'day' ? 1 : v === 'week' ? 7 : 30;
+  let title, body;
+  if (v === 'day') { title = fmtDate(d); body = timeline([d], 1.15); }
+  else if (v === 'week') { const ws = weekStartOf(d); title = `Semaine du ${fmtShort(ws)} au ${fmtShort(addDays(ws, 6))}`; body = `<div class="tw">${timeline([...Array(7)].map((_, i) => addDays(ws, i)), .95)}</div>`; }
+  else {
+    const [f, l] = monthRange(d); title = `${MONTHS[parseYmd(d).getMonth()]} ${parseYmd(d).getFullYear()}`;
+    let g = DAYS.map(x => `<div class="rt" style="text-align:center;font-weight:700">${x}</div>`).join('');
+    for (let x = weekStartOf(f); x <= addDays(weekStartOf(l), 6); x = addDays(x, 1)) {
+      const out = x < f || x > l, di = dayInfo(x), n = dayItems(x).length, past = x <= t;
+      let mk = '';
+      if (past && di.score != null) mk = `<div class="mk ${di.score >= 80 ? 'y' : di.score >= 50 ? 'q' : 'n'}">${di.score >= 80 ? '✓' : di.score >= 50 ? '≈' : '✗'}</div><div class="rt" style="text-align:center">${di.score}%</div>`;
+      else if (past && di.incomplete) mk = `<div class="mk q">❓</div>`;
+      else if (n) mk = `<div class="rt" style="text-align:center">${n} activité${n > 1 ? 's' : ''}</div>`;
+      g += `<div class="mc ${x === t ? 'today' : ''} ${out ? 'out' : ''}" ${A('calDay', { date: x })}><div class="dn">${parseYmd(x).getDate()}</div>${mk}</div>`;
+    }
+    body = `<div class="mg">${g}</div><div class="lg"><span>✓ ≥ 80 %</span><span>≈ 50–79 %</span><span>✗ &lt; 50 %</span><span>❓ à qualifier</span></div>`;
+  }
+  return pageTop('📅 Calendrier intelligent', 'Planning journalier fixé → bilan à ' + S.settings.bilanHour + 'h → rattrapage assisté', `<button class="btn" ${A('autoplan', { id: '' })}>✨ Proposer ma semaine</button><button class="btn pri" ${A('newBlock', { date: d })}>＋ Nouveau bloc</button>`) +
+    `<div class="card"><div class="ch" style="margin-bottom:12px"><div class="tabs" style="margin:0">${[['day', 'Jour'], ['week', 'Semaine'], ['month', 'Mois']].map(([k, l]) => `<button class="${v === k ? 'on' : ''}" ${A('calView', { v: k })}>${l}</button>`).join('')}</div><div style="display:flex;gap:6px;align-items:center"><button class="btn sm" ${A('calNav', { n: -step })}>‹</button><b style="min-width:170px;text-align:center">${title}</b><button class="btn sm" ${A('calNav', { n: step })}>›</button><button class="btn sm" ${A('calDay', { date: t })}>Aujourd’hui</button></div></div>${body}${v !== 'month' ? '<div class="lg"><span><i style="background:#6d7399"></i>Fixe / autre</span><span><i style="background:#f0a30a"></i>Rendez-vous</span><span><i style="background:#8a63d2"></i>Libre</span><span>❓ bordure pointillée = non renseignée</span><span class="rt">Touchez une zone vide pour créer un bloc.</span></div>' : ''}</div>`;
+}
+
+/* ---------- QUOTAS & CONSEILLER ---------- */
+function vQuotas() {
+  const t = todayStr(), ws = weekStartOf(t), we = addDays(ws, 6), wi = weekInfo(ws);
+  const sub = UI.qSub;
+  let body = '';
+  if (sub === 'quotas') {
+    const cap = freeMinutes(t, we);
+    let need = 0; const rows = S.quotas.map(q => {
+      const r = weekProgress(q, ws), row = wi.rows.find(x => x.q.id === q.id);
+      if (q.mode === 'min' && !q.noPlan) need += q.kind === 'duration' ? r.rem : r.rem * (q.sessionMin || 120);
+      const st = q.mode === 'max' ? (row.done > q.week ? ['bad', 'Plafond dépassé'] : row.done >= q.week * .85 ? ['warn', 'Proche'] : ['ok', 'OK']) : (row.done >= q.week ? ['ok', 'Atteint'] : r.unscheduled > 0 ? ['warn', 'À planifier'] : ['p', 'Planifié']);
+      return `<tr><td data-l="Quota"><b>${q.icon} ${esc(q.label)}</b><div class="rt">${q.mode === 'max' ? 'plafond' : 'objectif'} · ${q.kind === 'duration' ? 'durée' : 'compteur'}${q.noPlan ? ' · suivi sans planning' : ''}${q.overlap ? ' · chevauche les autres activités' : ''}</div></td><td data-l="Cible / sem.">${q.mode === 'max' ? 'max ' : ''}${fmtVal(q, q.week)}${q.day != null ? `<div class="rt">jour : ${q.mode === 'max' ? 'max ' : ''}${fmtVal(q, q.day)}</div>` : ''}</td><td data-l="Réalisé" style="min-width:150px">${fmtVal(q, r.done)}<div class="bar"><i style="width:${clamp(r.done / q.week, 0, 1) * 100}%;background:${row.done > q.week && q.mode === 'max' ? 'var(--bad)' : q.color}"></i></div></td><td data-l="Reste">${q.mode === 'max' ? fmtVal(q, Math.max(0, q.week - r.done)) + ' dispo.' : fmtVal(q, r.rem)}${q.mode === 'min' && !q.noPlan ? `<div class="rt">${fmtVal(q, r.plannedFut)} planifié(s)</div>` : ''}</td><td data-l="État"><span class="chip ${st[0]}">${st[1]}</span></td><td><button class="btn sm" ${A('qedit', { id: q.id })}>Modifier</button></td></tr>`;
+    }).join('');
+    const ratio = cap ? need / cap : 0;
+    body = `<div class="card" style="margin-bottom:14px"><div class="ch"><h2>⚖️ Réalisme de la semaine restante</h2></div><div class="g g3" style="margin:0"><div><div class="l rt">À faire (objectifs non atteints)</div><div class="big">${fmtDur(need)}</div></div><div><div class="l rt">Créneaux libres jusqu’à dimanche</div><div class="big">${fmtDur(cap)}</div></div><div><div class="rt">Charge / capacité</div><div class="big" style="color:${ratio > 1 ? 'var(--bad)' : ratio > .8 ? 'var(--warn)' : 'var(--ok)'}">${Math.round(ratio * 100)} %</div></div></div><div class="sub" style="margin-top:8px">${ratio > 1 ? '⚠️ Les objectifs restants dépassent le temps libre : il faudra en reporter ou ajuster une partie (avec ton accord).' : ratio > .8 ? 'Semaine serrée : peu de marge pour les imprévus.' : 'Capacité suffisante : tes objectifs sont réalistes.'} Les fenêtres libres se règlent dans <a href="#" ${A('go', { tab: 'settings' })}>Réglages</a>.</div></div>
+      <div class="card"><div class="ch"><h2>Quotas hebdomadaires stricts</h2><button class="btn sm pri" ${A('qnew')}>＋ Quota</button></div><div class="tw"><table class="rs"><thead><tr><th>Quota</th><th>Cible</th><th>Réalisé</th><th>Reste</th><th>État</th><th></th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
+  } else if (sub === 'plan') {
+    const r = UI.calAuto || autoPlan();
+    UI.calAuto = r;
+    body = `<div class="card"><div class="ch"><h2>✨ Planning proposé pour le reste de la semaine</h2><button class="btn sm" ${A('autoplanRefresh')}>↻ Recalculer</button></div><div class="sub" style="margin-bottom:10px">Basé sur les créneaux libres et ce qu’il reste à faire par quota. Rien n’est créé sans ta validation.</div>${r.prop.length ? `<form data-form="applyPlan"><div class="tw"><table><thead><tr><th></th><th>Jour</th><th>Horaire</th><th>Activité</th></tr></thead><tbody>${r.prop.map((p, i) => `<tr><td><input type="checkbox" name="p${i}" checked></td><td>${fmtDate(p.date)}</td><td>${p.start}–${p.end} (${fmtDur(hm2min(p.end) - hm2min(p.start))})</td><td>${qLabel(p.q)}</td></tr>`).join('')}</tbody></table></div><div style="margin-top:12px"><button class="btn pri" type="submit">Valider les créneaux cochés</button></div></form>` : '<div class="empty">Rien à planifier : tout est déjà planifié ou atteint 🎉</div>'}${r.unplaced.length ? `<div class="al danger" style="margin-top:12px"><div class="ai">⚠️</div><div><div class="at">Impossible de tout placer</div><div class="ax">${r.unplaced.map(u => `${qLabel(u.q)} : ${fmtDur(u.min)}`).join(' · ')} ne rentrent pas dans les créneaux libres. Décide : élargir les fenêtres (Réglages), reporter à la semaine suivante ou baisser temporairement un objectif.</div></div></div>` : ''}</div>`;
+  } else {
+    const sg = adjustSuggestions();
+    body = `<div class="card" style="margin-bottom:14px"><div class="ch"><h2>🧠 Objectifs assistés</h2></div>${sg.length ? sg.map(s => `<div class="al warn"><div class="ai">${s.q.icon}</div><div style="flex:1"><div class="at">${esc(s.q.label)} : cible ${fmtTarget(s.q, s.from)} jugée trop ambitieuse ?</div><div class="ax">${esc(s.why)} Je propose ${fmtTarget(s.q, s.to)} (ou de garder ${fmtTarget(s.q, s.from)} avec de meilleurs créneaux). Rien ne change sans ton accord.</div><div class="aa"><button class="btn sm ok" ${A('adjAccept', { id: s.q.id, to: s.to })}>Accepter ${fmtTarget(s.q, s.to)}</button><button class="btn sm" ${A('adjRefuse', { id: s.q.id })}>Garder ${fmtTarget(s.q, s.from)}</button></div></div></div>`).join('') : '<div class="empty">Aucune proposition d’ajustement pour le moment.<br>Le conseiller en émet après 3 semaines consécutives sous 85 % de la cible.</div>'}</div>
+      <div class="card"><div class="ch"><h2>Historique des propositions</h2></div>${S.proposals.length ? `<div class="tw"><table><thead><tr><th>Date</th><th>Type</th><th>Détail</th><th>Décision</th></tr></thead><tbody>${S.proposals.slice().reverse().slice(0, 60).map(p => `<tr><td>${new Date(p.ts).toLocaleDateString('fr-FR')}</td><td>${p.kind}</td><td>${esc(p.text)}</td><td><span class="chip ${p.decision === 'accepté' ? 'ok' : 'warn'}">${p.decision}</span></td></tr>`).join('')}</tbody></table></div>` : '<div class="empty">Aucun historique</div>'}</div>`;
+  }
+  return pageTop('🎯 Quotas & Conseiller', 'Cibles strictes, alertes de dépassement, rattrapage et réalisme', '') +
+    `<div class="tabs">${[['quotas', 'Quotas'], ['plan', 'Planificateur'], ['prop', 'Propositions & historique']].map(([k, l]) => `<button class="${sub === k ? 'on' : ''}" ${A('qsub', { v: k })}>${l}</button>`).join('')}</div>` + body;
+}
+/* ================= Écrans B : Journal, Libre, RDV, Recherche, Stats, Bilan, Réglages ================= */
+const norm = s => String(s ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const catOptions = (sel = '', all = '') => (all ? `<option value="">${all}</option>` : '') + S.quotas.map(q => `<option value="${q.id}" ${q.id === sel ? 'selected' : ''}>${q.icon} ${esc(q.label)}</option>`).join('');
+
+/* ---------- JOURNAL DES OPÉRATIONS ---------- */
+function journalRows() {
+  const f = UI.jf, tx = norm(f.text);
+  return S.entries.filter(e => (!f.from || e.date >= f.from) && (!f.to || e.date <= f.to) && (!f.cat || e.cat === f.cat) && (!tx || norm((Q(e.cat) || {}).label + ' ' + e.note + ' ' + (e.sub || '') + ' ' + e.src).includes(tx)))
+    .sort((a, b) => (b.date + b.time).localeCompare(a.date + a.time) || b.ts - a.ts);
+}
+function journalTable() {
+  const rows = journalRows();
+  const bycat = {}; rows.forEach(e => { bycat[e.cat] = (bycat[e.cat] || 0) + e.v; });
+  const tot = Object.entries(bycat).map(([c, v]) => `<span class="chip p">${Q(c) ? Q(c).icon + ' ' + fmtVal(Q(c), v) : c}</span>`).join(' ');
+  return `<div class="rt" style="margin-bottom:8px">${rows.length} opération(s) ${tot ? '· ' + tot : ''}</div><div class="tw"><table class="rs"><thead><tr><th>Date</th><th>Heure</th><th>Catégorie</th><th>Valeur</th><th>Détail / note</th><th>Source</th><th></th></tr></thead><tbody>${rows.slice(0, 400).map(e => { const q = Q(e.cat); return `<tr><td data-l="Date">${fmtShort(e.date)}</td><td data-l="Heure">${e.time || ''}</td><td data-l="Catégorie">${q ? q.icon + ' ' + esc(q.label) : esc(e.cat)}</td><td data-l="Valeur"><b>${q ? fmtVal(q, e.v) : e.v}</b>${q && q.kind === 'count' && e.mins ? `<div class="rt">${fmtDur(e.mins)}</div>` : ''}</td><td data-l="Détail">${esc(e.sub || '')} ${esc(e.note || '')}</td><td data-l="Source"><span class="chip">${esc(e.src)}</span></td><td style="white-space:nowrap"><button class="btn sm ic" ${A('entryEdit', { id: e.id })}>✎</button><button class="btn sm ic" ${A('entryDel', { id: e.id })}>🗑</button></td></tr>`; }).join('') || '<tr><td colspan="7"><div class="empty">Aucune opération pour ces filtres</div></td></tr>'}</tbody></table></div>${rows.length > 400 ? '<div class="rt">400 premières lignes affichées — affinez les filtres.</div>' : ''}`;
+}
+function vJournal() {
+  const sub = UI.jSub, f = UI.jf;
+  let body;
+  if (sub === 'saisies') body = `<div class="card"><div class="fr"><label>Du<input type="date" data-live="jf" name="from" value="${f.from}"></label><label>Au<input type="date" data-live="jf" name="to" value="${f.to}"></label><label>Catégorie<select data-live="jf" name="cat">${catOptions(f.cat, 'Toutes')}</select></label><label style="flex:1;min-width:140px">Recherche<input data-live="jf" name="text" value="${esc(f.text)}" placeholder="note, détail…"></label><button class="btn sm" ${A('jfReset')}>Réinitialiser</button></div><div id="jres">${journalTable()}</div></div>`;
+  else {
+    const rows = S.audit.slice().reverse().slice(0, 300);
+    body = `<div class="card"><div class="ch"><h2>Historique des opérations</h2><span class="rt">${S.audit.length} événement(s) conservés</span></div><div class="tw"><table class="rs"><thead><tr><th>Quand</th><th>Type</th><th>Détail</th></tr></thead><tbody>${rows.map(a => `<tr><td data-l="Quand">${new Date(a.ts).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' })}</td><td data-l="Type"><span class="chip">${esc(a.type)}</span></td><td data-l="Détail">${esc(a.text)}</td></tr>`).join('') || '<tr><td colspan="3"><div class="empty">Vide</div></td></tr>'}</tbody></table></div></div>`;
+  }
+  return pageTop('📒 Journal des opérations', 'Toutes les saisies, modifiables, avec historique', `<button class="btn pri" ${A('quick')}>＋ Ajouter</button><button class="btn" ${A('csvEntries')}>⬇ CSV</button>`) +
+    `<div class="tabs">${[['saisies', 'Saisies'], ['activite', 'Historique des modifications']].map(([k, l]) => `<button class="${sub === k ? 'on' : ''}" ${A('jsub', { v: k })}>${l}</button>`).join('')}</div>` + body;
+}
+
+/* ---------- LIBRE / BLOC-NOTES ---------- */
+function libreList() {
+  const tx = norm(UI.libreText || '');
+  const rows = S.libre.filter(l => !tx || norm(l.text + ' ' + (l.cat ? (Q(l.cat) || {}).label : '')).includes(tx)).sort((a, b) => (b.date + (b.from || '')).localeCompare(a.date + (a.from || '')));
+  if (!rows.length) return '<div class="empty">Rien pour l’instant. Note ici ce que tu as fait en dehors du planning (ex. « 15h–17h : hammam »).</div>';
+  const g = {}; rows.forEach(l => (g[l.date] = g[l.date] || []).push(l));
+  return Object.keys(g).sort().reverse().map(d => `<h3 style="margin:12px 0 4px">${fmtDate(d)}</h3>` + g[d].map(l => `<div class="ln"><div class="lt">${l.from ? l.from + '<br>' + l.to : '—'}</div><div class="lb2"><div style="white-space:pre-wrap">${esc(l.text)}</div><div class="rt">${l.from ? fmtDur(hm2min(l.to) - hm2min(l.from)) : ''}${l.cat ? ' · compté dans ' + qLabel(l.cat) : ''}</div></div><button class="btn sm ic" ${A('libreEdit', { id: l.id })}>✎</button><button class="btn sm ic" ${A('libreDel', { id: l.id })}>🗑</button></div>`).join('')).join('');
+}
+function vLibre() {
+  const t = todayStr();
+  return pageTop('📝 Libre / Bloc-notes', 'Activités hors planning, avec ou sans horaire — rien n’est compté sauf si tu le choisis', `<button class="btn pri" ${A('libreNew')}>＋ Nouvelle note</button>`) +
+    `<div class="g g2"><div class="card"><div class="ch"><h2>Ajout rapide</h2></div><form class="fm" data-form="libreSave"><div class="row"><label>Date<input type="date" name="date" value="${t}" required></label><label>De<input type="time" name="from"></label><label>À<input type="time" name="to"></label></div><label>Note<textarea name="text" placeholder="Ex. Je suis allé au hammam, sortie avec un ami, courses…" required></textarea></label><label>Compter dans un quota (facultatif)<select name="cat"><option value="">— Non, simple note —</option>${catOptions('')}</select></label><button class="btn pri" type="submit">Enregistrer</button></form></div>
+    <div class="card"><div class="fr"><label style="flex:1">Rechercher<input data-live="libre" name="t" value="${esc(UI.libreText || '')}" placeholder="mot-clé…"></label></div><div id="lres">${libreList()}</div></div></div>`;
+}
+
+/* ---------- RENDEZ-VOUS ---------- */
+function apptRow(a) {
+  const at = new Date(a.date + 'T' + (a.time || '09:00') + ':00').getTime(), diff = at - NOWFN().getTime();
+  let rem = '';
+  if (!a.done) rem = diff > 24 * 3600e3 ? `<span class="chip">rappels à J-1 et H-5</span>` : diff > 5 * 3600e3 ? `<span class="chip warn">⏰ rappel 24 h actif</span>` : diff > -3600e3 ? `<span class="chip bad">⏰ rappel 5 h actif</span>` : `<span class="chip warn">passé — à cocher</span>`;
+  return `<div class="ln"><div class="lt">${fmtShort(a.date)}<br>${a.time || ''}</div><div class="lb2"><div style="font-weight:700;${a.done ? 'text-decoration:line-through;opacity:.6' : ''}">${esc(a.title)}</div><div class="rt">${esc(a.place || '')} ${a.note ? '· ' + esc(a.note) : ''}</div><div style="margin-top:4px">${a.done ? '<span class="chip ok">✔ C’est bon</span>' : rem}</div></div><div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end">${a.done ? `<button class="btn sm" ${A('apptUndo', { id: a.id })}>↺</button>` : `<button class="btn sm ok" ${A('apptDone', { id: a.id })}>✔ C’est bon</button>`}<button class="btn sm ic" title="Ajouter à l’agenda du téléphone (rappels 24 h + 5 h)" ${A('apptIcs', { id: a.id })}>📲</button><button class="btn sm ic" ${A('apptEdit', { id: a.id })}>✎</button><button class="btn sm ic" ${A('apptDel', { id: a.id })}>🗑</button></div></div>`;
+}
+function vRdv() {
+  const t = todayStr(), nowStr = t + (min2hm(nowMin()));
+  const all = S.appts.slice().sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || '')));
+  const up = all.filter(a => !a.done && (a.date + (a.time || '')) >= nowStr || (!a.done && a.date >= t)), pastL = all.filter(a => !up.includes(a)).reverse();
+  const list = UI.rdvSub === 'a_venir' ? up : pastL;
+  return pageTop('🔔 Rendez-vous', 'Rappels automatiques 24 h et 5 h avant — ils s’arrêtent dès que tu coches « C’est bon »', `<button class="btn" ${A('apptIcsAll')}>📲 Tout exporter (.ics)</button><button class="btn pri" ${A('apptNew')}>＋ Rendez-vous</button>`) +
+    `<div class="tabs">${[['a_venir', `À venir (${up.length})`], ['passes', `Passés / faits (${pastL.length})`]].map(([k, l]) => `<button class="${UI.rdvSub === k ? 'on' : ''}" ${A('rdvsub', { v: k })}>${l}</button>`).join('')}</div>
+    <div class="card">${list.length ? list.map(apptRow).join('') : '<div class="empty">Aucun rendez-vous ici.</div>'}</div>
+    <div class="card" style="margin-top:14px"><div class="sub">ℹ️ Les rappels s’affichent dans l’app (alerte + notification si autorisée) <b>quand elle est ouverte</b>. Pour être prévenu même app fermée, utilise 📲 : le rendez-vous est ajouté à l’agenda du téléphone avec deux alarmes (24 h et 5 h avant).</div></div>`;
+}
+
+/* ---------- RECHERCHE ---------- */
+function searchRows() {
+  const f = UI.sf, tx = norm(f.text), out = [];
+  const inRange = d => (!f.from || d >= f.from) && (!f.to || d <= f.to);
+  const push = r => { if (!inRange(r.date)) return; if (f.type && r.type !== f.type) return; if (f.cat && r.cat !== f.cat) return; if (f.status && r.status !== f.status) return; if (tx && !norm(r.hay).includes(tx)) return; out.push(r); };
+  for (const e of S.entries) { const q = Q(e.cat); push({ type: 'saisie', date: e.date, time: e.time, cat: e.cat, text: `${q ? q.label : e.cat}${e.sub ? ' · ' + e.sub : ''}${e.note ? ' — ' + e.note : ''}`, val: q ? fmtVal(q, e.v) : e.v, hay: `${q ? q.label : ''} ${e.sub || ''} ${e.note || ''} ${e.src}`, k: 'e', id: e.id, num: e.v, status: '' }); }
+  for (const b of S.blocks) { const st = effStatus(b), q = Q(b.q); push({ type: 'bloc', date: b.date, time: b.start, cat: b.q || '', text: `${b.title} (${b.start}–${b.end})${b.reason ? ' — ' + b.reason : ''}${b.note ? ' — ' + b.note : ''}`, val: STATUS[st][1] + ' ' + STATUS[st][0], hay: `${b.title} ${q ? q.label : ''} ${b.reason || ''} ${b.note || ''} ${STATUS[st][0]}`, k: 'b', id: b.id, status: st }); }
+  for (const l of S.libre) push({ type: 'libre', date: l.date, time: l.from || '', cat: l.cat || '', text: l.text, val: l.from ? fmtDur(hm2min(l.to) - hm2min(l.from)) : '', hay: l.text, k: 'l', id: l.id, status: '' });
+  for (const a of S.appts) push({ type: 'rdv', date: a.date, time: a.time || '', cat: '', text: `${a.title}${a.place ? ' · ' + a.place : ''}${a.note ? ' — ' + a.note : ''}`, val: a.done ? '✔ fait' : 'à venir', hay: `${a.title} ${a.place || ''} ${a.note || ''} rendez-vous`, k: 'a', id: a.id, status: a.done ? 'done' : '' });
+  for (const [d, r] of Object.entries(S.reviews)) if (r.note || r.mood) push({ type: 'bilan', date: d, time: '23:00', cat: '', text: `Bilan du soir — humeur ${r.mood || '–'}/5, énergie ${r.energy || '–'}/5 ${r.note ? '— ' + r.note : ''}`, val: '', hay: `bilan ${r.note || ''}`, k: 'r', id: d, status: '' });
+  if (f.type === 'historique') for (const a of S.audit) push({ type: 'historique', date: ymd(new Date(a.ts)), time: new Date(a.ts).toTimeString().slice(0, 5), cat: '', text: a.text, val: a.type, hay: a.text + ' ' + a.type, k: 'x', id: a.id, status: '' });
+  return out.sort((a, b) => (b.date + b.time).localeCompare(a.date + a.time));
+}
+function searchTable() {
+  const rows = searchRows();
+  const tot = {}; rows.filter(r => r.type === 'saisie').forEach(r => { tot[r.cat] = (tot[r.cat] || 0) + r.num; });
+  const chips = Object.entries(tot).map(([c, v]) => `<span class="chip p">${Q(c) ? Q(c).icon + ' ' + fmtVal(Q(c), v) : c}</span>`).join(' ');
+  const typeIc = { saisie: '📒', bloc: '📅', libre: '📝', rdv: '🔔', bilan: '🌙', historique: '🕘' };
+  return `<div class="rt" style="margin-bottom:8px"><b>${rows.length}</b> résultat(s) ${chips ? '· totaux des saisies : ' + chips : ''}</div><div class="tw"><table class="rs"><thead><tr><th>Date</th><th>Type</th><th>Contenu</th><th>Valeur / statut</th><th></th></tr></thead><tbody>${rows.slice(0, 300).map(r => `<tr><td data-l="Date">${fmtShort(r.date)}<div class="rt">${r.time}</div></td><td data-l="Type"><span class="chip">${typeIc[r.type] || ''} ${r.type}</span></td><td data-l="Contenu">${esc(r.text)}</td><td data-l="Valeur">${esc(r.val)}</td><td>${r.k === 'x' ? '' : `<button class="btn sm ic" ${A('open', { k: r.k, id: r.id })}>›</button>`}</td></tr>`).join('') || '<tr><td colspan="5"><div class="empty">Aucun résultat</div></td></tr>'}</tbody></table></div>${rows.length > 300 ? '<div class="rt">300 premiers résultats — affinez la recherche.</div>' : ''}`;
+}
+function vSearch() {
+  const f = UI.sf;
+  return pageTop('🔎 Recherche & filtres', 'Retrouve cigarettes, prières, révisions, notes… à n’importe quelle date', `<button class="btn" ${A('csvSearch')}>⬇ CSV des résultats</button>`) +
+    `<div class="card"><div class="fr"><label style="flex:2;min-width:180px">Mot-clé<input data-live="sf" name="text" value="${esc(f.text)}" placeholder="cigarette, prière, révision, hammam…" autocomplete="off"></label><label>Catégorie<select data-live="sf" name="cat">${catOptions(f.cat, 'Toutes')}</select></label><label>Type<select data-live="sf" name="type"><option value="">Tous</option>${['saisie', 'bloc', 'libre', 'rdv', 'bilan', 'historique'].map(x => `<option ${f.type === x ? 'selected' : ''}>${x}</option>`).join('')}</select></label><label>Statut (blocs)<select data-live="sf" name="status"><option value="">Tous</option>${Object.entries(STATUS).map(([k, v]) => `<option value="${k}" ${f.status === k ? 'selected' : ''}>${v[0]}</option>`).join('')}</select></label><label>Du<input type="date" data-live="sf" name="from" value="${f.from}"></label><label>Au<input type="date" data-live="sf" name="to" value="${f.to}"></label><button class="btn sm" ${A('sfReset')}>Réinitialiser</button></div><div id="sres">${searchTable()}</div></div>`;
+}
+
+/* ---------- STATISTIQUES ---------- */
+function periodLabel(p) {
+  if (p.kind === 'day') return fmtDate(p.from);
+  if (p.kind === 'week') return `Semaine du ${fmtShort(p.from)} au ${fmtShort(p.to)}`;
+  const d = parseYmd(p.from); return `${MONTHS[d.getMonth()][0].toUpperCase() + MONTHS[d.getMonth()].slice(1)} ${d.getFullYear()}`;
+}
+function vStats() {
+  const date = UI.statDate || todayStr(), kind = UI.statP, qf = UI.statQ, p = periodOf(kind, date), st = statsFor(p, qf), pp = prevPeriod(p, date), sp = statsFor(pp, qf);
+  const q1 = qf === 'all' ? null : Q(qf);
+  const step = kind === 'day' ? 1 : kind === 'week' ? 7 : 31;
+  const delta = (a, b, suf = '') => (a == null || b == null ? '<span class="chip">–</span>' : `<span class="chip ${a - b > 0 ? 'ok' : a - b < 0 ? 'bad' : ''}">${a - b > 0 ? '▲' : a - b < 0 ? '▼' : '='} ${Math.abs(Math.round(a - b))}${suf}</span>`);
+  const sc = st.score, cnt = st.cnt;
+  const pend = (cnt.unfilled || 0) + (cnt.planned || 0) + (cnt.inprogress || 0);
+  const perRows = st.per.map(r => `<tr><td data-l="Quota">${r.q.icon} ${esc(r.q.label)}</td><td data-l="Réalisé"><b>${fmtVal(r.q, r.done)}</b></td><td data-l="Cible">${r.q.mode === 'max' ? 'max ' : ''}${fmtVal(r.q, Math.round(r.target))}</td><td data-l="%" style="min-width:140px"><div class="bar"><i style="width:${clamp(r.pct, 0, 1) * 100}%;background:${r.q.mode === 'max' && r.pct > 1 ? 'var(--bad)' : r.q.color}"></i></div></td><td data-l="Taux">${Math.round(r.pct * 100)} %</td></tr>`).join('');
+  const dailyItems = st.series.map(x => ({ l: kind === 'week' ? DAYS[dow(x.d)] : String(parseYmd(x.d).getDate()), v: q1 ? (q1.kind === 'duration' ? x.v / 60 : x.v) : x.v / 60, c: x.d === todayStr() ? 'var(--p)' : (q1 ? q1.color : 'var(--p2)'), dim: x.d > todayStr() }));
+  const tgt = q1 ? (q1.day != null ? q1.day : q1.week / 7) / (q1.kind === 'duration' ? 60 : 1) : null;
+  const dist = Object.entries(st.timeBy).map(([id, v]) => ({ l: Q(id).label, v, c: Q(id).color })).sort((a, b) => b.v - a.v);
+  const wk = []; const ws0 = weekStartOf(date); for (let i = 7; i >= 0; i--) { const w = addDays(ws0, -7 * i); wk.push({ l: String(parseYmd(w).getDate()) + '/' + pad(parseYmd(w).getMonth() + 1), v: weekInfo(w, qf).score }); }
+  const hmap = {}; const hFrom = addDays(weekStartOf(todayStr()), -7 * 14);
+  for (let d = hFrom; d <= todayStr(); d = addDays(d, 1)) { if (q1) hmap[d] = dayRatio(q1, d); else { const s = dayInfo(d).score; hmap[d] = s == null ? null : s / 100; } }
+  const reasons = Object.entries(st.reasons).sort((a, b) => b[1] - a[1]).map(([l, v]) => ({ l: l.length > 12 ? l.slice(0, 11) + '…' : l, v, c: 'var(--warn)' }));
+  let mgrid = '';
+  if (kind === 'month') {
+    const [f, l] = monthRange(date); mgrid = DAYS.map(x => `<div class="rt" style="text-align:center;font-weight:700">${x}</div>`).join('');
+    for (let x = weekStartOf(f); x <= addDays(weekStartOf(l), 6); x = addDays(x, 1)) {
+      const out = x < f || x > l; let mk = '';
+      if (!out && x <= todayStr()) { const r = q1 ? dayRatio(q1, x) : (() => { const s = dayInfo(x).score; return s == null ? null : s / 100; })(); mk = r == null ? '<div class="mk" style="opacity:.25">·</div>' : r >= 1 - 1e-9 || (!q1 && r >= .8) ? '<div class="mk y">✓</div>' : r >= .5 ? '<div class="mk q">≈</div>' : '<div class="mk n">✗</div>'; }
+      mgrid += `<div class="mc ${out ? 'out' : ''} ${x === todayStr() ? 'today' : ''}" style="min-height:52px"><div class="dn">${parseYmd(x).getDate()}</div>${mk}</div>`;
+    }
+  }
+  const comp = `<tr><td>Score</td><td>${sc == null ? '–' : sc + ' %'}</td><td>${sp.score == null ? '–' : sp.score + ' %'}</td><td>${delta(sc, sp.score, ' pts')}</td></tr>
+    <tr><td>Temps réalisé (blocs)</td><td>${fmtDur(st.realMin)}</td><td>${fmtDur(sp.realMin)}</td><td>${delta(st.realMin, sp.realMin, ' min')}</td></tr>
+    <tr><td>Régularité</td><td>${st.regularity == null ? '–' : Math.round(st.regularity * 100) + ' %'}</td><td>${sp.regularity == null ? '–' : Math.round(sp.regularity * 100) + ' %'}</td><td>${delta(st.regularity == null ? null : st.regularity * 100, sp.regularity == null ? null : sp.regularity * 100, ' pts')}</td></tr>
+    <tr><td>Activités reportées</td><td>${cnt.postponed || 0}</td><td>${sp.cnt.postponed || 0}</td><td>${delta(-(cnt.postponed || 0), -(sp.cnt.postponed || 0))}</td></tr>`;
+  const sdet = kind === 'day' ? dayInfo(p.from, qf) : null;
+  return pageTop('📊 Statistiques & scores', 'Un seul jeu de filtres : tous les chiffres et graphiques sont recalculés sur le même périmètre', `<button class="btn" ${A('goBilan', { k: kind === 'month' ? 'week' : kind })}>📑 Bilan détaillé</button><button class="btn" onclick="window.print()">🖨 PDF / Imprimer</button>`) +
+    `<div class="card" style="margin-bottom:14px"><div class="fr" style="margin:0"><div class="tabs" style="margin:0">${[['day', 'Jour'], ['week', 'Semaine'], ['month', 'Mois']].map(([k, l]) => `<button class="${kind === k ? 'on' : ''}" ${A('statP', { v: k })}>${l}</button>`).join('')}</div><div style="display:flex;gap:6px;align-items:center"><button class="btn sm" ${A('statNav', { n: -step })}>‹</button><b style="min-width:200px;text-align:center">${periodLabel(p)}</b><button class="btn sm" ${A('statNav', { n: step })}>›</button><button class="btn sm" ${A('statToday')}>Aujourd’hui</button></div><label>Domaine / quota<select data-live="stq" name="q"><option value="all">Tous les quotas</option>${catOptions(qf)}</select></label>${qf !== 'all' ? `<button class="btn sm" ${A('statQreset')}>✕ Réinitialiser le filtre</button>` : ''}</div></div>
+    <div class="g g4">
+      <div class="card kpi">${ring((sc || 0) / 100, { size: 84, label: sc == null ? '–' : sc + '%', color: `var(--${sc == null ? 'mut' : sc >= 80 ? 'ok' : sc >= 50 ? 'warn' : 'bad'})` })}<div><div class="l">Score ${kind === 'day' ? 'du jour' : kind === 'week' ? 'de la semaine' : 'du mois'}</div><div>${delta(sc, sp.score, ' pts')} <span class="rt">vs précédent</span></div></div></div>
+      <div class="card"><div class="l rt">Réalisé / prévu (blocs terminés)</div><div class="v big">${fmtDur(st.realMin)}</div><div class="rt">sur ${fmtDur(st.plannedMin)} prévus · écart ${fmtDur(st.realMin - st.plannedMin)}</div></div>
+      <div class="card"><div class="l rt">Régularité (blocs faits / traités)</div><div class="v big">${st.regularity == null ? '–' : Math.round(st.regularity * 100) + ' %'}</div><div class="rt">${(cnt.done || 0)} faits · ${cnt.partial || 0} partiels · ${cnt.missed || 0} non faits</div></div>
+      <div class="card"><div class="l rt">Report & à qualifier</div><div class="v big">${st.reportRate == null ? '–' : Math.round(st.reportRate * 100) + ' %'}</div><div class="rt">${cnt.postponed || 0} reporté(s) · ${pend} non renseigné(s)/à venir</div></div>
+    </div>
+    ${sdet ? `<div class="card" style="margin-bottom:14px"><div class="ch"><h2>Détail du score du jour</h2></div>${sdet.comps.length ? sdet.comps.map(c => `<div class="ln"><div class="lb2"><b>${esc(c.k)}</b><div class="rt">${esc(c.d)}</div></div><div style="min-width:120px"><div class="bar"><i style="width:${c.v * 100}%"></i></div></div><b>${Math.round(c.v * 100)}%</b></div>`).join('') : '<div class="empty">Pas de données pour calculer un score (jour non renseigné ou futur).</div>'}</div>` : ''}
+    <div class="g g2">
+      <div class="card span2"><div class="ch"><h2>Quotas — réalisé vs cible (${kind === 'day' ? 'jour' : kind === 'week' ? 'semaine' : 'mois, proratisé'})</h2></div><div class="tw"><table class="rs"><thead><tr><th>Quota</th><th>Réalisé</th><th>Cible</th><th></th><th>Taux</th></tr></thead><tbody>${perRows}</tbody></table></div></div>
+      ${kind !== 'day' ? `<div class="card"><div class="ch"><h2>${q1 ? esc(q1.label) + ' par jour' : 'Activité par jour (heures)'}</h2></div><div class="tw">${barChart(dailyItems, { target: tgt, fmt: v => q1 && q1.kind === 'count' ? v : (Math.round(v * 10) / 10) + (q1 && q1.kind === 'count' ? '' : 'h'), minW: kind === 'month' ? 22 : 40 })}</div></div>` : ''}
+      <div class="card"><div class="ch"><h2>Répartition du temps</h2></div><div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">${donut(dist)}<div class="lg" style="flex-direction:column;margin:0">${dist.map(x => `<span><i style="background:${x.c}"></i>${esc(x.l)} — ${fmtDur(x.v)}</span>`).join('')}</div></div><div class="rt" style="margin-top:6px">Hors sommeil et café (qui chevauche les autres activités).</div></div>
+      <div class="card"><div class="ch"><h2>Évolution du score (8 semaines)</h2></div><div class="tw">${lineChart(wk)}</div></div>
+      <div class="card"><div class="ch"><h2>Calendrier de régularité (15 semaines)</h2></div><div class="tw">${heat(hmap, hFrom, todayStr(), q1 ? q1.color : 'var(--p2)')}</div><div class="rt" style="margin-top:6px">Plus la case est foncée, plus l’objectif du jour est atteint. Case vide = non renseigné.</div></div>
+      ${kind === 'month' ? `<div class="card"><div class="ch"><h2>Mois en un coup d’œil ✓ / ✗</h2></div><div class="mg">${mgrid}</div></div>` : ''}
+      <div class="card"><div class="ch"><h2>Causes des écarts</h2></div>${reasons.length ? `<div class="tw">${barChart(reasons, { showAvg: false, h: 160, minW: 70 })}</div>` : '<div class="empty">Aucune cause renseignée sur la période.</div>'}</div>
+      <div class="card span2"><div class="ch"><h2>Comparaison avec la période précédente</h2></div><div class="tw"><table><thead><tr><th>Indicateur</th><th>Actuel</th><th>Précédent</th><th>Évolution</th></tr></thead><tbody>${comp}</tbody></table></div></div>
+      ${q1 && q1.day != null ? `<div class="card kpi"><div><div class="l rt">Série actuelle (jours)</div><div class="big">${streak(q1)}</div></div></div>` : q1 && !q1.noPlan ? `<div class="card kpi"><div><div class="l rt">Série (semaines objectif atteint)</div><div class="big">${weekStreak(q1)}</div></div></div>` : ''}
+    </div>`;
+}
+
+/* ---------- BILAN (jour / semaine) ---------- */
+function weekReportText(ws) {
+  const wi = weekInfo(ws), we = addDays(ws, 6);
+  let t = `BILAN DE LA SEMAINE ${fmtShort(ws)} → ${fmtShort(we)}\nScore : ${wi.score == null ? '–' : wi.score + ' %'}\n\n`;
+  wi.rows.forEach(r => { t += `${r.q.icon} ${r.q.label} : ${fmtVal(r.q, r.done)} / ${r.q.mode === 'max' ? 'max ' : ''}${fmtVal(r.q, r.target)} → ${r.reached ? 'OBJECTIF ATTEINT' : r.q.mode === 'max' ? 'PLAFOND DÉPASSÉ' : 'NON ATTEINT'}\n`; });
+  const miss = S.blocks.filter(b => b.date >= ws && b.date <= we && b.q && ['missed', 'partial', 'postponed', 'unfilled'].includes(effStatus(b)));
+  if (miss.length) t += `\nTâches non faites / partielles :\n` + miss.map(b => `- ${fmtShort(b.date)} ${b.start} ${b.title} (${STATUS[effStatus(b)][0]})${b.reason ? ' — ' + b.reason : ''}`).join('\n');
+  return t;
+}
+function vBilan() {
+  const kind = UI.bilanKind, date = UI.bilanDate || todayStr();
+  if (kind === 'day') {
+    const di = dayInfo(date), rv = S.reviews[date] || {}, bl = S.blocks.filter(b => b.date === date && b.status !== 'cancelled').sort((a, b) => a.start.localeCompare(b.start));
+    return pageTop(`🌙 Bilan du ${fmtDate(date)}`, rv.closed ? 'Bilan clôturé' : 'Bilan non clôturé', `<button class="btn" ${A('go', { tab: 'cockpit' })}>‹ Retour</button><button class="btn pri" ${A('bilan', { date })}>Faire / modifier le bilan</button>`) +
+      `<div class="g g2"><div class="card kpi">${ring((di.score || 0) / 100, { size: 90, label: di.score == null ? '–' : di.score + '%' })}<div><div class="l">Score du jour</div>${di.comps.map(c => `<div class="rt">${esc(c.k)} : ${esc(c.d)}</div>`).join('')}</div></div><div class="card"><h2>Humeur & énergie</h2><div class="big">${rv.mood ? ['😞', '😕', '😐', '🙂', '😄'][rv.mood - 1] : '–'} <span class="rt">énergie ${rv.energy || '–'}/5</span></div><div style="white-space:pre-wrap">${esc(rv.note || '')}</div></div></div><div class="card"><div class="ch"><h2>Activités</h2></div>${bl.length ? bl.map(blockRow).join('') : '<div class="empty">Aucune activité</div>'}</div>`;
+  }
+  const ws = weekStartOf(date), we = addDays(ws, 6), wi = weekInfo(ws), t = todayStr();
+  const miss = S.blocks.filter(b => b.date >= ws && b.date <= we && b.q && ['missed', 'partial', 'postponed', 'unfilled'].includes(effStatus(b))).sort((a, b) => (a.date + a.start).localeCompare(b.date + b.start));
+  const st = statsFor(periodOf('week', date));
+  const days = [...Array(7)].map((_, i) => { const d = addDays(ws, i); return { l: DAYS[i], v: dayInfo(d).score || 0, dim: d > t }; });
+  const recos = [];
+  wi.rows.forEach(r => {
+    if (r.q.mode === 'min' && !r.reached) recos.push(`${r.q.icon} ${r.q.label} : ${fmtVal(r.q, r.done)} sur ${fmtVal(r.q, r.target)} (${Math.round(r.pct * 100)} %). Option : garder la cible et placer un rattrapage la semaine prochaine, ou la baisser temporairement — à ta décision.`);
+    if (r.q.mode === 'max' && !r.reached) recos.push(`${r.q.icon} ${r.q.label} : ${fmtVal(r.q, r.done)} pour un plafond de ${fmtVal(r.q, r.target)}. Repère les jours/circonstances qui poussent à dépasser (voir Journal) et fixe une règle simple pour la semaine suivante.`);
+  });
+  if (!recos.length) recos.push('Tous les objectifs de la semaine sont tenus. Bravo — pense à protéger ton repos.');
+  const top = st.reasons && Object.entries(st.reasons).sort((a, b) => b[1] - a[1])[0];
+  if (top) recos.push(`Cause la plus fréquente des écarts : « ${top[0]} » (${top[1]} fois).`);
+  return pageTop(`📑 Bilan de la semaine`, `${fmtShort(ws)} → ${fmtShort(we)}`, `<button class="btn" ${A('bilanNav', { n: -7 })}>‹</button><button class="btn" ${A('bilanNav', { n: 7 })}>›</button><button class="btn" ${A('copyReport', { ws })}>📋 Copier</button><button class="btn" onclick="window.print()">🖨 PDF</button><button class="btn pri" ${A('wbDone', { ws })}>✔ Marquer comme lu</button>`) +
+    `<div class="g g2"><div class="card kpi">${ring((wi.score || 0) / 100, { size: 96, label: wi.score == null ? '–' : wi.score + '%' })}<div><div class="l">Score de la semaine</div><div class="rt">${wi.rows.filter(r => r.reached).length}/${wi.rows.length} objectifs tenus</div></div></div><div class="card"><div class="ch"><h2>Score par jour</h2></div><div class="tw">${barChart(days, { h: 140, showAvg: false, fmt: v => v + '%', minW: 44 })}</div></div></div>
+    <div class="card" style="margin-bottom:14px"><div class="ch"><h2>Objectifs : atteints ou non ?</h2></div><div class="tw"><table class="rs"><thead><tr><th>Quota</th><th>Réalisé</th><th>Cible</th><th>%</th><th>Verdict</th></tr></thead><tbody>${wi.rows.map(r => `<tr><td data-l="Quota">${r.q.icon} ${esc(r.q.label)}</td><td data-l="Réalisé"><b>${fmtVal(r.q, r.done)}</b></td><td data-l="Cible">${r.q.mode === 'max' ? 'max ' : ''}${fmtVal(r.q, r.target)}</td><td data-l="%">${Math.round(r.pct * 100)} %</td><td data-l="Verdict"><span class="chip ${r.reached ? 'ok' : 'bad'}">${r.reached ? (r.q.mode === 'max' ? '✔ Plafond respecté' : '✔ Objectif atteint') : (r.q.mode === 'max' ? '✘ Plafond dépassé' : '✘ Non atteint')}</span></td></tr>`).join('')}</tbody></table></div></div>
+    <div class="card" style="margin-bottom:14px"><div class="ch"><h2>Tâches non faites, partielles ou reportées</h2></div>${miss.length ? miss.map(b => `<div class="ln"><div class="lt">${fmtShort(b.date)}<br>${b.start}</div><div class="lb2"><b>${qLabel(b.q)} — ${esc(b.title)}</b> ${stChip(effStatus(b))}<div class="rt">${b.reason ? esc(b.reason) : 'cause non renseignée'}${b.note ? ' — ' + esc(b.note) : ''}</div></div>${['unfilled', 'missed', 'partial'].includes(effStatus(b)) ? `<button class="btn sm" ${A('qualify', { id: b.id })}>Corriger</button><button class="btn sm" ${A('replan', { id: b.id })}>Reporter</button>` : ''}</div>`).join('') : '<div class="empty">Aucune tâche manquée cette semaine 🎉</div>'}</div>
+    <div class="card"><div class="ch"><h2>💡 Recommandations (sans pression)</h2></div>${recos.map(r => `<div class="al info"><div class="ai">💡</div><div class="ax" style="color:var(--tx)">${esc(r)}</div></div>`).join('')}</div>`;
+}
+
+/* ---------- RÉGLAGES & DONNÉES ---------- */
+function vSettings() {
+  const s = S.settings, size = Math.round(JSON.stringify(S).length / 1024);
+  return pageTop('⚙️ Réglages & données', `Stockage local (${storageMode === 'idb' ? 'IndexedDB' : 'localStorage'}) · ${size} Ko · V${VERSION}`) +
+    `<div class="g g2">
+    <div class="card"><div class="ch"><h2>Apparence & bilan</h2></div><form class="fm" data-form="settingsSave"><div class="row"><label>Prénom (message d’accueil)<input name="name" value="${esc(s.name || 'Hamza')}"></label><label>Thème<select name="theme">${[['auto', 'Automatique'], ['light', 'Clair'], ['dark', 'Sombre']].map(([k, l]) => `<option value="${k}" ${s.theme === k ? 'selected' : ''}>${l}</option>`).join('')}</select></label><label>Heure du bilan du soir<input type="time" name="bilanHour" value="${pad(s.bilanHour)}:00"></label></div><div class="ch"><h3>Fenêtres libres (créneaux utilisables par le planificateur)</h3></div><div class="rt">Le temps de sommeil, de travail et de transport est protégé : ne mets ici que ce qui est vraiment disponible.</div>${DAYSL.map((d, i) => `<div class="row" style="align-items:center;grid-template-columns:90px 1fr 1fr auto"><b>${d}</b><input type="time" name="f${i}s" value="${s.free[i] ? s.free[i][0] : '18:45'}"><input type="time" name="f${i}e" value="${s.free[i] ? s.free[i][1] : '22:30'}"><label style="flex-direction:row;align-items:center;gap:5px"><input type="checkbox" name="f${i}n" ${s.free[i] ? '' : 'checked'}>aucune</label></div>`).join('')}<label>Causes d’imprévus / non-réalisation (une par ligne)<textarea name="reasons" rows="6">${esc(S.reasons.join('\n'))}</textarea></label><button class="btn pri" type="submit">Enregistrer</button></form></div>
+    <div style="display:grid;gap:14px;align-content:start">
+      <div class="card"><div class="ch"><h2>Notifications</h2></div><div class="sub" style="margin-bottom:8px">Statut : <b>${'Notification' in window ? Notification.permission : 'non supporté'}</b>. Les notifications fonctionnent app ouverte (ou en arrière-plan sur le navigateur). Pour les rendez-vous app fermée, utilise l’export 📲 vers l’agenda du téléphone.</div><button class="btn" ${A('notifAsk')}>Autoriser les notifications</button></div>
+      <div class="card"><div class="ch"><h2>Mon travail (bloc fixe)</h2></div><form class="fm" data-form="workAdd"><div class="row"><label>Début<input type="time" name="s" value="08:30"></label><label>Fin<input type="time" name="e" value="17:00"></label><label>Semaines<input type="number" name="w" value="8" min="1" max="52"></label></div><button class="btn" type="submit">Ajouter lun–ven (bloc fixe, hors score)</button></form></div>
+      <div class="card"><div class="ch"><h2>Sauvegarde & restauration</h2></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn pri" ${A('exportJson')}>⬇ Exporter (JSON)</button><label class="btn" style="cursor:pointer">⬆ Importer<input type="file" accept=".json" id="impfile" class="hide"></label><button class="btn" ${A('backups')}>🕘 Copies automatiques</button></div><div class="sub" style="margin-top:8px">Une copie automatique est gardée chaque jour (7 derniers jours) dans le navigateur. Pense à exporter régulièrement un fichier JSON sur ton PC/Drive.</div></div>
+      <div class="card"><div class="ch"><h2>Données de démonstration</h2></div><div class="sub" style="margin-bottom:8px">4 semaines d’historique fictif pour tester graphiques et bilans. Retirables en un clic sans toucher à tes vraies données.</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" ${A('demoLoad')}>Charger la démo</button><button class="btn" ${A('demoClear')}>Retirer la démo</button><button class="btn bad" ${A('resetAll')}>Tout effacer</button></div></div>
+    </div></div>`;
+}
+/* ================= Actions, formulaires, rendu, démarrage ================= */
+const VIEWS = { cockpit: vCockpit, cal: vCal, quotas: vQuotas, journal: vJournal, libre: vLibre, rdv: vRdv, search: vSearch, stats: vStats, bilan: vBilan, settings: vSettings };
+function applyTheme() { const th = S.settings.theme; document.documentElement.dataset.th = th === 'auto' ? (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light') : th; }
+function render(keep = true) {
+  const y = window.scrollY, st = $('#main');
+  st.innerHTML = (VIEWS[UI.tab] || vCockpit)();
+  renderNav(); renderTimerBar();
+  if (keep) window.scrollTo(0, y); else window.scrollTo(0, 0);
+}
+function setTab(t) { UI.tab = t; history.replaceState(null, '', '#' + t); closeModal(true); render(false); }
+function isTyping() { const a = document.activeElement; return a && ['INPUT', 'TEXTAREA', 'SELECT'].includes(a.tagName); }
+const curDate = () => UI.actDate || todayStr();
+
+/* ---------- limites : toast immédiat ---------- */
+function checkLimitToast(q) {
+  if (!q || q.mode !== 'max') return;
+  const t = todayStr(), ws = weekStartOf(t), d = qDone(q, t, t), w = qDone(q, ws, addDays(ws, 6));
+  if (q.day != null && d > q.day) toast(`🚨 <b>${esc(q.label)}</b> : ${fmtVal(q, d)} aujourd’hui — limite de ${fmtVal(q, q.day)} dépassée`, 'danger', 6000, 'lim:' + q.id);
+  else if (w > q.week) toast(`🚨 <b>${esc(q.label)}</b> : plafond hebdo dépassé (${fmtVal(q, w)} / ${fmtVal(q, q.week)})`, 'danger', 6000, 'lim:' + q.id);
+  else if (q.day != null && d >= q.day * .8) toast(`⚠️ <b>${esc(q.label)}</b> : ${fmtVal(q, d)} / ${fmtVal(q, q.day)} aujourd’hui`, 'warn', 4200, 'lim:' + q.id);
+  else if (w >= q.week * .85) toast(`⚠️ <b>${esc(q.label)}</b> : ${Math.round(100 * w / q.week)} % du plafond hebdo`, 'warn', 4200, 'lim:' + q.id);
+}
+
+/* ---------- formulaire de saisie (ajout rapide / édition) ---------- */
+function entryForm(e, pre = {}) {
+  const v = e || { cat: pre.cat || 'cigarette', date: curDate(), time: min2hm(nowMin()), v: 0, mins: 0, note: '', sub: '' };
+  const q = Q(v.cat) || S.quotas[0];
+  modal(`<h2>${e ? 'Modifier la saisie' : '＋ Saisie rapide'}</h2><form class="fm" data-form="entrySave"><input type="hidden" name="id" value="${e ? e.id : ''}">
+  <label>Catégorie<select name="cat" data-qk="entrycat">${catOptions(v.cat)}</select></label>
+  <div class="row"><label>Date<input type="date" name="date" value="${v.date}" required></label><label>Heure<input type="time" name="time" value="${v.time || ''}"></label></div>
+  <div class="row k-dur"><label>Heures<input type="number" name="h" min="0" value="${q.kind === 'duration' ? Math.floor(v.v / 60) : 0}"></label><label>Minutes<input type="number" name="m" min="0" max="59" value="${q.kind === 'duration' ? v.v % 60 : 0}"></label></div>
+  <div class="rg k-dur">${[15, 30, 45, 60, 90, 120].map(x => `<label><input type="radio" name="qd" value="${x}" data-qk="quickdur">${fmtDur(x)}</label>`).join('')}</div>
+  <div class="row k-cnt"><label>Quantité<input type="number" name="qty" min="0" step="1" value="${q.kind === 'count' ? (v.v || 1) : 1}"></label><label>Durée (min, facultatif)<input type="number" name="mins" min="0" value="${v.mins || 0}"></label></div>
+  <label class="k-pr">Prière<select name="sub">${PRAYERS.map(p => `<option ${v.sub === p ? 'selected' : ''}>${p}</option>`).join('')}</select></label>
+  <label>Note<input name="note" value="${esc(v.note || '')}" placeholder="contexte, cause…"></label>
+  <button class="btn pri" type="submit">Enregistrer</button></form>`);
+  toggleKind($('#modal form'));
+}
+function toggleKind(f) {
+  if (!f) return; const sel = f.querySelector('[name=cat]'); if (!sel) return; const q = Q(sel.value);
+  $$('.k-dur', f).forEach(x => x.classList.toggle('hide', !q || q.kind !== 'duration'));
+  $$('.k-cnt', f).forEach(x => x.classList.toggle('hide', !q || q.kind !== 'count'));
+  $$('.k-pr', f).forEach(x => x.classList.toggle('hide', !q || !q.prayers));
+}
+
+/* ---------- bloc : formulaire / détail ---------- */
+function blockForm(b, d = {}) {
+  const v = b || { date: d.date || todayStr(), start: d.start || '18:45', end: d.end || min2hm(hm2min(d.start || '18:45') + 90), title: '', q: d.q || '', fixed: false, note: '' };
+  const dw = dow(v.date);
+  modal(`<h2>${b ? 'Modifier le bloc' : 'Nouveau bloc de planning'}</h2><form class="fm" data-form="blockSave"><input type="hidden" name="id" value="${b ? b.id : ''}">
+  <label>Activité liée à un quota<select name="q" data-qk="blockq"><option value="">— Aucune (travail, fixe, autre) —</option>${S.quotas.filter(q => !q.noPlan).map(q => `<option value="${q.id}" ${q.id === v.q ? 'selected' : ''}>${q.icon} ${esc(q.label)}</option>`).join('')}</select></label>
+  <label>Titre<input name="title" value="${esc(v.title)}" placeholder="Ex. Révision fiscalité – chap. 3"></label>
+  <div class="row"><label>Date<input type="date" name="date" value="${v.date}" required></label><label>Début<input type="time" name="start" value="${v.start}" required></label><label>Fin<input type="time" name="end" value="${v.end}" required></label></div>
+  ${b ? '' : `<label>Répétition<select name="rep" data-qk="rep"><option value="0">Une seule fois</option><option value="1">Chaque semaine, aux jours choisis…</option></select></label><div class="hide" id="repbox"><div class="rg">${DAYS.map((x, i) => `<label><input type="checkbox" name="d${i}" ${i === dw ? 'checked' : ''}>${x}</label>`).join('')}</div><label style="margin-top:8px">Pendant combien de semaines ?<input type="number" name="weeks" value="4" min="1" max="52"></label></div>`}
+  <div class="rg"><label><input type="checkbox" name="fixed" ${v.fixed ? 'checked' : ''}>🔒 Non déplaçable (jamais modifié par le replanificateur)</label></div>
+  <label>Note<textarea name="note">${esc(v.note || '')}</textarea></label>
+  <button class="btn pri" type="submit">Enregistrer</button></form>`);
+}
+function blockModal(id) {
+  const b = S.blocks.find(x => x.id === id); if (!b) return;
+  const st = effStatus(b), q = Q(b.q), act = Math.round(blockActual(b)), p = blockPlanned(b);
+  modal(`<h2>${q ? q.icon + ' ' : ''}${esc(b.title)}</h2><div class="sub">${fmtDate(b.date)} · ${b.start}–${b.end} (${fmtDur(p)})</div><div style="margin:10px 0">${stChip(st)} ${b.fixed ? '<span class="chip">🔒 fixe</span>' : ''} ${act ? `<span class="chip p">${fmtDur(act)} réalisés</span>` : ''}</div>${b.reason ? `<div class="rt">Cause : ${esc(b.reason)}</div>` : ''}${b.note ? `<div style="white-space:pre-wrap;margin:6px 0">${esc(b.note)}</div>` : ''}${b.rescheduledFrom ? '<div class="rt">↪ Reporté depuis un autre créneau</div>' : ''}
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">${b.q && ['planned', 'inprogress', 'unfilled'].includes(st) ? `<button class="btn pri" ${A('timerStart', { id })}>▶ Chrono</button>` : ''}${b.q ? `<button class="btn" ${A('qualify', { id })}>✔ Qualifier</button>` : ''}${b.q && !b.fixed ? `<button class="btn" ${A('replan', { id })}>↪ Reporter</button>` : ''}<button class="btn" ${A('blkEdit', { id })}>✎ Modifier</button><button class="btn" ${A('blkDup', { id })}>⎘ Dupliquer</button>${st !== 'planned' ? `<button class="btn" ${A('blkReset', { id })}>↺ Réinitialiser</button>` : ''}<button class="btn bad" ${A('blkDel', { id })}>🗑 Supprimer</button></div>`);
+}
+
+/* ---------- qualifier un bloc (fait / partiel / non fait / reporter / annuler) ---------- */
+function qualifyModal(id, opts = {}) {
+  const b = S.blocks.find(x => x.id === id); if (!b) return;
+  const p = blockPlanned(b), a = Math.round(blockActual(b)), q = Q(b.q);
+  modal(`<h2>Qualifier : ${esc(b.title)}</h2><div class="sub">${fmtDate(b.date)} · ${b.start}–${b.end} · prévu ${fmtDur(p)}${a ? ` · déjà ${fmtDur(a)} enregistrés` : ''}</div>
+  <form class="fm" data-form="qualifySave" style="margin-top:12px"><input type="hidden" name="id" value="${id}">
+  <div class="rg">${[['done', '✅ Fait'], ['partial', '🟡 Partiel'], ['missed', '❌ Non fait'], ['postponed', '↪ Reporter'], ['cancelled', '🚫 Annuler']].map(([k, l], i) => `<label><input type="radio" name="out" value="${k}" data-qk="outcome" ${(opts.pre || 'done') === k ? 'checked' : ''}>${l}</label>`).join('')}</div>
+  <div class="row" id="q-min"><label>Minutes à ajouter (réalisées)<input type="number" name="add" min="0" value="${Math.max(0, p - a)}"></label>${q && q.kind === 'count' ? '<label>&nbsp;<span class="rt">Une séance complète sera comptée si « Fait ».</span></label>' : ''}</div>
+  <div id="q-why"><label>Pourquoi ? (cause)<select name="reason"><option value="">—</option>${S.reasons.map(r => `<option>${esc(r)}</option>`).join('')}</select></label><label style="margin-top:8px">Note<textarea name="note" placeholder="Ce qui s’est passé, ce que je ferai différemment…">${esc(b.note || '')}</textarea></label></div>
+  <div class="rg" id="q-rp"><label><input type="checkbox" name="rp" checked>Proposer un créneau de rattrapage</label></div>
+  <button class="btn pri" type="submit">Valider</button></form>`);
+  toggleOutcome($('#modal form'));
+}
+function toggleOutcome(f) {
+  if (!f) return; const o = f.querySelector('[name=out]:checked').value;
+  $('#q-min', f).classList.toggle('hide', !['done', 'partial'].includes(o));
+  $('#q-why', f).classList.toggle('hide', o === 'done' || o === 'cancelled');
+  $('#q-rp', f).classList.toggle('hide', !['missed', 'partial'].includes(o));
+  const add = f.querySelector('[name=add]'), b = S.blocks.find(x => x.id === f.querySelector('[name=id]').value);
+  if (b && add && !add.dataset.touched) { const p = blockPlanned(b), a = Math.round(blockActual(b)); add.value = o === 'done' ? Math.max(0, p - a) : Math.max(0, Math.round(p / 2) - a); }
+}
+function recordDone(b, addMin, countUnit) {
+  const q = Q(b.q); if (!q) return;
+  if (q.kind === 'duration') { if (addMin > 0) addEntry({ cat: q.id, v: addMin, date: b.date, time: b.end, blockId: b.id, src: 'bloc' }); }
+  else {
+    const ex = S.entries.find(e => e.blockId === b.id && e.v > 0);
+    if (ex) ex.mins = (ex.mins || 0) + addMin;
+    else addEntry({ cat: q.id, v: countUnit ? 1 : 0, mins: addMin, date: b.date, time: b.end, blockId: b.id, src: 'bloc' });
+  }
+}
+
+/* ---------- report assisté (DEC-01 : jamais sans validation) ---------- */
+function consequenceText(b, slot, dur) {
+  const q = Q(b.q); if (!q) return '';
+  const ws = weekStartOf(todayStr()), we = addDays(ws, 6), r = weekProgress(q, ws);
+  if (slot.date > we) return `Ce créneau est la semaine prochaine : cette semaine, ${q.label} restera à ${fmtVal(q, r.done + r.plannedFut)} sur ${fmtVal(q, q.week)}.`;
+  const tot = r.done + r.plannedFut + (q.kind === 'duration' ? dur : 1);
+  return tot >= q.week ? `Avec ce créneau, ${q.label} atteint son objectif de la semaine (${fmtVal(q, Math.min(tot, q.week))} / ${fmtVal(q, q.week)}).` : `Après ce report, ${q.label} sera planifié à ${fmtVal(q, tot)} sur ${fmtVal(q, q.week)} cette semaine (il manquera encore ${fmtVal(q, q.week - tot)}).`;
+}
+function replanModal(id, opts = {}) {
+  const b = S.blocks.find(x => x.id === id); if (!b) return;
+  const full = blockPlanned(b), dur = opts.remain || full;
+  const bb = { ...b, end: min2hm(hm2min(b.start) + dur) };
+  const o = replanOptions(bb);
+  modal(`<h2>↪ Replanifier : ${esc(b.title)}</h2><div class="sub">Durée à replacer : ${fmtDur(dur)}${opts.remain ? ' (reste non réalisé)' : ''}. Aucun changement sans ton accord.</div>
+  <div style="margin-top:12px">${o.length ? o.map((s, i) => `<div class="al info"><div class="ai">🗓️</div><div style="flex:1"><div class="at">${fmtDate(s.date)} · ${s.start}–${s.end}</div><div class="ax">${esc(consequenceText(b, s, dur))}</div><div class="aa"><button class="btn sm pri" ${A('replanPick', { id, date: s.date, s: s.start, e: s.end, mark: opts.remain ? 'keep' : 'postponed' })}>Choisir ce créneau</button></div></div></div>`).join('') : '<div class="al danger"><div class="ai">⚠️</div><div><div class="at">Aucun créneau libre trouvé sur 2 semaines</div><div class="ax">Élargis tes fenêtres libres (Réglages) ou choisis une date manuellement.</div></div></div>'}</div>
+  <details><summary>Choisir moi-même</summary><form class="fm" data-form="replanManual" style="margin-top:8px"><input type="hidden" name="id" value="${id}"><input type="hidden" name="mark" value="${opts.remain ? 'keep' : 'postponed'}"><div class="row"><label>Date<input type="date" name="date" value="${addDays(todayStr(), 1)}" required></label><label>Début<input type="time" name="s" value="${b.start}" required></label><label>Durée (min)<input type="number" name="dur" value="${dur}" min="15" step="5"></label></div><button class="btn" type="submit">Replanifier ici</button></form></details>
+  <div style="margin-top:12px"><button class="btn" ${A('replanRefuse', { id })}>Ne pas reporter</button></div>`);
+}
+function applyReplan(id, date, start, dur, mark) {
+  const b = S.blocks.find(x => x.id === id); if (!b) return;
+  const nb = { id: uid(), date, start, end: min2hm(hm2min(start) + dur), title: b.title, q: b.q, status: 'planned', fixed: false, note: b.note || '', rescheduledFrom: b.id };
+  S.blocks.push(nb);
+  if (mark === 'postponed') b.status = 'postponed';
+  S.proposals.push({ id: uid(), ts: Date.now(), kind: 'report', q: b.q, text: `${b.title} : ${fmtShort(b.date)} ${b.start} → ${fmtShort(date)} ${start} (${fmtDur(dur)})`, decision: 'accepté' });
+  log('report', `Reporté : ${b.title} ${b.date} ${b.start} → ${date} ${start}`, b.id);
+  save(); toast(`↪ Replanifié ${fmtShort(date)} à ${start}`, 'good');
+}
+
+/* ---------- chronomètre ---------- */
+function timerStartFor(id) {
+  if (S.timer) { toast('Un chronomètre est déjà en cours.', 'warn'); return timerModal(); }
+  if (id) {
+    const b = S.blocks.find(x => x.id === id); if (!b) return;
+    if (!b.q) return toast('Ce bloc n’est lié à aucun quota : rien à chronométrer.', 'warn');
+    const lim = Math.max(5, blockPlanned(b) - Math.round(blockActual(b)));
+    S.timer = { cat: b.q, blockId: b.id, label: b.title, startedAt: NOWFN().getTime(), acc: 0, running: true, limit: lim, alerted: false };
+    if (b.status === 'planned') b.status = 'inprogress';
+    log('chrono', `Démarrage : ${b.title}`, b.id); save(); closeModal(); render(); timerModal(); return;
+  }
+  modal(`<h2>⏱ Chrono libre</h2><form class="fm" data-form="timerNew"><label>Quota<select name="cat">${S.quotas.filter(q => !q.prayers && q.id !== 'sommeil' && q.id !== 'cigarette').map(q => `<option value="${q.id}">${q.icon} ${esc(q.label)}</option>`).join('')}</select></label><label>Titre (facultatif)<input name="label" placeholder="Ex. Révision TVA"></label><label>Alerte de dépassement après (min, facultatif)<input type="number" name="limit" min="1" placeholder="ex. 90"></label><button class="btn pri" type="submit">▶ Démarrer</button></form>`);
+}
+function timerModal() {
+  const T = S.timer; if (!T) return;
+  const ms = timerElapsed(), lim = T.limit ? T.limit * 60000 : 3600000;
+  modal(`<h2>${esc(T.label)}</h2><div class="sub">${qLabel(T.cat)}${T.limit ? ' · prévu ' + fmtDur(T.limit) : ''}</div><div style="display:grid;place-items:center;margin:14px 0" id="tmring">${ring((ms % lim) / lim, { size: 210, sw: 14, label: fmtClock(ms), color: T.limit && ms > lim ? 'var(--bad)' : 'var(--ok)' })}</div><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><button class="btn" ${A('timerToggle')}>${T.running ? '⏸ Pause' : '▶ Reprendre'}</button><button class="btn pri" ${A('timerStop')}>■ Terminer</button><button class="btn bad" ${A('timerCancel')}>Annuler</button></div>`);
+}
+function tick1s() {
+  const T = S.timer; if (!T) return;
+  renderTimerBar();
+  const r = $('#tmring'); if (r) { const ms = timerElapsed(), lim = T.limit ? T.limit * 60000 : 3600000; r.innerHTML = ring((ms % lim) / lim, { size: 210, sw: 14, label: fmtClock(ms), color: T.limit && ms > lim ? 'var(--bad)' : 'var(--ok)' }); }
+  if (T.limit && !T.alerted && timerElapsed() / 60000 > T.limit) {
+    T.alerted = true; save();
+    toast(`⏱️ <b>${esc(T.label)}</b> : durée prévue de ${fmtDur(T.limit)} dépassée`, 'danger', 8000); notify('Durée dépassée', `${T.label} : ${fmtDur(T.limit)} dépassées`);
+    if (!$('#modal')) render();
+  }
+}
+function timerStopModal() {
+  const T = S.timer; if (!T) return;
+  if (T.running) { T.acc += NOWFN().getTime() - T.startedAt; T.running = false; }
+  const min = Math.max(1, Math.round(T.acc / 60000)), q = Q(T.cat), b = T.blockId && S.blocks.find(x => x.id === T.blockId);
+  const planned = b ? blockPlanned(b) : null;
+  modal(`<h2>■ Terminer : ${esc(T.label)}</h2><div class="sub">Durée mesurée : <b>${fmtClock(T.acc)}</b> · ${qLabel(T.cat)}</div><form class="fm" data-form="timerStopSave" style="margin-top:10px"><label>Minutes à enregistrer<input type="number" name="min" min="1" value="${min}"></label>${q.kind === 'count' ? `<div class="rg"><label><input type="checkbox" name="unit" ${planned && min >= planned * .5 || !planned ? 'checked' : ''}>Compter comme 1 ${esc(q.unit || 'unité')} complète</label></div>` : ''}${b ? `<div class="rg"><label><input type="radio" name="fin" value="done" checked>✅ Bloc terminé</label><label><input type="radio" name="fin" value="partial">🟡 Partiel — je continue plus tard</label></div>` : ''}<label>Note<input name="note" placeholder="facultatif"></label><button class="btn pri" type="submit">Enregistrer</button></form>`);
+}
+
+/* ---------- sommeil / bilan du soir ---------- */
+function sleepModal() {
+  const d = curDate(), ex = S.entries.find(e => e.cat === 'sommeil' && e.date === d);
+  modal(`<h2>😴 Sommeil — nuit se terminant le ${fmtShort(d)}</h2><form class="fm" data-form="sleepSave"><div class="row"><label>Coucher<input type="time" name="bed" value="23:00" required></label><label>Réveil<input type="time" name="wake" value="06:30" required></label></div><div class="rt">${ex ? 'Valeur actuelle : ' + fmtDur(ex.v) + ' (' + esc(ex.note) + '). L’enregistrement la remplace.' : 'La durée est calculée automatiquement (passage minuit géré).'}</div><button class="btn pri" type="submit">Enregistrer</button></form>`);
+}
+function bilanModal(date) {
+  const d = date || todayStr();
+  const bl = S.blocks.filter(b => b.date === d && b.status !== 'cancelled').sort((a, b) => a.start.localeCompare(b.start));
+  const rv = S.reviews[d] || {}; const dr = UI.bilanDraft || (UI.bilanDraft = { mood: rv.mood || 0, energy: rv.energy || 0, note: rv.note || '' });
+  const cq = S.quotas.filter(q => q.noPlan && q.kind === 'count' && !q.prayers);
+  const done = S.entries.filter(e => e.cat === 'priere' && e.date === d).map(e => e.sub);
+  const sl = S.entries.find(e => e.cat === 'sommeil' && e.date === d), tm = addDays(d, 1);
+  const tb = S.blocks.filter(b => b.date === tm && b.status !== 'cancelled').sort((a, b) => a.start.localeCompare(b.start));
+  const di = dayInfo(d);
+  modal(`<h2>🌙 Bilan du ${fmtDate(d)}</h2><div class="sub">Vérifie, corrige les oublis, note les imprévus. ${di.score != null ? 'Score provisoire : <b>' + di.score + ' %</b>' : ''}</div>
+  <h3 style="margin:14px 0 4px">1 · Activités du jour</h3>${bl.length ? bl.map(b => { const st = effStatus(b); return `<div class="ln"><div class="lt">${b.start}</div><div class="lb2"><b>${esc(b.title)}</b> ${stChip(st)}<div class="rt">${fmtDur(blockPlanned(b))} prévus${blockActual(b) ? ' · ' + fmtDur(blockActual(b)) + ' réalisés' : ''}${b.reason ? ' · ' + esc(b.reason) : ''}</div></div>${b.q ? `<button class="btn sm ${st === 'unfilled' ? 'pri' : ''}" ${A('qualify', { id: b.id, back: 1 })}>${st === 'unfilled' ? 'Qualifier' : 'Modifier'}</button>` : ''}</div>`; }).join('') : '<div class="rt">Aucune activité planifiée.</div>'}
+  <h3 style="margin:14px 0 6px">2 · Compteurs</h3><div class="g g3" style="margin-bottom:8px">${cq.map(q => { const v = qDone(q, d, d); return `<div class="card" style="padding:10px"><b>${q.icon} ${esc(q.label)}</b><div class="cnt" style="margin-top:6px"><button class="rb m" ${A('cnt', { q: q.id, d: -1 })}>−</button><div class="n">${v}</div><button class="rb" ${A('cnt', { q: q.id, d: 1 })}>+</button></div></div>`; }).join('')}</div>
+  <div class="pr" style="margin-bottom:8px">${PRAYERS.map(p => `<button class="${done.includes(p) ? 'on' : ''}" ${A('prayer', { n: p })}>${done.includes(p) ? '✓ ' : ''}${p}</button>`).join('')}</div>
+  <div style="margin-bottom:8px"><button class="btn sm" ${A('sleep')}>😴 Sommeil : ${sl ? fmtDur(sl.v) : 'saisir'}</button></div>
+  <h3 style="margin:14px 0 6px">3 · Ressenti</h3><div class="rg" style="margin-bottom:8px">${['😞', '😕', '😐', '🙂', '😄'].map((e, i) => `<label><input type="radio" name="mood" value="${i + 1}" data-draft="mood" ${dr.mood === i + 1 ? 'checked' : ''}>${e}</label>`).join('')}</div>
+  <div class="fm"><label>Énergie (1–5)<select data-draft="energy"><option value="0">—</option>${[1, 2, 3, 4, 5].map(x => `<option ${dr.energy === x ? 'selected' : ''}>${x}</option>`).join('')}</select></label><label>Note du jour / imprévus<textarea data-draft="note" placeholder="Ce qui m’a ralenti, ce qui a bien marché…">${esc(dr.note)}</textarea></label></div>
+  <h3 style="margin:14px 0 4px">4 · Demain (${fmtShort(tm)})</h3>${tb.length ? tb.map(b => `<div class="ln"><div class="lt">${b.start}</div><div class="lb2">${esc(b.title)} <span class="rt">${fmtDur(blockPlanned(b))}</span></div></div>`).join('') : '<div class="rt">Rien de planifié. <a href="#" ' + A('newBlock', { date: tm }) + '>Ajouter un bloc</a></div>'}
+  <div style="margin-top:16px;display:flex;gap:8px"><button class="btn pri" ${A('bilanSave', { date: d })}>✔ Valider le bilan</button></div>`, { wide: true });
+  UI.actDate = d; UI.bilanForDate = d;
+}
+
+/* ---------- quotas ---------- */
+function quotaForm(q) {
+  const v = q || { label: '', icon: '⭐', color: '#4f5bd5', kind: 'duration', mode: 'min', week: 0, day: null, sessionMin: 60, noPlan: false, overlap: false };
+  const h = v.kind === 'duration';
+  modal(`<h2>${q ? 'Modifier le quota' : 'Nouveau quota'}</h2><div class="sub">Une modification d’objectif est toujours une décision explicite de ta part et reste dans l’historique.</div><form class="fm" data-form="quotaSave" style="margin-top:10px"><input type="hidden" name="id" value="${q ? q.id : ''}">
+  <div class="row"><label>Nom<input name="label" value="${esc(v.label)}" required></label><label>Icône<input name="icon" value="${esc(v.icon)}" maxlength="3"></label><label>Couleur<input type="color" name="color" value="${v.color}"></label></div>
+  <div class="row"><label>Type<select name="kind"><option value="duration" ${h ? 'selected' : ''}>Durée (heures)</option><option value="count" ${!h ? 'selected' : ''}>Compteur (nombre)</option></select></label><label>Sens<select name="mode"><option value="min" ${v.mode === 'min' ? 'selected' : ''}>Objectif à atteindre (minimum)</option><option value="max" ${v.mode === 'max' ? 'selected' : ''}>Plafond à ne pas dépasser</option></select></label></div>
+  <div class="row"><label>Cible par semaine ${h ? '(heures)' : ''}<input type="number" step="0.25" min="0" name="week" value="${h ? v.week / 60 : v.week}" required></label><label>Cible par jour (facultatif)<input type="number" step="0.25" min="0" name="day" value="${v.day == null ? '' : (h ? v.day / 60 : v.day)}"></label><label>Durée d’une session (min)<input type="number" name="sessionMin" min="15" step="5" value="${v.sessionMin || 60}"></label></div>
+  <div class="rg"><label><input type="checkbox" name="noPlan" ${v.noPlan ? 'checked' : ''}>Suivi seulement (pas de blocs planifiés)</label><label><input type="checkbox" name="overlap" ${v.overlap ? 'checked' : ''}>Chevauche d’autres activités</label></div>
+  <div style="display:flex;gap:8px"><button class="btn pri" type="submit">Enregistrer</button>${q ? `<button class="btn bad" type="button" ${A('qdel', { id: q.id })}>Supprimer</button>` : ''}</div></form>`);
+}
+function quotaDetail(id) {
+  const q = Q(id); if (!q) return; const t = todayStr(), ws = weekStartOf(t);
+  const items = []; for (let i = 7; i >= 0; i--) { const w = addDays(ws, -7 * i), v = qDone(q, w, addDays(w, 6)); items.push({ l: `${parseYmd(w).getDate()}/${pad(parseYmd(w).getMonth() + 1)}`, v: q.kind === 'duration' ? v / 60 : v, c: q.color, dim: i === 0 }); }
+  const hm = {}, hf = addDays(ws, -7 * 14); for (let d = hf; d <= t; d = addDays(d, 1)) hm[d] = dayRatio(q, d);
+  const sk = q.day != null ? streak(q) : weekStreak(q);
+  modal(`<h2>${q.icon} ${esc(q.label)}</h2><div class="sub">${q.mode === 'max' ? 'Plafond' : 'Objectif'} ${fmtVal(q, q.week)} / semaine${q.day != null ? ' · ' + fmtVal(q, q.day) + ' / jour' : ''}</div><div class="g g3" style="margin:12px 0"><div class="card" style="padding:10px"><div class="rt">Cette semaine</div><div class="big">${fmtVal(q, qDone(q, ws, addDays(ws, 6)))}</div></div><div class="card" style="padding:10px"><div class="rt">${q.day != null ? 'Série (jours)' : 'Série (semaines)'}</div><div class="big">${sk}</div></div></div><h3>8 dernières semaines</h3><div class="tw">${barChart(items, { target: q.kind === 'duration' ? q.week / 60 : q.week, fmt: v => v + (q.kind === 'duration' ? 'h' : ''), minW: 44 })}</div><h3 style="margin-top:10px">Régularité</h3><div class="tw">${heat(hm, hf, t, q.color)}</div><div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="btn" ${A('qedit', { id })}>✎ Modifier</button><button class="btn" ${A('qstats', { id })}>📊 Statistiques</button><button class="btn" ${A('quickCat', { q: id })}>＋ Saisie</button></div>`, { wide: true });
+}
+
+/* ---------- libre / rdv ---------- */
+function libreForm(l) {
+  const v = l || { date: todayStr(), from: '', to: '', text: '', cat: '' };
+  modal(`<h2>${l ? 'Modifier' : 'Nouvelle note libre'}</h2><form class="fm" data-form="libreSave"><input type="hidden" name="id" value="${l ? l.id : ''}"><div class="row"><label>Date<input type="date" name="date" value="${v.date}" required></label><label>De<input type="time" name="from" value="${v.from || ''}"></label><label>À<input type="time" name="to" value="${v.to || ''}"></label></div><label>Note<textarea name="text" required>${esc(v.text)}</textarea></label><label>Compter dans un quota<select name="cat"><option value="">— Non —</option>${catOptions(v.cat || '')}</select></label><button class="btn pri" type="submit">Enregistrer</button></form>`);
+}
+function apptForm(a) {
+  const v = a || { title: '', date: addDays(todayStr(), 1), time: '10:00', dur: 60, place: '', note: '' };
+  modal(`<h2>${a ? 'Modifier le rendez-vous' : '🔔 Nouveau rendez-vous'}</h2><form class="fm" data-form="apptSave"><input type="hidden" name="id" value="${a ? a.id : ''}"><label>Titre<input name="title" value="${esc(v.title)}" required placeholder="Ex. Banque, médecin, client…"></label><div class="row"><label>Date<input type="date" name="date" value="${v.date}" required></label><label>Heure<input type="time" name="time" value="${v.time || ''}" required></label><label>Durée (min)<input type="number" name="dur" value="${v.dur || 60}" min="5" step="5"></label></div><label>Lieu<input name="place" value="${esc(v.place || '')}"></label><label>Note<input name="note" value="${esc(v.note || '')}"></label><div class="rt">Rappels automatiques : 24 h et 5 h avant, jusqu’à ce que tu coches « C’est bon ».</div><button class="btn pri" type="submit">Enregistrer</button></form>`);
+}
+
+/* ---------- démo ---------- */
+function loadDemo() {
+  let seed = 7; const rnd = () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  const t = todayStr(), start = addDays(weekStartOf(t), -28);
+  const tpl = { 0: [['revision', '18:45', '20:15'], ['freelance', '20:30', '22:30']], 1: [['sport', '18:30', '20:30'], ['apprentissage', '21:00', '22:00']], 2: [['revision', '18:45', '20:15'], ['freelance', '20:30', '22:30']], 3: [['revision', '18:45', '20:15'], ['apprentissage', '20:30', '21:30']], 4: [['sport', '18:30', '20:30'], ['freelance', '21:00', '22:30']], 5: [['freelance', '10:00', '14:00'], ['sport', '16:00', '18:00'], ['apprentissage', '20:00', '21:30']], 6: [['revision', '10:00', '12:00'], ['freelance', '14:00', '18:00']] };
+  const reasonsL = S.reasons;
+  for (let d = start; d <= addDays(weekStartOf(t), 6); d = addDays(d, 1)) {
+    const i = dow(d), past = d < t;
+    if (i < 5) S.blocks.push({ id: uid(), demo: 1, date: d, start: '08:30', end: '17:00', title: 'Travail', q: null, status: 'done', fixed: true });
+    for (const [qid, s, e] of tpl[i]) {
+      const q = Q(qid), b = { id: uid(), demo: 1, date: d, start: s, end: e, title: q.label, q: qid, status: 'planned', fixed: false }, p = blockPlanned(b);
+      S.blocks.push(b);
+      if (!past) continue;
+      const r = rnd();
+      if (r < .72) { b.status = 'done'; const a = Math.round(p * (0.9 + rnd() * .2)); S.entries.push({ id: uid(), demo: 1, date: d, time: e, cat: qid, v: q.kind === 'duration' ? a : 1, mins: q.kind === 'count' ? a : 0, blockId: b.id, src: 'bloc', note: '', ts: Date.now() }); }
+      else if (r < .85) { b.status = 'partial'; b.reason = reasonsL[Math.floor(rnd() * reasonsL.length)]; const a = Math.round(p * .5); S.entries.push({ id: uid(), demo: 1, date: d, time: e, cat: qid, v: q.kind === 'duration' ? a : 0, mins: q.kind === 'count' ? a : 0, blockId: b.id, src: 'bloc', note: '', ts: Date.now() }); }
+      else if (r < .95) { b.status = 'missed'; b.reason = reasonsL[Math.floor(rnd() * reasonsL.length)]; }
+      else { b.status = 'postponed'; b.reason = reasonsL[Math.floor(rnd() * reasonsL.length)]; }
+    }
+    if (past) {
+      const n = 12 + Math.floor(rnd() * 12); for (let k = 0; k < n; k++) S.entries.push({ id: uid(), demo: 1, date: d, time: min2hm(480 + Math.floor(k * 60 + rnd() * 20)), cat: 'cigarette', v: 1, src: 'manual', note: '', ts: Date.now() });
+      S.entries.push({ id: uid(), demo: 1, date: d, time: '06:30', cat: 'sommeil', v: 330 + Math.floor(rnd() * 150), src: 'manual', note: '23:00 → 06:30', ts: Date.now() });
+      PRAYERS.forEach(p => { if (rnd() < .82) S.entries.push({ id: uid(), demo: 1, date: d, time: '12:00', cat: 'priere', sub: p, v: 1, src: 'manual', note: '', ts: Date.now() }); });
+      if (rnd() < .5) S.entries.push({ id: uid(), demo: 1, date: d, time: '15:00', cat: 'cafe', v: 60 + Math.floor(rnd() * 120), src: 'manual', note: 'café + travail', ts: Date.now() });
+      S.reviews[d] = { closed: true, ts: Date.now(), mood: 2 + Math.floor(rnd() * 4), energy: 2 + Math.floor(rnd() * 4), note: rnd() < .3 ? 'Journée chargée au bureau, fatigue en fin de soirée.' : '', demo: 1 };
+    }
+  }
+  S.appts.push({ id: uid(), demo: 1, title: 'Rendez-vous banque', date: addDays(t, 1), time: '10:00', dur: 60, place: 'Agence centre-ville', note: '', done: false });
+  S.appts.push({ id: uid(), demo: 1, title: 'Client SGC — appel', date: addDays(t, 3), time: '17:30', dur: 30, place: '', note: '', done: false });
+  S.libre.push({ id: uid(), demo: 1, date: addDays(t, -1), from: '15:00', to: '17:00', text: 'Hammam', cat: '' });
+  log('démo', 'Données de démonstration chargées'); save();
+}
+function csvEscape(x) { x = String(x ?? ''); return /[;"\n]/.test(x) ? '"' + x.replace(/"/g, '""') + '"' : x; }
+
+/* ================= Délégation d'événements ================= */
+const ACT = {
+  go: d => setTab(d.tab), mclose: () => closeModal(true),
+  themeCycle: () => { const o = ['auto', 'light', 'dark'], c = S.settings.theme || 'auto'; S.settings.theme = o[(o.indexOf(c) + 1) % 3]; save(); applyTheme(); render(); toast(THM[S.settings.theme][1], 'good', 1500); },
+  moreMenu: () => modal(`<h2>Menu</h2><div style="display:grid;gap:8px">${NAV.filter(n => ['quotas', 'libre', 'rdv', 'search', 'settings'].includes(n[0])).map(n => `<button class="btn" style="justify-content:flex-start" ${A('go', { tab: n[0] })}>${n[2]} ${n[1]}</button>`).join('')}</div>`),
+  calDay: d => { UI.calDate = d.date; UI.calView = 'day'; setTab('cal'); },
+  calView: d => { UI.calView = d.v; render(); },
+  calNav: d => { const n = +d.n, cur = UI.calDate || todayStr(); if (UI.calView === 'month') { const x = parseYmd(cur); UI.calDate = ymd(new Date(x.getFullYear(), x.getMonth() + Math.sign(n), 1)); } else UI.calDate = addDays(cur, n); render(); },
+  colclick: (d, t, e) => { const r = t.getBoundingClientRect(), sc = parseFloat(getComputedStyle(t.parentElement).getPropertyValue('--sc')) || 1.1; const m = clamp(Math.round((360 + (e.clientY - r.top) / sc) / 15) * 15, 360, 1380); blockForm(null, { date: d.date, start: min2hm(m) }); },
+  calItem: d => { if (d.k === 'b') blockModal(d.id); else if (d.k === 'a') apptForm(S.appts.find(x => x.id === d.id)); else libreForm(S.libre.find(x => x.id === d.id)); },
+  newBlock: d => blockForm(null, { date: d.date }), blk: d => blockModal(d.id),
+  blkEdit: d => blockForm(S.blocks.find(x => x.id === d.id)),
+  blkDup: d => { const b = S.blocks.find(x => x.id === d.id); blockForm(null, { date: addDays(b.date, 1), start: b.start, end: b.end, q: b.q }); },
+  blkReset: d => { if (!confirm('Remettre ce bloc à « Prévue » et supprimer ses saisies de temps ?')) return; const b = S.blocks.find(x => x.id === d.id); S.entries = S.entries.filter(e => e.blockId !== b.id); b.status = 'planned'; b.reason = ''; log('bloc', `Réinitialisé : ${b.title}`, b.id); save(); closeModal(); render(); },
+  blkDel: d => { const b = S.blocks.find(x => x.id === d.id); if (b.series && S.blocks.filter(x => x.series === b.series && x.date > b.date).length) { if (confirm('Supprimer aussi les occurrences futures de cette série ?\nOK = toute la série à venir · Annuler = seulement ce bloc')) S.blocks = S.blocks.filter(x => !(x.series === b.series && x.date >= b.date)); else S.blocks = S.blocks.filter(x => x.id !== b.id); } else { if (!confirm('Supprimer ce bloc ?')) return; S.blocks = S.blocks.filter(x => x.id !== b.id); } log('bloc', `Supprimé : ${b.title} ${b.date}`); save(); closeModal(); render(); },
+  qualify: d => { UI.backToBilan = d.back ? (UI.bilanForDate || todayStr()) : null; qualifyModal(d.id); },
+  replan: d => { UI.backToBilan = null; replanModal(d.id); },
+  replanPick: d => { const b = S.blocks.find(x => x.id === d.id), dur = hm2min(d.e) - hm2min(d.s); applyReplan(d.id, d.date, d.s, dur, d.mark); closeModal(); const bd = UI.backToBilan; UI.backToBilan = null; render(); if (bd) bilanModal(bd); },
+  replanRefuse: d => { const b = S.blocks.find(x => x.id === d.id); S.proposals.push({ id: uid(), ts: Date.now(), kind: 'report', q: b.q, text: `${b.title} (${fmtShort(b.date)}) : pas de report`, decision: 'refusé' }); if (b.status === 'planned' || b.status === 'inprogress') { b.status = 'missed'; } save(); closeModal(); const bd = UI.backToBilan; UI.backToBilan = null; render(); if (bd) bilanModal(bd); },
+  timerStart: d => timerStartFor(d.id), timerOpen: () => timerModal(),
+  timerToggle: (d, t, e) => { e.stopPropagation(); const T = S.timer; if (!T) return; if (T.running) { T.acc += NOWFN().getTime() - T.startedAt; T.running = false; } else { T.startedAt = NOWFN().getTime(); T.running = true; } save(); renderTimerBar(); if ($('#tmring')) timerModal(); },
+  timerStop: () => timerStopModal(),
+  timerCancel: () => { if (!confirm('Annuler le chronomètre sans rien enregistrer ?')) return; S.timer = null; save(); closeModal(); render(); },
+  cnt: d => {
+    const q = Q(d.q), dt = curDate(), dl = +d.d;
+    if (dl > 0) { addEntry({ cat: q.id, v: 1, date: dt }); checkLimitToast(q); }
+    else { const l = S.entries.filter(e => e.cat === q.id && e.date === dt && e.v > 0).sort((a, b) => b.ts - a.ts)[0]; if (l) { if (l.v > 1) l.v--; else S.entries = S.entries.filter(e => e.id !== l.id); log('saisie', `Correction −1 ${q.label} (${dt})`); save(); } }
+    render(); if ($('#modal') && UI.bilanForDate) bilanModal(UI.bilanForDate);
+  },
+  prayer: d => { const dt = curDate(), ex = S.entries.find(e => e.cat === 'priere' && e.date === dt && e.sub === d.n); if (ex) { S.entries = S.entries.filter(e => e.id !== ex.id); log('saisie', `Prière décochée : ${d.n} ${dt}`); save(); } else addEntry({ cat: 'priere', sub: d.n, v: 1, date: dt }); render(); if ($('#modal') && UI.bilanForDate) bilanModal(UI.bilanForDate); },
+  sleep: () => sleepModal(),
+  quick: () => entryForm(null), quickCat: d => entryForm(null, { cat: d.q }),
+  entryEdit: d => entryForm(S.entries.find(e => e.id === d.id)),
+  entryDel: d => { if (!confirm('Supprimer cette saisie ?')) return; const e = S.entries.find(x => x.id === d.id); S.entries = S.entries.filter(x => x.id !== d.id); log('saisie', `Supprimé : ${Q(e.cat) ? Q(e.cat).label : e.cat} ${e.date}`); save(); render(); },
+  csvEntries: () => { const rows = journalRows(); download('journal_mylifepilot.csv', '﻿' + ['date;heure;categorie;valeur;unite;duree_min;detail;note;source'].concat(rows.map(e => { const q = Q(e.cat); return [e.date, e.time, q ? q.label : e.cat, q && q.kind === 'duration' ? e.v : e.v, q ? (q.kind === 'duration' ? 'min' : q.unit || '') : '', entryMins(e), e.sub || '', e.note || '', e.src].map(csvEscape).join(';'); })).join('\r\n'), 'text/csv'); toast('Export CSV provisoire (les exports Word/Excel/PDF natifs arrivent au Lot 5).', 'info'); },
+  csvSearch: () => { const rows = searchRows(); download('recherche_mylifepilot.csv', '﻿' + ['date;heure;type;contenu;valeur'].concat(rows.map(r => [r.date, r.time, r.type, r.text, r.val].map(csvEscape).join(';'))).join('\r\n'), 'text/csv'); },
+  jsub: d => { UI.jSub = d.v; render(); }, jfReset: () => { UI.jf = { from: '', to: '', cat: '', text: '' }; render(); }, sfReset: () => { UI.sf = { text: '', cat: '', type: '', from: '', to: '', status: '' }; render(); },
+  libreNew: () => libreForm(null), libreEdit: d => libreForm(S.libre.find(x => x.id === d.id)),
+  libreDel: d => { if (!confirm('Supprimer cette note ?')) return; const l = S.libre.find(x => x.id === d.id); if (l.entryId) S.entries = S.entries.filter(e => e.id !== l.entryId); S.libre = S.libre.filter(x => x.id !== d.id); log('libre', 'Note libre supprimée'); save(); render(); },
+  apptNew: () => apptForm(null), apptEdit: d => apptForm(S.appts.find(x => x.id === d.id)),
+  apptDone: d => { const a = S.appts.find(x => x.id === d.id); a.done = true; a.doneAt = Date.now(); log('rdv', `Rendez-vous OK : ${a.title}`); save(); toast('✔ Rendez-vous validé — rappels arrêtés', 'good'); render(); },
+  apptUndo: d => { const a = S.appts.find(x => x.id === d.id); a.done = false; save(); render(); },
+  apptDel: d => { if (!confirm('Supprimer ce rendez-vous ?')) return; S.appts = S.appts.filter(x => x.id !== d.id); save(); render(); },
+  apptIcs: d => { const a = S.appts.find(x => x.id === d.id); download(`rdv_${a.date}.ics`, icsFor([a]), 'text/calendar'); toast('Ouvre le fichier .ics pour l’ajouter à l’agenda du téléphone (alarmes 24 h et 5 h).', 'info', 6000); },
+  apptIcsAll: () => { const l = S.appts.filter(a => !a.done && a.date >= todayStr()); if (!l.length) return toast('Aucun rendez-vous à venir.', 'warn'); download('rendez-vous_mylifepilot.ics', icsFor(l), 'text/calendar'); },
+  rdvsub: d => { UI.rdvSub = d.v; render(); },
+  statP: d => { UI.statP = d.v; render(); },
+  statNav: d => { const n = +d.n, cur = UI.statDate || todayStr(); if (UI.statP === 'month') { const x = parseYmd(cur); UI.statDate = ymd(new Date(x.getFullYear(), x.getMonth() + Math.sign(n), 1)); } else UI.statDate = addDays(cur, n); render(); },
+  statToday: () => { UI.statDate = null; render(); }, statQreset: () => { UI.statQ = 'all'; render(); },
+  qstats: d => { UI.statQ = d.id; setTab('stats'); },
+  goBilan: d => { UI.bilanKind = d.k === 'day' ? 'day' : 'week'; UI.bilanDate = UI.statDate || todayStr(); setTab('bilan'); },
+  goBilanWeek: () => { UI.bilanKind = 'week'; UI.bilanDate = todayStr(); setTab('bilan'); },
+  bilanNav: d => { UI.bilanDate = addDays(UI.bilanDate || todayStr(), +d.n); render(); },
+  wbDone: d => { S.wreviews[d.ws] = { ts: Date.now() }; log('bilan', `Bilan de semaine lu : ${d.ws}`); save(); toast('Bilan de la semaine marqué comme lu', 'good'); render(); },
+  copyReport: d => { const t = weekReportText(d.ws); (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => toast('Bilan copié dans le presse-papiers', 'good')).catch(() => download('bilan_semaine.txt', t, 'text/plain')); },
+  fixOld: () => { UI.sf = { text: '', cat: '', type: 'bloc', from: '', to: addDays(todayStr(), -1), status: 'unfilled' }; setTab('search'); },
+  bilan: d => { UI.bilanDraft = null; bilanModal(d.date); },
+  bilanSave: d => {
+    const dt = d.date, dr = UI.bilanDraft || {}, pend = S.blocks.filter(b => b.date === dt && effStatus(b) === 'unfilled').length;
+    if (pend && !confirm(`${pend} activité(s) restent « non renseignées ». Elles ne seront pas comptées comme non réalisées et resteront à corriger.\nValider quand même ?`)) return;
+    S.reviews[dt] = { closed: true, ts: Date.now(), mood: dr.mood || 0, energy: dr.energy || 0, note: dr.note || '' };
+    log('bilan', `Bilan du soir clôturé : ${dt}`); save(); closeModal(true); UI.bilanDraft = null; render();
+    const i = dayInfo(dt); toast(`🌙 Bilan enregistré${i.score != null ? ' — score du jour ' + i.score + ' %' : ''}`, 'good');
+  },
+  autoplan: d => { UI.calAuto = autoPlan(d.id ? [d.id] : null); UI.qSub = 'plan'; setTab('quotas'); },
+  autoplanRefresh: () => { UI.calAuto = autoPlan(); render(); },
+  qsub: d => { UI.qSub = d.v; render(); }, qedit: d => quotaForm(Q(d.id)), qnew: () => quotaForm(null), qdetail: d => quotaDetail(d.id),
+  qdel: d => { if (S.entries.some(e => e.cat === d.id) || S.blocks.some(b => b.q === d.id)) return toast('Ce quota a des données : suppression refusée (modifie-le plutôt).', 'warn'); if (!confirm('Supprimer ce quota ?')) return; S.quotas = S.quotas.filter(q => q.id !== d.id); save(); closeModal(); render(); },
+  adjAccept: d => { const q = Q(d.id), to = +d.to, ws = weekStartOf(todayStr()), from = q.week; q.week = to; S.proposals.push({ id: uid(), ts: Date.now(), kind: 'objectif', q: q.id, week: ws, text: `${q.label} : ${fmtTarget(q, from)} → ${fmtTarget(q, to)} / semaine`, decision: 'accepté' }); log('objectif', `Objectif modifié (accord explicite) : ${q.label} ${fmtTarget(q, from)} → ${fmtTarget(q, to)}`); save(); toast('Objectif ajusté — décision enregistrée', 'good'); render(); },
+  adjRefuse: d => { const q = Q(d.id), ws = weekStartOf(todayStr()); S.proposals.push({ id: uid(), ts: Date.now(), kind: 'objectif', q: q.id, week: ws, text: `${q.label} : cible ${fmtTarget(q, q.week)} conservée`, decision: 'refusé' }); save(); render(); },
+  open: d => { if (d.k === 'e') entryForm(S.entries.find(x => x.id === d.id)); else if (d.k === 'b') blockModal(d.id); else if (d.k === 'l') libreForm(S.libre.find(x => x.id === d.id)); else if (d.k === 'a') apptForm(S.appts.find(x => x.id === d.id)); else if (d.k === 'r') { UI.bilanKind = 'day'; UI.bilanDate = d.id; setTab('bilan'); } },
+  exportJson: () => { download(`mylifepilot_sauvegarde_${todayStr()}.json`, JSON.stringify(S, null, 1)); toast('Sauvegarde téléchargée', 'good'); },
+  backups: async () => { let keys = []; try { keys = (await DB.keys()).filter(k => String(k).startsWith('bak-')).sort().reverse(); } catch (e) { } modal(`<h2>Copies automatiques</h2>${keys.length ? keys.map(k => `<div class="ln"><div class="lb2"><b>${esc(String(k).replace('bak-', ''))}</b></div><button class="btn sm" ${A('restoreBak', { k })}>Restaurer</button></div>`).join('') : '<div class="empty">Aucune copie pour l’instant (la première est créée au prochain lancement).</div>'}`); },
+  restoreBak: async d => { if (!confirm('Remplacer les données actuelles par cette copie ?')) return; try { const s = JSON.parse(await DB.get(d.k)); await DB.set('bak-avant-restauration-' + Date.now(), JSON.stringify(S)); S = s; migrate(); await persist(); closeModal(); render(); toast('Copie restaurée', 'good'); } catch (e) { toast('Échec de la restauration', 'danger'); } },
+  demoLoad: () => { if (S.blocks.some(b => b.demo)) return toast('La démo est déjà chargée.', 'warn'); loadDemo(); render(); toast('Démo chargée : 4 semaines de données fictives', 'good'); },
+  demoClear: () => { S.blocks = S.blocks.filter(x => !x.demo); S.entries = S.entries.filter(x => !x.demo); S.appts = S.appts.filter(x => !x.demo); S.libre = S.libre.filter(x => !x.demo); for (const k of Object.keys(S.reviews)) if (S.reviews[k].demo) delete S.reviews[k]; log('démo', 'Démo retirée'); save(); render(); toast('Démo retirée', 'good'); },
+  resetAll: async () => { if (!confirm('Effacer TOUTES les données ? (une copie de sécurité est conservée)')) return; if (!confirm('Dernière confirmation : tout effacer ?')) return; try { await DB.set('bak-avant-effacement-' + Date.now(), JSON.stringify(S)); } catch (e) { } S = defaults(); await persist(); render(); toast('Données effacées', 'warn'); },
+  notifAsk: async () => { if (!('Notification' in window)) return toast('Notifications non supportées sur ce navigateur.', 'warn'); const r = await Notification.requestPermission(); S.settings.notif = r === 'granted'; save(); render(); }
+};
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-act]'); if (!t) return;
+  const f = ACT[t.dataset.act]; if (!f) return;
+  if (t.tagName === 'A') e.preventDefault();
+  f(t.dataset, t, e);
+});
+
+/* ---------- formulaires ---------- */
+const FORMS = {
+  entrySave(fd) {
+    const cat = fd.get('cat'), q = Q(cat), id = fd.get('id'); let v, mins = 0;
+    if (q.kind === 'duration') { v = (+fd.get('h') || 0) * 60 + (+fd.get('m') || 0); const qd = fd.get('qd'); if (!v && qd) v = +qd; } else { v = +fd.get('qty') || 0; mins = +fd.get('mins') || 0; }
+    if (q.kind === 'duration' && v <= 0) return toast('Indique une durée.', 'warn');
+    const o = { cat, date: fd.get('date'), time: fd.get('time') || '', v, mins, note: fd.get('note') || '', sub: q.prayers ? fd.get('sub') : '' };
+    if (id) { Object.assign(S.entries.find(x => x.id === id), o); log('saisie', `Modifié : ${q.label} ${o.date}`); save(); }
+    else addEntry(o);
+    closeModal(); render(); checkLimitToast(q);
+  },
+  blockSave(fd) {
+    const id = fd.get('id'), qid = fd.get('q') || null, s = fd.get('start'), e = fd.get('end'), date = fd.get('date');
+    if (hm2min(e) <= hm2min(s)) return toast('L’heure de fin doit être après le début.', 'warn');
+    const title = (fd.get('title') || '').trim() || (qid ? Q(qid).label : 'Activité');
+    const base = { title, q: qid, start: s, end: e, fixed: !!fd.get('fixed'), note: fd.get('note') || '' };
+    const dates = [];
+    if (!id && fd.get('rep') === '1') { const weeks = clamp(+fd.get('weeks') || 1, 1, 52), ws = weekStartOf(date); for (let w = 0; w < weeks; w++) for (let i = 0; i < 7; i++) if (fd.get('d' + i)) { const d = addDays(ws, w * 7 + i); if (d >= date) dates.push(d); } } else dates.push(date);
+    if (!dates.length) return toast('Choisis au moins un jour.', 'warn');
+    const conf = []; for (const d of dates) for (const [bs, be, nm] of busyOf(d, id)) if (hm2min(s) < be && hm2min(e) > bs) conf.push(`${fmtShort(d)} ${min2hm(bs)}–${min2hm(be)} ${nm || ''}`);
+    if (conf.length && !confirm('⚠️ Chevauchement détecté :\n' + conf.slice(0, 5).join('\n') + '\n\nEnregistrer quand même ?')) return;
+    if (id) { Object.assign(S.blocks.find(x => x.id === id), base, { date }); log('bloc', `Modifié : ${title} ${date}`, id); }
+    else { const series = dates.length > 1 ? uid() : null; for (const d of dates) S.blocks.push({ id: uid(), date: d, status: 'planned', series, ...base }); log('bloc', `Créé : ${title} × ${dates.length}`); }
+    save(); closeModal(); render(); toast(id ? 'Bloc modifié' : `${dates.length} bloc(s) créé(s)`, 'good');
+  },
+  qualifySave(fd) {
+    const b = S.blocks.find(x => x.id === fd.get('id')), out = fd.get('out'), add = Math.max(0, +fd.get('add') || 0), reason = fd.get('reason') || '', note = fd.get('note') || '';
+    const q = Q(b.q); b.note = note || b.note; if (reason) b.reason = reason;
+    const back = UI.backToBilan; UI.backToBilan = null;
+    let next = null;
+    if (out === 'done') { recordDone(b, add, true); b.status = 'done'; b.reason = ''; }
+    else if (out === 'partial') { recordDone(b, add, false); b.status = 'partial'; if (fd.get('rp')) next = { remain: Math.max(15, blockPlanned(b) - Math.round(blockActual(b))) }; }
+    else if (out === 'missed') { b.status = 'missed'; if (fd.get('rp')) next = { remain: null }; }
+    else if (out === 'postponed') { next = { remain: null, postpone: true }; }
+    else if (out === 'cancelled') b.status = 'cancelled';
+    log('bloc', `${b.title} (${b.date}) → ${STATUS[out][0]}${reason ? ' — ' + reason : ''}`, b.id); save(); closeModal();
+    UI.backToBilan = back;
+    if (next) { if (out === 'partial') replanModal(b.id, { remain: next.remain }); else replanModal(b.id, {}); }
+    else if (back) { UI.backToBilan = null; render(); bilanModal(back); return; }
+    render();
+  },
+  replanManual(fd) { const id = fd.get('id'); applyReplan(id, fd.get('date'), fd.get('s'), +fd.get('dur'), fd.get('mark')); closeModal(); render(); },
+  libreSave(fd) {
+    const id = fd.get('id'), o = { date: fd.get('date'), from: fd.get('from') || '', to: fd.get('to') || '', text: (fd.get('text') || '').trim(), cat: fd.get('cat') || '' };
+    if (o.from && o.to && hm2min(o.to) <= hm2min(o.from)) return toast('Heure de fin avant le début.', 'warn');
+    let l = id ? S.libre.find(x => x.id === id) : null;
+    if (l) Object.assign(l, o); else { l = { id: uid(), ...o }; S.libre.push(l); }
+    if (l.entryId) { S.entries = S.entries.filter(e => e.id !== l.entryId); l.entryId = null; }
+    if (l.cat && l.from && l.to) { const q = Q(l.cat), m = hm2min(l.to) - hm2min(l.from); const e = addEntry({ cat: l.cat, v: q.kind === 'duration' ? m : 1, mins: q.kind === 'count' ? m : 0, date: l.date, time: l.from, note: l.text, src: 'libre' }); l.entryId = e.id; }
+    log('libre', `Note libre : ${l.text.slice(0, 50)}`); save(); closeModal(); render(); toast('Enregistré', 'good');
+  },
+  apptSave(fd) {
+    const id = fd.get('id'), o = { title: fd.get('title').trim(), date: fd.get('date'), time: fd.get('time'), dur: +fd.get('dur') || 60, place: fd.get('place') || '', note: fd.get('note') || '' };
+    if (id) Object.assign(S.appts.find(x => x.id === id), o, { done: false }); else S.appts.push({ id: uid(), done: false, ...o });
+    log('rdv', `Rendez-vous : ${o.title} ${o.date} ${o.time}`); save(); closeModal(); render(); toast('Rendez-vous enregistré — rappels 24 h et 5 h programmés', 'good');
+  },
+  quotaSave(fd) {
+    const id = fd.get('id'), kind = fd.get('kind'), h = kind === 'duration', mul = h ? 60 : 1;
+    const o = { label: fd.get('label').trim(), icon: fd.get('icon') || '⭐', color: fd.get('color'), kind, mode: fd.get('mode'), week: Math.round((+fd.get('week') || 0) * mul), day: fd.get('day') === '' ? null : Math.round(+fd.get('day') * mul), sessionMin: +fd.get('sessionMin') || 60, noPlan: !!fd.get('noPlan'), overlap: !!fd.get('overlap') };
+    if (id) { const q = Q(id); if (q.week !== o.week) { S.proposals.push({ id: uid(), ts: Date.now(), kind: 'objectif', q: id, text: `${q.label} : ${fmtTarget(q, q.week)} → ${fmtTarget({ ...q, ...o }, o.week)} (modification manuelle)`, decision: 'accepté' }); log('objectif', `Objectif modifié : ${q.label}`); } Object.assign(q, o); }
+    else S.quotas.push({ id: 'q' + uid(), prio: 5, unit: kind === 'count' ? 'fois' : '', ...o });
+    save(); closeModal(); render();
+  },
+  settingsSave(fd) {
+    const s = S.settings; s.theme = fd.get('theme'); s.name = (fd.get('name') || '').trim() || 'Hamza'; s.bilanHour = clamp(parseInt((fd.get('bilanHour') || '23:00').split(':')[0], 10) || 23, 18, 23);
+    for (let i = 0; i < 7; i++) s.free[i] = fd.get('f' + i + 'n') ? null : [fd.get('f' + i + 's'), fd.get('f' + i + 'e')];
+    S.reasons = (fd.get('reasons') || '').split('\n').map(x => x.trim()).filter(Boolean); if (!S.reasons.length) S.reasons = DEFAULT_REASONS.slice();
+    save(); applyTheme(); render(); toast('Réglages enregistrés', 'good');
+  },
+  workAdd(fd) {
+    const s = fd.get('s'), e = fd.get('e'), w = clamp(+fd.get('w') || 1, 1, 52), ws = weekStartOf(todayStr()), series = uid(); let n = 0;
+    for (let k = 0; k < w; k++) for (let i = 0; i < 5; i++) { const d = addDays(ws, k * 7 + i); if (d < todayStr() || S.blocks.some(b => b.date === d && b.title === 'Travail' && !b.q)) continue; S.blocks.push({ id: uid(), date: d, start: s, end: e, title: 'Travail', q: null, status: 'done', fixed: true, series }); n++; }
+    save(); render(); toast(`${n} bloc(s) de travail ajouté(s)`, 'good');
+  },
+  applyPlan(fd) {
+    const r = UI.calAuto; let n = 0; const series = uid();
+    r.prop.forEach((p, i) => { if (fd.get('p' + i)) { S.blocks.push({ id: uid(), date: p.date, start: p.start, end: p.end, title: p.title, q: p.q, status: 'planned', fixed: false, auto: true }); n++; } });
+    S.proposals.push({ id: uid(), ts: Date.now(), kind: 'planning', text: `${n} créneau(x) proposés par le planificateur`, decision: n ? 'accepté' : 'refusé' });
+    log('planning', `Planning proposé appliqué : ${n} bloc(s)`); UI.calAuto = null; save(); toast(`${n} bloc(s) ajoutés au calendrier`, 'good'); UI.calDate = todayStr(); UI.calView = 'week'; setTab('cal');
+  },
+  sleepSave(fd) {
+    const bed = hm2min(fd.get('bed')), wake = hm2min(fd.get('wake')); let m = wake - bed; if (m <= 0) m += 1440;
+    const d = curDate(); S.entries = S.entries.filter(e => !(e.cat === 'sommeil' && e.date === d));
+    addEntry({ cat: 'sommeil', v: m, date: d, time: fd.get('wake'), note: `${fd.get('bed')} → ${fd.get('wake')}` });
+    const bd = UI.bilanForDate; closeModal(); render(); if (bd) bilanModal(bd); toast(`Sommeil : ${fmtDur(m)}`, m >= 420 ? 'good' : 'warn');
+  },
+  timerNew(fd) { S.timer = { cat: fd.get('cat'), blockId: null, label: (fd.get('label') || '').trim() || Q(fd.get('cat')).label, startedAt: NOWFN().getTime(), acc: 0, running: true, limit: +fd.get('limit') || null, alerted: false }; log('chrono', `Démarrage : ${S.timer.label}`); save(); closeModal(); render(); timerModal(); },
+  timerStopSave(fd) {
+    const T = S.timer, q = Q(T.cat), min = Math.max(1, +fd.get('min') || 1), b = T.blockId && S.blocks.find(x => x.id === T.blockId), fin = fd.get('fin');
+    if (q.kind === 'duration') addEntry({ cat: q.id, v: min, blockId: T.blockId || undefined, src: 'timer', note: fd.get('note') || '', date: b ? b.date : todayStr() });
+    else addEntry({ cat: q.id, v: fd.get('unit') ? 1 : 0, mins: min, blockId: T.blockId || undefined, src: 'timer', note: fd.get('note') || '', date: b ? b.date : todayStr() });
+    if (b) { b.status = fin === 'partial' ? 'inprogress' : 'done'; if (fin !== 'partial') b.reason = ''; }
+    log('chrono', `Terminé : ${T.label} — ${fmtDur(min)}`); S.timer = null; save(); closeModal(); render();
+    if (q.mode === 'max') checkLimitToast(q); toast(`✅ ${fmtDur(min)} enregistrées`, 'good');
+  }
+};
+document.addEventListener('submit', e => { const f = e.target.closest('form[data-form]'); if (!f) return; e.preventDefault(); const h = FORMS[f.dataset.form]; if (h) h(new FormData(f), f); });
+document.addEventListener('input', e => {
+  const t = e.target;
+  if (t.dataset.live) {
+    const k = t.dataset.live, n = t.name, v = t.value;
+    if (k === 'jf') { UI.jf[n] = v; $('#jres').innerHTML = journalTable(); }
+    else if (k === 'sf') { UI.sf[n] = v; $('#sres').innerHTML = searchTable(); }
+    else if (k === 'libre') { UI.libreText = v; $('#lres').innerHTML = libreList(); }
+    else if (k === 'stq') { UI.statQ = v; render(); }
+  }
+  if (t.dataset.draft) { const dr = UI.bilanDraft || (UI.bilanDraft = {}); dr[t.dataset.draft] = t.dataset.draft === 'note' ? t.value : +t.value; }
+  if (t.name === 'add') t.dataset.touched = 1;
+  if (t.dataset.qk === 'quickdur') { const f = t.closest('form'); f.h.value = Math.floor(+t.value / 60); f.m.value = +t.value % 60; }
+});
+document.addEventListener('change', e => {
+  const t = e.target;
+  if (t.dataset.live && t.tagName === 'SELECT' && t.dataset.live !== 'stq') { /* déjà traité par input */ }
+  if (t.dataset.qk === 'entrycat') toggleKind(t.closest('form'));
+  if (t.dataset.qk === 'outcome') toggleOutcome(t.closest('form'));
+  if (t.dataset.qk === 'rep') $('#repbox').classList.toggle('hide', t.value !== '1');
+  if (t.id === 'impfile' && t.files[0]) {
+    const r = new FileReader();
+    r.onload = async () => { try { const s = JSON.parse(r.result); if (!s.quotas || !s.entries || !s.blocks) throw new Error('format'); if (!confirm('Remplacer toutes les données actuelles par ce fichier ?')) return; try { await DB.set('bak-avant-import-' + Date.now(), JSON.stringify(S)); } catch (e) { } S = s; migrate(); await persist(); render(); toast('Données importées', 'good'); } catch (e) { toast('Fichier invalide : sauvegarde My Life Pilot (.json) attendue.', 'danger'); } };
+    r.readAsText(t.files[0]);
+  }
+});
+
+/* ================= Démarrage ================= */
+function checkNotify() {
+  const al = alerts().filter(a => a.notify); let shown = 0; const now = Date.now();
+  for (const a of al) { if (S.notified[a.key]) continue; S.notified[a.key] = now; if (shown < 3) { toast(`${a.icon} <b>${esc(a.title)}</b><br><span class="rt">${esc(a.text)}</span>`, a.lvl === 'danger' ? 'danger' : 'warn', 7000); notify(a.title, a.text); shown++; } }
+  for (const k of Object.keys(S.notified)) if (now - S.notified[k] > 3 * 864e5) delete S.notified[k];
+  if (shown) save();
+}
+async function boot() {
+  await load(); applyTheme();
+  const h = location.hash.slice(1); if (VIEWS[h]) UI.tab = h;
+  const fab = document.createElement('button'); fab.className = 'fab'; fab.textContent = '＋'; fab.title = 'Saisie rapide'; fab.dataset.act = 'quick'; fab.setAttribute('aria-label', 'Saisie rapide'); document.body.appendChild(fab);
+  render(false); checkNotify();
+  setInterval(tick1s, 1000);
+  setInterval(() => { if (!$('#modal') && !isTyping() && ['cockpit', 'cal'].includes(UI.tab)) render(); checkNotify(); renderNav(); }, 30000);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) persist(); else { if (!$('#modal') && !isTyping()) render(); checkNotify(); } });
+  window.addEventListener('pagehide', persist);
+  window.addEventListener('hashchange', () => { const h = location.hash.slice(1); if (VIEWS[h] && h !== UI.tab) { UI.tab = h; render(false); } });
+  matchMedia('(prefers-color-scheme:dark)').addEventListener('change', applyTheme);
+  if ('serviceWorker' in navigator && /^https?:/.test(location.protocol)) navigator.serviceWorker.register('sw.js').catch(() => { });
+  window.MLP = { get S() { return S; }, set S(v) { S = v; }, UI, render, alerts, dayInfo, weekInfo, statsFor, periodOf, autoPlan, effStatus, loadDemo, persist, load, DB, qDone };
+}
+boot();
+</script>
+</body>
+</html>
