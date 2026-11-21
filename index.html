@@ -27,7 +27,7 @@ h1{font-size:1.45rem}h2{font-size:1.1rem}h3{font-size:.98rem}
 .nv b{margin-left:auto;background:var(--bad);color:#fff;border-radius:99px;font-size:.72rem;padding:1px 7px}
 .main{padding:20px 22px 110px;max-width:1300px;width:100%;margin:0 auto}
 .top{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
-.tl0{flex:1 1 auto;min-width:0}.tact{display:flex;gap:8px;flex-wrap:wrap;align-items:center;order:1}.tbar{display:flex;gap:6px;align-items:center;order:2}.fbtns{display:flex;gap:8px;flex-wrap:wrap}.expchk{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:6px 12px;margin-top:6px}.expchk .chk{display:flex;align-items:center;gap:8px;font-size:.9rem}.expchk input{width:auto}
+.tl0{flex:1 1 auto;min-width:0}.tact{display:flex;gap:8px;flex-wrap:wrap;align-items:center;order:1}.tbar{display:flex;gap:6px;align-items:center;order:2}.fbtns{display:flex;gap:8px;flex-wrap:wrap}@keyframes vp{50%{opacity:.25}}.vpulse{animation:vp 1s infinite}.expchk{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:6px 12px;margin-top:6px}.expchk .chk{display:flex;align-items:center;gap:8px;font-size:.9rem}.expchk input{width:auto}
 .thbtn,.syb{gap:5px}.syb.bad{background:var(--bad);color:#fff}.thl{font-size:.78rem}@media(max-width:700px){.thl{display:none}}
 .sub{color:var(--mut);font-size:.88rem}
 .card{background:var(--card);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--cb);border-radius:var(--r);box-shadow:var(--sh);padding:16px;min-width:0}
@@ -100,7 +100,7 @@ tr:hover td{background:var(--soft)}
 .bnav{display:none;position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--cardsolid);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-top:1px solid var(--cb);padding:6px calc(4px + env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) calc(4px + env(safe-area-inset-left));gap:2px;justify-content:space-between;box-sizing:border-box;width:100%}
 .bnav button{border:0;background:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;font-size:.68rem;line-height:1.15;font-weight:700;color:var(--mut);padding:5px 2px;border-radius:12px;cursor:pointer;position:relative;flex:1 1 0;min-width:0;min-height:50px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;-webkit-tap-highlight-color:transparent;touch-action:manipulation;font-family:inherit}
 .bnav button span{font-size:1.25rem}.bnav button.on{color:var(--p);background:var(--soft)}
-.bnav b{position:absolute;top:1px;right:calc(50% - 22px);background:var(--bad);color:#fff;border-radius:99px;font-size:.62rem;padding:0 5px}
+.bnav button{letter-spacing:-.2px}@media(max-width:360px){.bnav button{font-size:.6rem}.bnav button span{font-size:1.1rem}}.bnav b{position:absolute;top:1px;right:calc(50% - 22px);background:var(--bad);color:#fff;border-radius:99px;font-size:.62rem;padding:0 5px}
 .fab{position:fixed;right:18px;bottom:24px;z-index:35;width:58px;height:58px;border-radius:50%;border:0;font-size:1.9rem;color:#fff;background:linear-gradient(135deg,var(--p),var(--p2));box-shadow:0 10px 26px rgba(45,52,139,.5);cursor:pointer}
 .tmb{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;z-index:36;background:#12163a;color:#fff;border-radius:99px;padding:9px 12px 9px 18px;display:flex;align-items:center;gap:12px;box-shadow:0 10px 30px rgba(0,0,0,.45);cursor:pointer;max-width:calc(100vw - 100px)}
 .tmb .tt{font-variant-numeric:tabular-nums;font-weight:800;font-size:1.1rem}
@@ -179,7 +179,7 @@ button,.btn,a,.nv{touch-action:manipulation;-webkit-tap-highlight-color:transpar
 <script>
 'use strict';
 /* ================= My Life Pilot V0.3.1 — noyau : utilitaires, stockage, calculs ================= */
-const VERSION = '0.5.0';
+const VERSION = '0.6.0';
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const uid = () => Math.random().toString(36).slice(2, 8) + Date.now().toString(36).slice(-4);
@@ -624,7 +624,7 @@ function icsFor(list) {
 }
 /* ================= UI : graphiques SVG, modales, toasts, navigation ================= */
 const UI = { tab: 'cockpit', calView: 'day', calDate: null, statP: 'week', statDate: null, statQ: 'all', jSub: 'saisies', jf: { from: '', to: '', cat: '', text: '' }, sf: { text: '', cat: '', type: '', from: '', to: '', status: '' }, qSub: 'quotas', bilanDate: null, bilanKind: 'day', libreDate: null, rdvSub: 'a_venir', calAuto: null };
-const NAV = [['cockpit', 'Cockpit', '🏠'], ['cal', 'Calendrier', '📅'], ['quotas', 'Quotas & Conseiller', '🎯'], ['journal', 'Journal', '📒'], ['libre', 'Libre / Bloc-notes', '📝'], ['rdv', 'Rendez-vous', '🔔'], ['search', 'Recherche', '🔎'], ['stats', 'Statistiques', '📊'], ['settings', 'Réglages & données', '⚙️']];
+const NAV = [['cockpit', 'Cockpit', '🏠'], ['voice', 'Vocaux', '🎙️'], ['cal', 'Calendrier', '📅'], ['quotas', 'Quotas & Conseiller', '🎯'], ['journal', 'Journal', '📒'], ['libre', 'Libre / Bloc-notes', '📝'], ['rdv', 'Rendez-vous', '🔔'], ['search', 'Recherche', '🔎'], ['stats', 'Statistiques', '📊'], ['settings', 'Réglages & données', '⚙️']];
 
 /* ---------- graphiques ---------- */
 function ring(pct, { size = 72, color = 'var(--p2)', label = '', sw = 9 } = {}) {
@@ -714,8 +714,8 @@ function download(name, text, type = 'application/json') {
 function alertCount() { return alerts().filter(a => a.lvl === 'danger' || a.lvl === 'warn').length; }
 function renderNav() {
   const n = alertCount();
-  $('#side').innerHTML = `<div class="logo"><i>🧭</i>My Life Pilot</div>` + NAV.map(([k, l, i]) => `<button class="nv ${UI.tab === k ? 'on' : ''}" data-act="go" data-tab="${k}"><span>${i}</span>${l}${k === 'cockpit' && n ? `<b>${n}</b>` : ''}</button>`).join('') + `<div style="flex:1"></div><div class="rt" style="padding:8px">V${VERSION} · données locales</div>`;
-  const mob = [['cockpit', 'Cockpit', '🏠'], ['cal', 'Calendrier', '📅'], ['journal', 'Journal', '📒'], ['stats', 'Stats', '📊'], ['more', 'Plus', '☰']];
+  $('#side').innerHTML = `<div class="logo"><i>🧭</i>My Life Pilot</div>` + NAV.map(([k, l, i]) => `<button class="nv ${UI.tab === k ? 'on' : ''}" data-act="go" data-tab="${k}"><span>${i}</span>${l}${k === 'cockpit' && n ? `<b>${n}</b>` : ''}${k === 'voice' && voxNew() ? `<b>${voxNew()}</b>` : ''}</button>`).join('') + `<div style="flex:1"></div><div class="rt" style="padding:8px">V${VERSION} · données locales</div>`;
+  const mob = [['cockpit', 'Cockpit', '🏠'], ['cal', 'Agenda', '📅'], ['voice', 'Vocal', '🎙️'], ['journal', 'Journal', '📒'], ['stats', 'Stats', '📊'], ['more', 'Plus', '☰']];
   $('#bnav').innerHTML = mob.map(([k, l, i]) => `<button class="${UI.tab === k || (k === 'more' && ['quotas', 'libre', 'rdv', 'search', 'settings', 'bilan'].includes(UI.tab)) ? 'on' : ''}" data-act="${k === 'more' ? 'moreMenu' : 'go'}" data-tab="${k}"><span>${i}</span>${l}${k === 'cockpit' && n ? `<b>${n}</b>` : ''}</button>`).join('');
 }
 function renderTimerBar() {
@@ -1819,8 +1819,123 @@ async function expRun(fmt, o) {
   if (fmt === 'docx') { download(base + '.docx', await buildDocx(rep), EXP_MIME.docx); return; }
   printHtml(reportHtml(rep), base + '.pdf');
 }
+/* =====================================================================
+   34 — VOCAUX : enregistrer vite, trier plus tard
+   Les fichiers audio restent sur CET appareil (IndexedDB), hors synchro et hors JSON.
+   ===================================================================== */
+const VX = { list: [], rec: null, pending: null, url: null, ready: false };
+const voxNew = () => VX.list.filter(x => x.status === 'new').length;
+const VST = { new: ['Non écouté', 'warn'], heard: ['Écouté', 'ok'], archived: ['Archivé', 'p'] };
+const VTO = { note: '📝 Note', task: '✅ Tâche', entry: '🚬 Saisie', appt: '🔔 Rendez-vous' };
+const fmtSec = s => { s = Math.round(s); return Math.floor(s / 60) + ':' + pad(s % 60); };
+const fmtSize = b => (b > 1048576 ? (b / 1048576).toFixed(1) + ' Mo' : Math.max(1, Math.round(b / 1024)) + ' Ko');
+
+async function voxLoad() {
+  try { if (storageMode === 'idb') VX.list = (await DB.get('voxMeta')) || []; } catch (e) { VX.list = []; }
+  VX.ready = true;
+}
+const voxSaveMeta = () => (storageMode === 'idb' ? DB.set('voxMeta', JSON.parse(JSON.stringify(VX.list))).catch(() => { }) : Promise.resolve());
+
+async function voxStart() {
+  if (VX.rec) return;
+  if (storageMode !== 'idb') return toast('Stockage indisponible : les vocaux ne peuvent pas être gardés ici.', 'bad');
+  if (!navigator.mediaDevices || !window.MediaRecorder) return toast('Ce navigateur ne sait pas enregistrer le son.', 'bad');
+  let stream;
+  try { stream = await navigator.mediaDevices.getUserMedia({ audio: true }); } catch (e) { return toast('Micro refusé : autorise le micro pour ce site dans le navigateur.', 'bad', 6000); }
+  const mt = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/ogg;codecs=opus'].find(m => MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(m)) || '';
+  const mr = new MediaRecorder(stream, mt ? { mimeType: mt } : undefined), chunks = [];
+  mr.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
+  const rec = { mr, stream, chunks, t0: Date.now(), date: todayStr(), time: min2hm(nowMin()), cancel: false, mime: mr.mimeType || mt || 'audio/webm' };
+  rec.timer = setInterval(() => { const el = $('#vtime'); const s = (Date.now() - rec.t0) / 1000; if (el) el.textContent = fmtSec(s); if (s >= 600) voxStop(); }, 400);
+  mr.onstop = () => voxFinish(rec);
+  VX.rec = rec; mr.start(1000);
+  if (UI.tab !== 'voice') { UI.tab = 'voice'; }
+  render(false);
+}
+function voxStop(cancel) { const r = VX.rec; if (!r) return; r.cancel = !!cancel; try { r.mr.state !== 'inactive' && r.mr.stop(); } catch (e) { voxFinish(r); } }
+async function voxFinish(rec) {
+  clearInterval(rec.timer); try { rec.stream.getTracks().forEach(t => t.stop()); } catch (e) { }
+  if (VX.rec !== rec) return; VX.rec = null;
+  const dur = (Date.now() - rec.t0) / 1000, blob = new Blob(rec.chunks, { type: rec.mime });
+  if (rec.cancel) { toast('Enregistrement annulé'); return render(false); }
+  if (blob.size < 400) { toast('Vocal vide : rien n’a été enregistré.', 'warn'); return render(false); }
+  const m = { id: uid(), ts: rec.t0, date: rec.date, time: rec.time, dur, status: 'new', title: '', mime: rec.mime, size: blob.size, treated: null };
+  try { await DB.set('vox:' + m.id, blob); VX.list.push(m); await voxSaveMeta(); toast('🎙️ Vocal enregistré', 'good'); }
+  catch (e) { toast('Impossible de sauvegarder le vocal (espace plein ?).', 'bad'); }
+  UI.vf = 'new'; render(false);
+}
+
+function vVoice() {
+  const f = UI.vf || 'new', L = VX.list.slice().sort((a, b) => b.ts - a.ts);
+  const cnt = { new: 0, heard: 0, archived: 0, all: L.length }; L.forEach(x => cnt[x.status]++);
+  const rows = L.filter(x => f === 'all' || x.status === f);
+  const tot = L.reduce((s, x) => s + (x.size || 0), 0);
+  const rec = VX.rec;
+  const box = rec
+    ? `<div class="card" style="border:2px solid var(--bad);text-align:center"><div style="font-size:2.4rem" class="vpulse">🔴</div><div class="big" id="vtime">${fmtSec((Date.now() - rec.t0) / 1000)}</div><div class="rt">Enregistrement en cours… parle, puis termine.</div><div class="fbtns" style="justify-content:center;margin-top:10px"><button class="btn pri" ${A('voxStop')}>⏹ Terminer et garder</button><button class="btn" ${A('voxCancel')}>✖ Annuler</button></div></div>`
+    : `<div class="card" style="text-align:center"><button class="btn pri" style="font-size:1.15rem;padding:14px 26px" ${A('voxRec')}>🎙️ Nouveau vocal</button><div class="rt" style="margin-top:8px">Appuie, parle, termine. Tu tries plus tard, le soir.</div></div>`;
+  const tabs = `<div class="tabs" style="margin:12px 0">${[['new', 'Non écoutés'], ['heard', 'Écoutés'], ['archived', 'Archivés'], ['all', 'Tous']].map(([k, l]) => `<button class="${f === k ? 'on' : ''}" ${A('voxFilter', { f: k })}>${l} (${cnt[k]})</button>`).join('')}</div>`;
+  const list = rows.length ? rows.map(x => {
+    const [sl, sc] = VST[x.status];
+    return `<div class="card vx" style="margin-bottom:8px;cursor:pointer" ${A('voxOpen', { id: x.id })}><div style="display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap"><b>🎙️ ${esc(x.title || 'Vocal')}</b><span><span class="chip ${sc}">${sl}</span>${x.treated ? ` <span class="chip">→ ${VTO[x.treated]}</span>` : ''}</span></div><div class="rt" style="margin-top:4px">📅 ${frD(x.date)} · 🕒 ${x.time} · ⏱ ${fmtSec(x.dur)} · ${fmtSize(x.size)}</div></div>`;
+  }).join('') : `<div class="card empty">Aucun vocal ici.</div>`;
+  return pageTop('🎙️ Vocaux', `${cnt.new} non écouté${cnt.new > 1 ? 's' : ''} · ${fmtSize(tot)} sur cet appareil`, '') + box + tabs + list;
+}
+
+async function voxOpen(id) {
+  const m = VX.list.find(x => x.id === id); if (!m) return;
+  let blob = null; try { blob = await DB.get('vox:' + id); } catch (e) { }
+  if (VX.url) { URL.revokeObjectURL(VX.url); VX.url = null; }
+  if (!blob) toast('Fichier audio introuvable sur cet appareil.', 'warn');
+  else VX.url = URL.createObjectURL(blob);
+  const btn = (k, l) => `<button class="btn" ${A('voxTo', { id, k })}>${l}</button>`;
+  modal(`<h2>🎙️ ${frD(m.date)} à ${m.time}</h2><div class="rt">⏱ ${fmtSec(m.dur)} · ${fmtSize(m.size)} · ${VST[m.status][0]}${m.treated ? ' · → ' + VTO[m.treated] : ''}</div>
+  ${VX.url ? `<audio id="vxa" controls preload="metadata" src="${VX.url}" style="width:100%;margin:12px 0"></audio>` : ''}
+  <form class="fm" data-form="voxTitle"><input type="hidden" name="id" value="${id}"><div class="row"><label>Titre (facultatif)<input name="title" value="${esc(m.title)}" placeholder="Ex. Idée client, rappel…"></label><button class="btn" style="align-self:end">💾</button></div></form>
+  <h3 style="margin:14px 0 6px">Que veux-tu en faire ?</h3>
+  <div class="fbtns">${btn('note', '📝 Note libre')}${btn('task', '✅ Tâche (à planifier)')}${btn('entry', '🚬 Saisie (cigarette, café…)')}${btn('appt', '🔔 Rendez-vous')}</div>
+  <div class="fbtns" style="margin-top:12px"><button class="btn" ${A('voxSkip', { id })}>⏭ Passer</button>${m.status === 'archived' ? `<button class="btn" ${A('voxRestore', { id })}>↩ Désarchiver</button>` : `<button class="btn" ${A('voxArchive', { id })}>📦 Archiver</button>`}<button class="btn" ${A('voxDl', { id })}>⬇ Audio</button><button class="btn danger" ${A('voxDel', { id })}>🗑 Supprimer</button></div>`);
+  const a = $('#vxa'); if (a) a.addEventListener('play', () => { if (m.status === 'new') { m.status = 'heard'; voxSaveMeta(); renderNav(); } });
+}
+function voxAfter(msg) { closeModal(); voxSaveMeta(); if (msg) toast(msg, 'good'); render(false); renderNav(); }
+
+function voxInit() {
+  Object.assign(ACT, {
+    voxRec: () => voxStart(), voxStop: () => voxStop(false), voxCancel: () => voxStop(true),
+    voxFilter: d => { UI.vf = d.f; render(false); },
+    voxOpen: d => voxOpen(d.id),
+    voxSkip: d => { const m = VX.list.find(x => x.id === d.id); if (m && m.status === 'new') m.status = 'heard'; voxAfter('Gardé dans « Écoutés »'); },
+    voxArchive: d => { const m = VX.list.find(x => x.id === d.id); if (m) m.status = 'archived'; voxAfter('Archivé'); },
+    voxRestore: d => { const m = VX.list.find(x => x.id === d.id); if (m) m.status = 'heard'; voxAfter('Remis dans « Écoutés »'); },
+    voxDl: async d => { const m = VX.list.find(x => x.id === d.id), b = await DB.get('vox:' + d.id); if (b && m) download(`vocal_${m.date}_${m.time.replace(':', 'h')}.${/mp4/.test(m.mime) ? 'm4a' : /ogg/.test(m.mime) ? 'ogg' : 'webm'}`, b, m.mime); },
+    voxDel: async d => { const ok = await ask('Supprimer définitivement ce vocal ? L’audio sera effacé de cet appareil.', { title: 'Supprimer le vocal', ok: 'Supprimer', danger: true }); if (!ok) return; VX.list = VX.list.filter(x => x.id !== d.id); try { await DB.del('vox:' + d.id); } catch (e) { } voxAfter('Vocal supprimé'); },
+    voxTo: d => {
+      const m = VX.list.find(x => x.id === d.id); if (!m) return;
+      closeModal();
+      if (d.k === 'note') libreForm(null, { date: m.date, from: m.time, text: m.title || '' });
+      else if (d.k === 'task') blockForm(null, { title: m.title || '' });
+      else if (d.k === 'entry') entryForm(null, { date: m.date, time: m.time });
+      else apptForm(null, { title: m.title || '' });
+      VX.pending = { id: m.id, k: d.k, el: $('#modal') };
+    }
+  });
+  FORMS.voxTitle = fd => { const m = VX.list.find(x => x.id === fd.get('id')); if (m) { m.title = (fd.get('title') || '').trim(); voxSaveMeta(); toast('Titre enregistré', 'good'); render(false); } };
+  for (const n of ['libreSave', 'blockSave', 'entrySave', 'apptSave']) {
+    const orig = FORMS[n]; if (!orig) continue;
+    FORMS[n] = function (fd, f) {
+      const pend = VX.pending && VX.pending.el === $('#modal') ? VX.pending : null;
+      const r = orig.apply(this, arguments);
+      if (pend && $('#modal') !== pend.el) {
+        const m = VX.list.find(x => x.id === pend.id); VX.pending = null;
+        if (m) { m.treated = pend.k; m.status = 'archived'; voxSaveMeta(); toast('Vocal transformé et archivé : ' + VTO[pend.k], 'good'); renderNav(); }
+      }
+      return r;
+    };
+  }
+  voxLoad().then(() => { renderNav(); if (UI.tab === 'voice' && !VX.rec) render(false); });
+}
 /* ================= Actions, formulaires, rendu, démarrage ================= */
-const VIEWS = { cockpit: vCockpit, cal: vCal, quotas: vQuotas, journal: vJournal, libre: vLibre, rdv: vRdv, search: vSearch, stats: vStats, bilan: vBilan, settings: vSettings };
+const VIEWS = { voice: vVoice, cockpit: vCockpit, cal: vCal, quotas: vQuotas, journal: vJournal, libre: vLibre, rdv: vRdv, search: vSearch, stats: vStats, bilan: vBilan, settings: vSettings };
 function applyTheme() { const th = S.settings.theme; document.documentElement.dataset.th = th === 'auto' ? (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light') : th; }
 function render(keep = true) {
   const y = window.scrollY, st = $('#main');
@@ -1844,7 +1959,7 @@ function checkLimitToast(q) {
 
 /* ---------- formulaire de saisie (ajout rapide / édition) ---------- */
 function entryForm(e, pre = {}) {
-  const v = e || { cat: pre.cat || 'cigarette', date: curDate(), time: min2hm(nowMin()), v: 0, mins: 0, note: '', sub: '' };
+  const v = e || { cat: pre.cat || 'cigarette', date: pre.date || curDate(), time: pre.time || min2hm(nowMin()), v: 0, mins: 0, note: '', sub: '' };
   const q = Q(v.cat) || S.quotas[0];
   modal(`<h2>${e ? 'Modifier la saisie' : '＋ Saisie rapide'}</h2><form class="fm" data-form="entrySave"><input type="hidden" name="id" value="${e ? e.id : ''}">
   <label>Catégorie<select name="cat" data-qk="entrycat">${catOptions(v.cat)}</select></label>
@@ -1866,7 +1981,7 @@ function toggleKind(f) {
 
 /* ---------- bloc : formulaire / détail ---------- */
 function blockForm(b, d = {}) {
-  const v = b || { date: d.date || todayStr(), start: d.start || '18:45', end: d.end || min2hm(hm2min(d.start || '18:45') + 90), title: '', q: d.q || '', fixed: false, note: '' };
+  const v = b || { date: d.date || todayStr(), start: d.start || '18:45', end: d.end || min2hm(hm2min(d.start || '18:45') + 90), title: d.title || '', q: d.q || '', fixed: false, note: '' };
   const dw = dow(v.date);
   modal(`<h2>${b ? 'Modifier le bloc' : 'Nouveau bloc de planning'}</h2><form class="fm" data-form="blockSave"><input type="hidden" name="id" value="${b ? b.id : ''}">
   <label>Activité liée à un quota<select name="q" data-qk="blockq"><option value="">— Aucune (travail, fixe, autre) —</option>${S.quotas.filter(q => !q.noPlan).map(q => `<option value="${q.id}" ${q.id === v.q ? 'selected' : ''}>${q.icon} ${esc(q.label)}</option>`).join('')}</select></label>
@@ -2025,12 +2140,12 @@ function quotaDetail(id) {
 }
 
 /* ---------- libre / rdv ---------- */
-function libreForm(l) {
-  const v = l || { date: todayStr(), from: '', to: '', text: '', cat: '' };
+function libreForm(l, pre) {
+  const v = l || Object.assign({ date: todayStr(), from: '', to: '', text: '', cat: '' }, pre || {});
   modal(`<h2>${l ? 'Modifier' : 'Nouvelle note libre'}</h2><form class="fm" data-form="libreSave"><input type="hidden" name="id" value="${l ? l.id : ''}"><div class="row"><label>Date<input type="date" name="date" value="${v.date}" required></label><label>De<input type="time" name="from" value="${v.from || ''}"></label><label>À<input type="time" name="to" value="${v.to || ''}"></label></div><label>Note<textarea name="text" required>${esc(v.text)}</textarea></label><label>Compter dans un quota<select name="cat"><option value="">— Non —</option>${catOptions(v.cat || '')}</select></label><div class="fbtns"><button class="btn pri" type="submit">Enregistrer</button>${l ? `<button class="btn bad" type="button" ${A('libreDel', { id: l.id })}>🗑 Supprimer</button>` : ''}</div></form>`);
 }
-function apptForm(a) {
-  const v = a || { title: '', date: addDays(todayStr(), 1), time: '10:00', dur: 60, place: '', note: '' };
+function apptForm(a, pre) {
+  const v = a || Object.assign({ title: '', date: addDays(todayStr(), 1), time: '10:00', dur: 60, place: '', note: '' }, pre || {});
   modal(`<h2>${a ? 'Modifier le rendez-vous' : '🔔 Nouveau rendez-vous'}</h2><form class="fm" data-form="apptSave"><input type="hidden" name="id" value="${a ? a.id : ''}"><label>Titre<input name="title" value="${esc(v.title)}" required placeholder="Ex. Banque, médecin, client…"></label><div class="row"><label>Date<input type="date" name="date" value="${v.date}" required></label><label>Heure<input type="time" name="time" value="${v.time || ''}" required></label><label>Durée (min)<input type="number" name="dur" value="${v.dur || 60}" min="5" step="5"></label></div><label>Lieu<input name="place" value="${esc(v.place || '')}"></label><label>Note<input name="note" value="${esc(v.note || '')}"></label><div class="rt">Rappels automatiques : 24 h et 5 h avant, jusqu’à ce que tu coches « C’est bon ».</div><div class="fbtns"><button class="btn pri" type="submit">Enregistrer</button>${a ? `<button class="btn bad" type="button" ${A('apptDel', { id: a.id })}>🗑 Supprimer</button>` : ''}</div></form>`);
 }
 
@@ -2312,7 +2427,7 @@ async function boot() {
   await load(); applyTheme();
   const h = location.hash.slice(1); if (VIEWS[h]) UI.tab = h;
   const fab = document.createElement('button'); fab.className = 'fab'; fab.textContent = '＋'; fab.title = 'Saisie rapide'; fab.dataset.act = 'quick'; fab.setAttribute('aria-label', 'Saisie rapide'); document.body.appendChild(fab);
-  render(false); checkNotify();
+  voxInit(); render(false); checkNotify();
   setInterval(tick1s, 1000);
   setInterval(() => { if (!$('#modal') && !isTyping() && ['cockpit', 'cal'].includes(UI.tab)) render(); checkNotify(); renderNav(); }, 30000);
   document.addEventListener('visibilitychange', () => { if (document.hidden) { persist(); syncNow('hide'); } else { if (!$('#modal') && !isTyping()) render(); checkNotify(); if (Date.now() - SYNC.last > 20000) syncNow('show'); } });
