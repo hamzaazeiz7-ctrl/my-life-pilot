@@ -27,7 +27,7 @@ h1{font-size:1.45rem}h2{font-size:1.1rem}h3{font-size:.98rem}
 .nv b{margin-left:auto;background:var(--bad);color:#fff;border-radius:99px;font-size:.72rem;padding:1px 7px}
 .main{padding:20px 22px 110px;max-width:1300px;width:100%;margin:0 auto}
 .top{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
-.top .sp{flex:1}
+.tl0{flex:1 1 auto;min-width:0}.tact{display:flex;gap:8px;flex-wrap:wrap;align-items:center;order:1}.tbar{display:flex;gap:6px;align-items:center;order:2}.fbtns{display:flex;gap:8px;flex-wrap:wrap}.expchk{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:6px 12px;margin-top:6px}.expchk .chk{display:flex;align-items:center;gap:8px;font-size:.9rem}.expchk input{width:auto}
 .thbtn,.syb{gap:5px}.syb.bad{background:var(--bad);color:#fff}.thl{font-size:.78rem}@media(max-width:700px){.thl{display:none}}
 .sub{color:var(--mut);font-size:.88rem}
 .card{background:var(--card);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--cb);border-radius:var(--r);box-shadow:var(--sh);padding:16px;min-width:0}
@@ -49,7 +49,7 @@ h1{font-size:1.45rem}h2{font-size:1.1rem}h3{font-size:.98rem}
 .kpi{display:flex;gap:12px;align-items:center}
 .kpi .v{font-size:1.7rem;font-weight:800;line-height:1}
 .kpi .l{font-size:.8rem;color:var(--mut);font-weight:600}
-.strip{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.strip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
 .sd{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 2px;border-radius:14px;cursor:pointer;border:1px solid transparent;background:var(--soft)}
 .sd.today{border-color:var(--p);background:rgba(85,96,216,.14)}
 .sd small{font-weight:700;color:var(--mut);font-size:.7rem}
@@ -81,8 +81,8 @@ h1{font-size:1.45rem}h2{font-size:1.1rem}h3{font-size:.98rem}
 input,select,textarea{background:var(--cardsolid);border:1px solid var(--cb);border-radius:11px;padding:8px 10px;min-width:0;color:var(--tx)}
 input:focus,select:focus,textarea:focus{outline:2px solid var(--p2)}
 textarea{resize:vertical;min-height:70px}
-.fm{display:grid;gap:11px}
-.fm .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.fm{display:grid;grid-template-columns:minmax(0,1fr);gap:11px}.fm label,.fr label{min-width:0}.fm input:not([type=checkbox]):not([type=radio]),.fm select,.fm textarea{width:100%;max-width:100%;box-sizing:border-box}.fr input,.fr select{max-width:100%;box-sizing:border-box}.frow{display:grid;grid-template-columns:90px minmax(0,1fr) minmax(0,1fr) auto;gap:8px;align-items:center}
+.fm .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(130px,100%),1fr));gap:10px}.fm .row>*{min-width:0}
 table{border-collapse:collapse;width:100%;font-size:.88rem}
 th{text-align:left;color:var(--mut);font-size:.74rem;text-transform:uppercase;letter-spacing:.04em;padding:7px 8px;border-bottom:1px solid var(--cb)}
 td{padding:8px;border-bottom:1px solid var(--cb);vertical-align:top}
@@ -120,8 +120,8 @@ tr:hover td{background:var(--soft)}
 .blk.ap{background:linear-gradient(180deg,#f0a30a,#c98100)}
 .blk.lb{background:linear-gradient(180deg,#8a63d2,#6a46b0)}
 .nowl{position:absolute;left:0;right:0;height:2px;background:var(--bad);z-index:2}.nowl:before{content:"";position:absolute;left:-4px;top:-3px;width:8px;height:8px;border-radius:50%;background:var(--bad)}
-.mg{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
-.mc{min-height:74px;border-radius:12px;padding:5px 6px;background:var(--soft);cursor:pointer;border:1px solid transparent;display:flex;flex-direction:column;gap:2px;font-size:.74rem}
+.mg{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.mc{min-width:0;overflow:hidden;min-height:74px;border-radius:12px;padding:5px 6px;background:var(--soft);cursor:pointer;border:1px solid transparent;display:flex;flex-direction:column;gap:2px;font-size:.74rem}
 .mc.today{border-color:var(--p)}.mc.out{opacity:.4}
 .mc .dn{font-weight:800;font-size:.84rem}
 .mk{font-size:1.3rem;font-weight:800;text-align:center}
@@ -149,7 +149,10 @@ details summary{cursor:pointer;font-weight:700;padding:4px 0}
  .main{padding:14px 12px calc(150px + env(safe-area-inset-bottom));min-width:0}
  .g>*,.top>*,.card{min-width:0;max-width:100%}
  .g2,.g3{grid-template-columns:minmax(0,1fr)}
- .top{gap:8px}.top>div:first-child{flex:1 1 calc(100% - 64px)}.top .sp{display:none}.thbtn{order:-1}
+ .top{gap:8px;align-items:flex-start}.tl0{flex:1 1 0}.tbar{order:1}.tact{order:2;flex:1 1 100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr))}.tact .btn{justify-content:center;text-align:center}
+ .frow{grid-template-columns:64px minmax(0,1fr) minmax(0,1fr)}.frow>label{grid-column:2/4;justify-self:start}
+ .strip{gap:3px}.sd{padding:6px 0}.sd small{font-size:.62rem}
+ .mg{gap:3px}.mc{padding:3px 4px;font-size:.66rem}.mc .rt{display:none}
  .fab{bottom:calc(78px + env(safe-area-inset-bottom));right:14px;width:54px;height:54px;font-size:1.7rem}
  .tmb{bottom:calc(80px + env(safe-area-inset-bottom));max-width:calc(100vw - 90px)}
  input,select,textarea{font-size:16px}
@@ -176,7 +179,7 @@ button,.btn,a,.nv{touch-action:manipulation;-webkit-tap-highlight-color:transpar
 <script>
 'use strict';
 /* ================= My Life Pilot V0.3.1 — noyau : utilitaires, stockage, calculs ================= */
-const VERSION = '0.4.0';
+const VERSION = '0.5.0';
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const uid = () => Math.random().toString(36).slice(2, 8) + Date.now().toString(36).slice(-4);
@@ -509,7 +512,8 @@ function statsFor(p, qf = 'all') {
   let score;
   if (p.kind === 'day') score = dayInfo(p.from, qf).score;
   else if (p.kind === 'week') score = weekInfo(p.from, qf).score;
-  else score = monthInfo(p.from, qf).score;
+  else if (p.kind === 'month') score = monthInfo(p.from, qf).score;
+  else score = null;
   return { per, bl, cnt, plannedMin, realMin, regularity, reportRate, reasons, timeBy, series, score };
 }
 function streak(q) {
@@ -685,7 +689,14 @@ function modal(html, { wide = false } = {}) {
   const f = m.querySelector('input:not([type=hidden]):not([type=checkbox]):not([type=radio]),select,textarea'); if (f && matchMedia('(pointer:fine)').matches) f.focus();
   return m;
 }
-function closeModal(manual) { const m = $('#modal'); if (m) m.remove(); if (manual) { UI.actDate = null; UI.bilanForDate = null; UI.backToBilan = null; } }
+function ask(text, { title = 'Confirmer', ok = 'Supprimer', alt = null, danger = true } = {}) {
+  return new Promise(res => {
+    modal(`<h2>${esc(title)}</h2><div style="white-space:pre-wrap;margin:8px 0 16px">${esc(text)}</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn ${danger ? 'bad' : 'pri'}" data-act="askOk">${esc(ok)}</button>${alt ? `<button class="btn" data-act="askAlt">${esc(alt)}</button>` : ''}<button class="btn" data-act="askNo">Annuler</button></div>`);
+    UI.askRes = res;
+  });
+}
+function askDone(v) { const r = UI.askRes; UI.askRes = null; const m = $('#modal'); if (m) m.remove(); if (r) r(v); }
+function closeModal(manual) { const m = $('#modal'); if (UI.askRes) { const r = UI.askRes; UI.askRes = null; r(false); } if (m) m.remove(); if (manual) { UI.actDate = null; UI.bilanForDate = null; UI.backToBilan = null; } }
 function toast(msg, lvl = 'info', ms = 4200, key = '') {
   if (key) $$('#toasts .toast').filter(x => x.dataset.k === key).forEach(x => x.remove());
   const t = document.createElement('div'); t.className = 'toast ' + lvl; t.dataset.k = key; t.innerHTML = msg; $('#toasts').appendChild(t);
@@ -726,7 +737,7 @@ const A = (act, d = {}) => `data-act="${act}" ` + Object.entries(d).map(([k, v])
 const THM = { auto: ['🌓', 'Thème automatique'], light: ['☀️', 'Thème clair'], dark: ['🌙', 'Thème sombre'] };
 const themeBtn = () => { const t = (S.settings.theme || 'auto'); return `<button class="btn sm thbtn" title="${THM[t][1]} — toucher pour changer" aria-label="${THM[t][1]}" data-act="themeCycle">${THM[t][0]}<span class="thl">${t === 'auto' ? 'Auto' : t === 'light' ? 'Clair' : 'Sombre'}</span></button>`; };
 const greeting = () => { const h = NOWFN().getHours(); return (h >= 6 && h < 17 ? 'Bonjour' : 'Bonsoir') + ' ' + (S.settings.name || 'Hamza'); };
-const pageTop = (title, sub, right = '') => `<div class="top"><div><h1>${title}</h1>${sub ? `<div class="sub">${sub}</div>` : ''}</div><div class="sp"></div>${right}${syncChip()}${themeBtn()}</div>`;
+const pageTop = (title, sub, right = '') => `<div class="top"><div class="tl0"><h1>${title}</h1>${sub ? `<div class="sub">${sub}</div>` : ''}</div><div class="tbar">${syncChip()}${themeBtn()}</div>${right ? `<div class="tact">${right}</div>` : ''}</div>`;
 const stChip = st => { const [l, i] = STATUS[st] || ['?', '']; const c = st === 'done' ? 'ok' : st === 'missed' ? 'bad' : st === 'unfilled' || st === 'partial' ? 'warn' : 'p'; return `<span class="chip ${c}">${i} ${l}</span>`; };
 const scoreDot = (s, lbl) => `<div class="dot ${scoreCls(s)}">${s == null ? '–' : s}</div>`;
 
@@ -905,7 +916,7 @@ function vJournal() {
     const rows = S.audit.slice().reverse().slice(0, 300);
     body = `<div class="card"><div class="ch"><h2>Historique des opérations</h2><span class="rt">${S.audit.length} événement(s) conservés</span></div><div class="tw"><table class="rs"><thead><tr><th>Quand</th><th>Type</th><th>Détail</th></tr></thead><tbody>${rows.map(a => `<tr><td data-l="Quand">${new Date(a.ts).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' })}</td><td data-l="Type"><span class="chip">${esc(a.type)}</span></td><td data-l="Détail">${esc(a.text)}</td></tr>`).join('') || '<tr><td colspan="3"><div class="empty">Vide</div></td></tr>'}</tbody></table></div></div>`;
   }
-  return pageTop('📒 Journal des opérations', 'Toutes les saisies, modifiables, avec historique', `<button class="btn pri" ${A('quick')}>＋ Ajouter</button><button class="btn" ${A('csvEntries')}>⬇ CSV</button>`) +
+  return pageTop('📒 Journal des opérations', 'Toutes les saisies, modifiables, avec historique', `<button class="btn pri" ${A('quick')}>＋ Ajouter</button><button class="btn" ${A('csvEntries')}>⬇ CSV</button><button class="btn" ${A('expOpen', { kind: 'month' })}>⬇ Excel / Word / PDF</button>`) +
     `<div class="tabs">${[['saisies', 'Saisies'], ['activite', 'Historique des modifications']].map(([k, l]) => `<button class="${sub === k ? 'on' : ''}" ${A('jsub', { v: k })}>${l}</button>`).join('')}</div>` + body;
 }
 
@@ -1003,7 +1014,7 @@ function vStats() {
     <tr><td>Régularité</td><td>${st.regularity == null ? '–' : Math.round(st.regularity * 100) + ' %'}</td><td>${sp.regularity == null ? '–' : Math.round(sp.regularity * 100) + ' %'}</td><td>${delta(st.regularity == null ? null : st.regularity * 100, sp.regularity == null ? null : sp.regularity * 100, ' pts')}</td></tr>
     <tr><td>Activités reportées</td><td>${cnt.postponed || 0}</td><td>${sp.cnt.postponed || 0}</td><td>${delta(-(cnt.postponed || 0), -(sp.cnt.postponed || 0))}</td></tr>`;
   const sdet = kind === 'day' ? dayInfo(p.from, qf) : null;
-  return pageTop('📊 Statistiques & scores', 'Un seul jeu de filtres : tous les chiffres et graphiques sont recalculés sur le même périmètre', `<button class="btn" ${A('goBilan', { k: kind === 'month' ? 'week' : kind })}>📑 Bilan détaillé</button><button class="btn" onclick="window.print()">🖨 PDF / Imprimer</button>`) +
+  return pageTop('📊 Statistiques & scores', 'Un seul jeu de filtres : tous les chiffres et graphiques sont recalculés sur le même périmètre', `<button class="btn" ${A('goBilan', { k: kind === 'month' ? 'week' : kind })}>📑 Bilan détaillé</button><button class="btn pri" ${A('expOpen', {})}>⬇ Exporter…</button><button class="btn" onclick="window.print()">🖨 Imprimer</button>`) +
     `<div class="card" style="margin-bottom:14px"><div class="fr" style="margin:0"><div class="tabs" style="margin:0">${[['day', 'Jour'], ['week', 'Semaine'], ['month', 'Mois']].map(([k, l]) => `<button class="${kind === k ? 'on' : ''}" ${A('statP', { v: k })}>${l}</button>`).join('')}</div><div class="calbar"><button class="btn sm" ${A('statNav', { n: -step })}>‹</button><b class="ct" style="min-width:200px">${periodLabel(p)}</b><button class="btn sm" ${A('statNav', { n: step })}>›</button><button class="btn sm" ${A('statToday')}>Aujourd’hui</button></div><label>Domaine / quota<select data-live="stq" name="q"><option value="all">Tous les quotas</option>${catOptions(qf)}</select></label>${qf !== 'all' ? `<button class="btn sm" ${A('statQreset')}>✕ Réinitialiser le filtre</button>` : ''}</div></div>
     <div class="g g4">
       <div class="card kpi">${ring((sc || 0) / 100, { size: 84, label: sc == null ? '–' : sc + '%', color: `var(--${sc == null ? 'mut' : sc >= 80 ? 'ok' : sc >= 50 ? 'warn' : 'bad'})` })}<div><div class="l">Score ${kind === 'day' ? 'du jour' : kind === 'week' ? 'de la semaine' : 'du mois'}</div><div>${delta(sc, sp.score, ' pts')} <span class="rt">vs précédent</span></div></div></div>
@@ -1065,7 +1076,7 @@ function vSettings() {
   const s = S.settings, size = Math.round(JSON.stringify(S).length / 1024);
   return pageTop('⚙️ Réglages & données', `Stockage local (${storageMode === 'idb' ? 'IndexedDB' : 'localStorage'}) · ${size} Ko · V${VERSION}`) +
     `<div class="g g2">
-    <div class="card"><div class="ch"><h2>Apparence & bilan</h2></div><form class="fm" data-form="settingsSave"><div class="row"><label>Prénom (message d’accueil)<input name="name" value="${esc(s.name || 'Hamza')}"></label><label>Thème<select name="theme">${[['auto', 'Automatique'], ['light', 'Clair'], ['dark', 'Sombre']].map(([k, l]) => `<option value="${k}" ${s.theme === k ? 'selected' : ''}>${l}</option>`).join('')}</select></label><label>Heure du bilan du soir<input type="time" name="bilanHour" value="${pad(s.bilanHour)}:00"></label></div><div class="ch"><h3>Fenêtres libres (créneaux utilisables par le planificateur)</h3></div><div class="rt">Le temps de sommeil, de travail et de transport est protégé : ne mets ici que ce qui est vraiment disponible.</div>${DAYSL.map((d, i) => `<div class="row" style="align-items:center;grid-template-columns:90px 1fr 1fr auto"><b>${d}</b><input type="time" name="f${i}s" value="${s.free[i] ? s.free[i][0] : '18:45'}"><input type="time" name="f${i}e" value="${s.free[i] ? s.free[i][1] : '22:30'}"><label style="flex-direction:row;align-items:center;gap:5px"><input type="checkbox" name="f${i}n" ${s.free[i] ? '' : 'checked'}>aucune</label></div>`).join('')}<label>Causes d’imprévus / non-réalisation (une par ligne)<textarea name="reasons" rows="6">${esc(S.reasons.join('\n'))}</textarea></label><button class="btn pri" type="submit">Enregistrer</button></form></div>
+    <div class="card"><div class="ch"><h2>Apparence & bilan</h2></div><form class="fm" data-form="settingsSave"><div class="row"><label>Prénom (message d’accueil)<input name="name" value="${esc(s.name || 'Hamza')}"></label><label>Thème<select name="theme">${[['auto', 'Automatique'], ['light', 'Clair'], ['dark', 'Sombre']].map(([k, l]) => `<option value="${k}" ${s.theme === k ? 'selected' : ''}>${l}</option>`).join('')}</select></label><label>Heure du bilan du soir<input type="time" name="bilanHour" value="${pad(s.bilanHour)}:00"></label></div><div class="ch"><h3>Fenêtres libres (créneaux utilisables par le planificateur)</h3></div><div class="rt">Le temps de sommeil, de travail et de transport est protégé : ne mets ici que ce qui est vraiment disponible.</div>${DAYSL.map((d, i) => `<div class="frow"><b>${d}</b><input type="time" name="f${i}s" value="${s.free[i] ? s.free[i][0] : '18:45'}"><input type="time" name="f${i}e" value="${s.free[i] ? s.free[i][1] : '22:30'}"><label style="flex-direction:row;align-items:center;gap:5px"><input type="checkbox" name="f${i}n" ${s.free[i] ? '' : 'checked'}>aucune</label></div>`).join('')}<label>Causes d’imprévus / non-réalisation (une par ligne)<textarea name="reasons" rows="6">${esc(S.reasons.join('\n'))}</textarea></label><button class="btn pri" type="submit">Enregistrer</button></form></div>
     <div style="display:grid;gap:14px;align-content:start">
       <div class="card"><div class="ch"><h2>☁️ Synchronisation PC ↔ téléphone</h2></div>
         <div class="sub" id="syncstat" style="margin-bottom:8px">${esc(syncStatusText())}</div>
@@ -1083,7 +1094,7 @@ function vSettings() {
           <div class="rt">Les données sont chiffrées avant l’envoi : même dans un dépôt GitHub, personne ne peut les lire sans ton mot de passe. Le jeton et le mot de passe restent uniquement dans ce navigateur et ne sont jamais inclus dans les sauvegardes JSON.</div></details></div>
       <div class="card"><div class="ch"><h2>Notifications</h2></div><div class="sub" style="margin-bottom:8px">Statut : <b>${'Notification' in window ? Notification.permission : 'non supporté'}</b>. Les notifications fonctionnent app ouverte (ou en arrière-plan sur le navigateur). Pour les rendez-vous app fermée, utilise l’export 📲 vers l’agenda du téléphone.</div><button class="btn" ${A('notifAsk')}>Autoriser les notifications</button></div>
       <div class="card"><div class="ch"><h2>Mon travail (bloc fixe)</h2></div><form class="fm" data-form="workAdd"><div class="row"><label>Début<input type="time" name="s" value="08:30"></label><label>Fin<input type="time" name="e" value="17:00"></label><label>Semaines<input type="number" name="w" value="8" min="1" max="52"></label></div><button class="btn" type="submit">Ajouter lun–ven (bloc fixe, hors score)</button></form></div>
-      <div class="card"><div class="ch"><h2>Sauvegarde & restauration</h2></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn pri" ${A('exportJson')}>⬇ Exporter (JSON)</button><label class="btn" style="cursor:pointer">⬆ Importer<input type="file" accept=".json" id="impfile" class="hide"></label><button class="btn" ${A('backups')}>🕘 Copies automatiques</button></div><div class="sub" style="margin-top:8px">Une copie automatique est gardée chaque jour (7 derniers jours) dans le navigateur. Pense à exporter régulièrement un fichier JSON sur ton PC/Drive.</div></div>
+      <div class="card"><div class="ch"><h2>Sauvegarde & restauration</h2></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn pri" ${A('exportJson')}>⬇ Exporter (JSON)</button><button class="btn" ${A('expOpen', {})}>📄 Rapport Word / Excel / PDF</button><button class="btn" ${A('expFull')}>📊 Excel complet</button><label class="btn" style="cursor:pointer">⬆ Importer<input type="file" accept=".json" id="impfile" class="hide"></label><button class="btn" ${A('backups')}>🕘 Copies automatiques</button></div><div class="sub" style="margin-top:8px">Une copie automatique est gardée chaque jour (7 derniers jours) dans le navigateur. Pense à exporter régulièrement un fichier JSON sur ton PC/Drive.</div></div>
       <div class="card"><div class="ch"><h2>Données de démonstration</h2></div><div class="sub" style="margin-bottom:8px">4 semaines d’historique fictif pour tester graphiques et bilans. Retirables en un clic sans toucher à tes vraies données.</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" ${A('demoLoad')}>Charger la démo</button><button class="btn" ${A('demoClear')}>Retirer la démo</button><button class="btn bad" ${A('resetAll')}>Tout effacer</button></div></div>
     </div></div>`;
 }
@@ -1312,6 +1323,502 @@ async function syncInit() {
   window.addEventListener('online', () => syncNow('online'));
   if (SYNC.cfg && SYNC.cfg.on) { setSync('busy'); setTimeout(() => syncNow('open'), 700); }
 }
+/* =====================================================================
+   33 — EXPORTS : Excel (.xlsx), Word (.docx), PDF (impression)
+   Charte : Book Antiqua, texte noir justifié interligne 1,5, titres en bleus,
+   sommaire, tableaux et graphiques. Aucune bibliothèque externe.
+   ===================================================================== */
+const X = s => String(s ?? '').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const B1 = '#2D348B', B2 = '#4A55B8', B3 = '#6F7AD8', ZEB = '#EEF0FB', GRID = '#D0D3E8';
+const FONT = "'Book Antiqua','Palatino Linotype',Palatino,'Times New Roman',serif";
+const frD = s => s.slice(8) + '/' + s.slice(5, 7) + '/' + s.slice(0, 4);
+const dmD = s => s.slice(8) + '/' + s.slice(5, 7);
+const capF = s => s.charAt(0).toUpperCase() + s.slice(1);
+const xlSerial = s => { const [y, m, d] = s.split('-').map(Number); return Math.round((Date.UTC(y, m - 1, d) - Date.UTC(1899, 11, 30)) / 864e5); };
+const pct0 = x => (x == null ? '–' : Math.round(x * 100) + ' %');
+const nfmt = v => (Math.round(v * 10) / 10).toString().replace('.', ',');
+
+/* ---------------- ZIP (méthode « store ») ---------------- */
+const CRC_T = (() => { const t = []; for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+function crc32(u) { let c = 0xFFFFFFFF; for (let i = 0; i < u.length; i++) c = CRC_T[(c ^ u[i]) & 255] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; }
+function zipStore(files) {
+  const enc = new TextEncoder(), parts = [], cen = []; let off = 0;
+  const DT = ((2025 - 1980) << 9) | (1 << 5) | 1;
+  for (const f of files) {
+    const nm = enc.encode(f.name), d = typeof f.data === 'string' ? enc.encode(f.data) : f.data, crc = crc32(d);
+    const h = new DataView(new ArrayBuffer(30));
+    h.setUint32(0, 0x04034b50, true); h.setUint16(4, 20, true); h.setUint16(6, 0x0800, true); h.setUint16(8, 0, true); h.setUint16(10, 0, true); h.setUint16(12, DT, true);
+    h.setUint32(14, crc, true); h.setUint32(18, d.length, true); h.setUint32(22, d.length, true); h.setUint16(26, nm.length, true); h.setUint16(28, 0, true);
+    parts.push(new Uint8Array(h.buffer), nm, d);
+    const c = new DataView(new ArrayBuffer(46));
+    c.setUint32(0, 0x02014b50, true); c.setUint16(4, 20, true); c.setUint16(6, 20, true); c.setUint16(8, 0x0800, true); c.setUint16(10, 0, true); c.setUint16(12, 0, true); c.setUint16(14, DT, true);
+    c.setUint32(16, crc, true); c.setUint32(20, d.length, true); c.setUint32(24, d.length, true); c.setUint16(28, nm.length, true); c.setUint32(42, off, true);
+    cen.push(new Uint8Array(c.buffer), nm);
+    off += 30 + nm.length + d.length;
+  }
+  let cs = 0; for (const x of cen) cs += x.length;
+  const e = new DataView(new ArrayBuffer(22));
+  e.setUint32(0, 0x06054b50, true); e.setUint16(8, files.length, true); e.setUint16(10, files.length, true); e.setUint32(12, cs, true); e.setUint32(16, off, true);
+  const all = [...parts, ...cen, new Uint8Array(e.buffer)]; let n = 0; for (const x of all) n += x.length;
+  const out = new Uint8Array(n); let p = 0; for (const x of all) { out.set(x, p); p += x.length; }
+  return out;
+}
+
+/* ---------------- données communes ---------------- */
+const qStatus = r => {
+  const q = r.q;
+  if (q.mode === 'max') return r.done <= r.target ? ['Respecté', 'ok'] : ['Dépassé', 'bad'];
+  return r.pct >= 1 ? ['Atteint', 'ok'] : r.pct >= 0.7 ? ['Partiel', 'warn'] : ['En retard', 'bad'];
+};
+const stTone = s => (s === 'done' ? 'ok' : s === 'missed' ? 'bad' : s === 'partial' || s === 'postponed' || s === 'unfilled' ? 'warn' : '');
+function expPeriodLabel(p) {
+  if (p.kind === 'day') return `${capF(fmtDate(p.from))} ${p.from.slice(0, 4)}`;
+  if (p.kind === 'week') return `Semaine ${isoWeek(p.from)} · du ${dmD(p.from)} au ${dmD(p.to)}/${p.to.slice(0, 4)}`;
+  if (p.kind === 'month') { const d = parseYmd(p.from); return `${capF(MONTHS[d.getMonth()])} ${d.getFullYear()}`; }
+  return `Du ${frD(p.from)} au ${frD(p.to)}`;
+}
+function expAllRange() {
+  const ds = [todayStr()]; for (const e of S.entries) ds.push(e.date); for (const b of S.blocks) ds.push(b.date); for (const l of S.libre) ds.push(l.date); for (const a of S.appts) ds.push(a.date);
+  ds.sort(); return { kind: 'range', from: ds[0], to: ds[ds.length - 1], days: daysBetween(ds[0], ds[ds.length - 1]) + 1 };
+}
+function expData(o) {
+  const qf = o.qf || 'all', p = o.kind === 'range' ? expAllRange() : periodOf(o.kind, o.date);
+  const st = statsFor(p, qf), q1 = qf === 'all' ? null : Q(qf);
+  const sp = p.kind === 'range' ? null : statsFor(prevPeriod(p, o.date), qf);
+  const inP = d => d >= p.from && d <= p.to;
+  const quotas = st.per.map(r => { const s = qStatus(r); return { q: r.q, done: r.done, target: r.target, pct: r.pct, status: s[0], tone: s[1] }; });
+  const blocks = S.blocks.filter(b => inP(b.date) && b.status !== 'cancelled' && (qf === 'all' || b.q === qf))
+    .sort((a, b) => (a.date + a.start).localeCompare(b.date + b.start))
+    .map(b => { const s = effStatus(b), pl = blockPlanned(b); const ac = ['done', 'partial', 'missed', 'postponed'].includes(s) ? Math.min(pl, blockActual(b) || (s === 'done' ? pl : 0)) : 0; return { b, s, pl, ac, q: b.q ? Q(b.q) : null }; });
+  const missed = blocks.filter(x => ['missed', 'partial', 'postponed'].includes(x.s));
+  const daily = st.series.map(x => { const i = dayInfo(x.d, qf), rv = S.reviews[x.d] || {}; return { d: x.d, score: i.score, v: x.v, mood: rv.mood || null, energy: rv.energy || null }; });
+  const entries = S.entries.filter(e => inP(e.date) && (qf === 'all' || e.cat === qf)).sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || '')));
+  const libre = S.libre.filter(l => inP(l.date)).sort((a, b) => (a.date + (a.from || '')).localeCompare(b.date + (b.from || '')));
+  const appts = S.appts.filter(a => inP(a.date)).sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time));
+  const reco = [];
+  for (const r of quotas) {
+    if (p.kind === 'day' && r.q.day == null) continue;
+    if (r.q.mode === 'min' && r.pct < 0.7 && !r.q.noPlan) reco.push(`${r.q.label} : ${fmtVal(r.q, r.done)} réalisés pour une cible de ${fmtTarget(r.q, r.target)}${r.q.kind === 'duration' ? '' : ''} (${Math.round(r.pct * 100)} %). Prévoir un créneau protégé dès la prochaine période.`);
+    if (r.q.mode === 'max' && r.done > r.target) reco.push(`${r.q.label} : plafond dépassé (${fmtVal(r.q, r.done)} pour un maximum de ${fmtTarget(r.q, r.target)}). Fixer une limite horaire ou un remplacement.`);
+  }
+  const rs = Object.entries(st.reasons).sort((a, b) => b[1] - a[1]);
+  if (rs.length) reco.push(`Motif d’écart le plus fréquent : « ${rs[0][0]} » (${rs[0][1]} fois). C’est le premier levier à traiter.`);
+  if (st.regularity != null && st.regularity < 0.6) reco.push(`Régularité de ${Math.round(st.regularity * 100)} % : privilégier moins d’activités par jour, mais tenues.`);
+  if (p.kind === 'week') for (const a of adjustSuggestions()) reco.push(`Ajustement proposé pour ${a.q.label} : passer de ${fmtTarget(a.q, a.from)} à ${fmtTarget(a.q, a.to)}. ${a.why}`);
+  if (!reco.length) reco.push('Aucun point d’alerte sur la période : maintenir le rythme actuel.');
+  return { o, p, qf, q1, st, sp, quotas, blocks, missed, daily, entries, libre, appts, reco, label: expPeriodLabel(p), serUnit: q1 && q1.kind === 'count' ? (q1.unit || '') : 'h', serDiv: q1 && q1.kind === 'count' ? 1 : 60 };
+}
+
+/* ---------------- graphiques SVG autonomes ---------------- */
+function niceMax(m) { if (m <= 0) return 4; const r = m / 4, e = Math.pow(10, Math.floor(Math.log10(r))), f = r / e; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * e * 4; }
+function chartSvg(b, W = 640, H = 300) {
+  const items = b.items || [];
+  let body = '';
+  const title = b.title ? `<text x="${W / 2}" y="22" text-anchor="middle" font-size="15" font-weight="700" fill="${B1}">${X(b.title)}</text>` : '';
+  if (b.kind === 'donut') {
+    const tot = items.reduce((s, i) => s + i.v, 0) || 1, cx = 150, cy = H / 2 + 12, R = 96, r = 56, rm = (R + r) / 2, C = 2 * Math.PI * rm;
+    let acc = 0;
+    for (const it of items) { const len = it.v / tot * C; body += `<circle cx="${cx}" cy="${cy}" r="${rm}" fill="none" stroke="${it.c}" stroke-width="${R - r}" stroke-dasharray="${len.toFixed(2)} ${(C - len).toFixed(2)}" stroke-dashoffset="${(-acc).toFixed(2)}" transform="rotate(-90 ${cx} ${cy})"/>`; acc += len; }
+    body += `<text x="${cx}" y="${cy + 6}" text-anchor="middle" font-size="16" font-weight="700" fill="#000">${X(b.center || '')}</text>`;
+    items.forEach((it, i) => { const y = 62 + i * 26; body += `<rect x="300" y="${y - 11}" width="14" height="14" rx="3" fill="${it.c}"/><text x="322" y="${y}" font-size="13" fill="#000">${X(it.l)} — ${X(b.fv ? b.fv(it.v) : nfmt(it.v))} (${Math.round(it.v / tot * 100)} %)</text>`; });
+  } else {
+    const L = 52, R = 14, T = 40, Bm = 46, pw = W - L - R, ph = H - T - Bm, n = Math.max(items.length, 1);
+    const mx = niceMax(Math.max(...items.map(i => i.v), b.target || 0, 0.0001) * 1.08), gx = pw / n, bw = Math.min(46, gx * 0.62);
+    for (let k = 0; k <= 4; k++) { const v = mx * k / 4, y = T + ph - ph * k / 4; body += `<line x1="${L}" y1="${y}" x2="${W - R}" y2="${y}" stroke="${GRID}" stroke-width="1"/><text x="${L - 6}" y="${y + 4}" text-anchor="end" font-size="11" fill="#333">${X(nfmt(v))}</text>`; }
+    const step = Math.ceil(n / 12);
+    items.forEach((it, i) => {
+      const x = L + gx * i + (gx - bw) / 2, h = ph * Math.min(it.v, mx) / mx, y = T + ph - h;
+      body += `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(h, 0).toFixed(1)}" rx="3" fill="${it.c || B1}"/>`;
+      if (n <= 16 && it.v > 0) body += `<text x="${(x + bw / 2).toFixed(1)}" y="${(y - 4).toFixed(1)}" text-anchor="middle" font-size="11" font-weight="700" fill="#000">${X(b.fv ? b.fv(it.v) : nfmt(it.v))}</text>`;
+      if (i % step === 0) { const lb = it.l.length > 13 ? it.l.slice(0, 12) + '…' : it.l; body += `<text x="${(x + bw / 2).toFixed(1)}" y="${T + ph + 16}" text-anchor="middle" font-size="11" fill="#000">${X(lb)}</text>`; }
+    });
+    body += `<line x1="${L}" y1="${T + ph}" x2="${W - R}" y2="${T + ph}" stroke="#555" stroke-width="1"/>`;
+    if (b.target) { const y = T + ph - ph * b.target / mx; body += `<line x1="${L}" y1="${y}" x2="${W - R}" y2="${y}" stroke="#d9480f" stroke-width="1.6" stroke-dasharray="6 4"/><text x="${W - R}" y="${y - 4}" text-anchor="end" font-size="11" fill="#d9480f">${X(b.targetL || 'objectif')}</text>`; }
+    if (b.unit) body += `<text x="${L}" y="${T - 8}" font-size="11" fill="#333">${X(b.unit)}</text>`;
+  }
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="${FONT}"><rect width="${W}" height="${H}" fill="#fff"/>${title}${body}</svg>`;
+}
+function svgToPng(svg, W, H, sc = 2) {
+  return new Promise((res, rej) => {
+    const img = new Image();
+    img.onload = () => {
+      const c = document.createElement('canvas'); c.width = W * sc; c.height = H * sc;
+      const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); x.drawImage(img, 0, 0, c.width, c.height);
+      c.toBlob(bl => (bl ? bl.arrayBuffer().then(a => res(new Uint8Array(a))) : rej(new Error('png'))), 'image/png');
+    };
+    img.onerror = () => rej(new Error('svg'));
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  });
+}
+
+/* ---------------- modèle de rapport (Word / PDF) ---------------- */
+function buildReport(o) {
+  const D = expData(o), { p, st, sp, q1 } = D, P = o.parts, secs = [];
+  const cnt = st.cnt, nb = D.blocks.length;
+  if (P.synth) {
+    const bl = [];
+    bl.push({ t: 'kpi', items: [
+      { l: 'Score', v: st.score == null ? '–' : st.score + ' %' },
+      { l: 'Régularité', v: pct0(st.regularity) },
+      { l: 'Temps réalisé', v: fmtDur(st.realMin) },
+      { l: 'Reportées', v: String(cnt.postponed || 0) }] });
+    let txt = `Sur la période « ${D.label} »${q1 ? `, pour l’activité « ${q1.label} »` : ''}, le score global ressort à ${st.score == null ? 'non calculable (pas assez de données)' : st.score + ' %'}${sp && sp.score != null && st.score != null ? `, contre ${sp.score} % sur la période précédente (${st.score - sp.score >= 0 ? '+' : ''}${st.score - sp.score} pts)` : ''}.`;
+    if (nb) txt += ` ${nb} activité${nb > 1 ? 's' : ''} planifiée${nb > 1 ? 's' : ''} : ${cnt.done || 0} terminée${(cnt.done || 0) > 1 ? 's' : ''}, ${cnt.partial || 0} partielle${(cnt.partial || 0) > 1 ? 's' : ''}, ${cnt.missed || 0} non réalisée${(cnt.missed || 0) > 1 ? 's' : ''} et ${cnt.postponed || 0} reportée${(cnt.postponed || 0) > 1 ? 's' : ''}.`;
+    bl.push({ t: 'p', x: txt });
+    if (sp) bl.push({ t: 'table', head: ['Indicateur', 'Période', 'Précédente', 'Écart'], align: ['l', 'r', 'r', 'r'], rows: [
+      ['Score', st.score == null ? '–' : st.score + ' %', sp.score == null ? '–' : sp.score + ' %', st.score == null || sp.score == null ? '–' : (st.score - sp.score >= 0 ? '+' : '') + (st.score - sp.score) + ' pts'],
+      ['Temps réalisé (blocs)', fmtDur(st.realMin), fmtDur(sp.realMin), (st.realMin - sp.realMin >= 0 ? '+' : '') + fmtDur(st.realMin - sp.realMin)],
+      ['Régularité', pct0(st.regularity), pct0(sp.regularity), st.regularity == null || sp.regularity == null ? '–' : (st.regularity - sp.regularity >= 0 ? '+' : '') + Math.round((st.regularity - sp.regularity) * 100) + ' pts'],
+      ['Activités reportées', cnt.postponed || 0, sp.cnt.postponed || 0, (cnt.postponed || 0) - (sp.cnt.postponed || 0)]] });
+    const dist = Object.entries(st.timeBy).map(([id, v]) => ({ l: Q(id).label, v, c: Q(id).color })).sort((a, b) => b.v - a.v);
+    if (dist.length) bl.push({ t: 'chart', kind: 'donut', title: 'Répartition du temps par activité', items: dist, fv: fmtDur, center: fmtDur(dist.reduce((s, i) => s + i.v, 0)) });
+    secs.push({ h: 'Synthèse', blocks: bl });
+  }
+  if (P.quotas) {
+    const bl = [{ t: 'p', x: 'Le tableau compare le réalisé à la cible de la période. Les quotas « max » (café, cigarettes) sont des plafonds : ils sont respectés tant que le réalisé ne les dépasse pas.' }];
+    bl.push({ t: 'table', head: ['Quota', 'Réalisé', 'Cible', 'Avancement', 'Statut'], align: ['l', 'r', 'r', 'r', 'l'],
+      rows: D.quotas.map(r => [`${r.q.icon} ${r.q.label}`, fmtVal(r.q, r.done), (r.q.mode === 'max' ? 'max ' : '') + fmtTarget(r.q, r.target) + (r.q.kind === 'duration' ? '' : (r.q.unit ? ' ' + r.q.unit : '')), Math.round(r.pct * 100) + ' %', { v: r.status, k: r.tone }]) });
+    if (D.quotas.length > 1) bl.push({ t: 'chart', kind: 'bar', title: 'Avancement par quota (% de la cible)', unit: '%', target: 100, targetL: '100 %', items: D.quotas.map(r => ({ l: r.q.label, v: Math.round(r.pct * 100), c: r.q.color })), fv: v => v + '' });
+    secs.push({ h: 'Quotas et objectifs', blocks: bl });
+  }
+  if (P.plan) {
+    const bl = [];
+    if (!D.blocks.length) bl.push({ t: 'p', x: 'Aucune activité planifiée sur la période.' });
+    else bl.push({ t: 'table', head: ['Date', 'Horaire', 'Activité', 'Quota', 'Statut', 'Prévu', 'Réalisé'], align: ['l', 'l', 'l', 'l', 'l', 'r', 'r'],
+      rows: D.blocks.map(x => [dmD(x.b.date), `${x.b.start}–${x.b.end}`, x.b.title, x.q ? x.q.label : '—', { v: (STATUS[x.s] || ['?'])[0], k: stTone(x.s) }, fmtDur(x.pl), x.ac ? fmtDur(x.ac) : '—']) });
+    secs.push({ h: 'Planning de la période', blocks: bl });
+  }
+  if (P.missed) {
+    const bl = [];
+    if (!D.missed.length) bl.push({ t: 'p', x: 'Aucun écart enregistré : toutes les activités échues ont été réalisées ou sont encore à venir.' });
+    else {
+      bl.push({ t: 'p', x: `${D.missed.length} activité${D.missed.length > 1 ? 's' : ''} n’${D.missed.length > 1 ? 'ont' : 'a'} pas été menée${D.missed.length > 1 ? 's' : ''} à terme. Les motifs saisis permettent de repérer les causes récurrentes.` });
+      bl.push({ t: 'table', head: ['Date', 'Horaire', 'Activité', 'Statut', 'Motif'], align: ['l', 'l', 'l', 'l', 'l'], rows: D.missed.map(x => [dmD(x.b.date), `${x.b.start}–${x.b.end}`, x.b.title, { v: (STATUS[x.s] || ['?'])[0], k: stTone(x.s) }, x.b.reason || '—']) });
+      const rs = Object.entries(st.reasons).sort((a, b) => b[1] - a[1]).map(([l, v]) => ({ l, v, c: '#e8590c' }));
+      if (rs.length) bl.push({ t: 'chart', kind: 'bar', title: 'Motifs d’écart (nombre d’occurrences)', items: rs });
+    }
+    secs.push({ h: 'Non réalisés et causes', blocks: bl });
+  }
+  if (P.daily) {
+    const bl = [];
+    if (p.kind !== 'day' && D.daily.length > 1) bl.push({ t: 'chart', kind: 'bar', title: `Évolution quotidienne${q1 ? ' — ' + q1.label : ''}`, unit: D.serUnit, items: D.daily.map(x => ({ l: p.kind === 'week' ? DAYS[dow(x.d)] : String(parseYmd(x.d).getDate()), v: Math.round(x.v / D.serDiv * 10) / 10, c: B1 })), target: q1 && q1.day != null ? q1.day / (q1.kind === 'duration' ? 60 : 1) : null, targetL: 'cible/jour' });
+    bl.push({ t: 'table', head: ['Jour', 'Score', q1 && q1.kind === 'count' ? 'Quantité' : 'Temps', 'Humeur', 'Énergie'], align: ['l', 'r', 'r', 'r', 'r'],
+      rows: D.daily.map(x => [`${DAYS[dow(x.d)]} ${dmD(x.d)}`, x.score == null ? '–' : { v: x.score + ' %', k: x.score >= 80 ? 'ok' : x.score >= 50 ? 'warn' : 'bad' }, q1 && q1.kind === 'count' ? String(x.v) : fmtDur(x.v), x.mood ? x.mood + '/5' : '–', x.energy ? x.energy + '/5' : '–']) });
+    secs.push({ h: 'Évolution quotidienne', blocks: bl });
+  }
+  if (P.journal) {
+    const bl = [], cap = 300;
+    if (!D.entries.length) bl.push({ t: 'p', x: 'Aucune saisie sur la période.' });
+    else {
+      if (D.entries.length > cap) bl.push({ t: 'p', x: `Les ${cap} premières saisies sur ${D.entries.length} sont reprises ici ; le fichier Excel contient la liste complète.` });
+      bl.push({ t: 'table', head: ['Date', 'Heure', 'Activité', 'Valeur', 'Détail'], align: ['l', 'l', 'l', 'r', 'l'], rows: D.entries.slice(0, cap).map(e => [dmD(e.date), e.time || '', (Q(e.cat) || {}).label || e.cat, fmtVal(Q(e.cat), e.v), e.note || e.sub || '']) });
+    }
+    secs.push({ h: 'Journal des opérations', blocks: bl });
+  }
+  if (P.notes) {
+    const bl = [];
+    if (!D.libre.length && !D.appts.length) bl.push({ t: 'p', x: 'Aucune note libre ni rendez-vous sur la période.' });
+    if (D.libre.length) bl.push({ t: 'p', x: 'Notes libres (activités hors quotas) :' }, { t: 'table', head: ['Date', 'Horaire', 'Note'], align: ['l', 'l', 'l'], rows: D.libre.map(l => [dmD(l.date), l.from ? `${l.from}–${l.to || ''}` : '', l.text]) });
+    if (D.appts.length) bl.push({ t: 'p', x: 'Rendez-vous :' }, { t: 'table', head: ['Date', 'Heure', 'Rendez-vous', 'Lieu', 'Statut'], align: ['l', 'l', 'l', 'l', 'l'], rows: D.appts.map(a => [dmD(a.date), a.time, a.title, a.place || '—', { v: a.done ? 'Fait' : 'À venir', k: a.done ? 'ok' : '' }]) });
+    secs.push({ h: 'Notes libres et rendez-vous', blocks: bl });
+  }
+  if (P.reco) secs.push({ h: 'Recommandations du conseiller', blocks: [{ t: 'p', x: 'Ces recommandations sont calculées automatiquement à partir des écarts constatés. Elles ne modifient jamais le planning sans ta validation.' }, { t: 'ul', items: D.reco }] });
+  return { title: 'Rapport My Life Pilot', sub: D.label + (q1 ? ' · ' + q1.label : ''), generated: new Date().toLocaleString('fr-FR'), who: S.settings.name || 'Hamza', sections: secs, D };
+}
+
+/* ---------------- Word (.docx) ---------------- */
+const wRun = (t, o = {}) => `<w:r>${(o.b || o.i || o.color || o.sz) ? `<w:rPr>${o.b ? '<w:b/>' : ''}${o.i ? '<w:i/>' : ''}${o.color ? `<w:color w:val="${o.color}"/>` : ''}${o.sz ? `<w:sz w:val="${o.sz}"/><w:szCs w:val="${o.sz}"/>` : ''}</w:rPr>` : ''}<w:t xml:space="preserve">${X(t)}</w:t></w:r>`;
+const wP = (inner, o = {}) => `<w:p><w:pPr>${o.style ? `<w:pStyle w:val="${o.style}"/>` : ''}${o.keep ? '<w:keepNext/>' : ''}${o.pb ? '<w:pageBreakBefore/>' : ''}${o.ind ? `<w:ind w:left="${o.ind}" w:hanging="${o.hang || 0}"/>` : ''}${o.sp ? '<w:spacing w:before="60" w:after="60"/>' : ''}${o.jc ? `<w:jc w:val="${o.jc}"/>` : ''}</w:pPr>${inner}</w:p>`;
+const TONE_FILL = { ok: 'E3F5E9', bad: 'FDE4E4', warn: 'FFF1D6' };
+function wTable(head, rows, align) {
+  const TOT = 9638, n = head.length;
+  const ln = i => Math.max(8, Math.min(34, Math.max(String(head[i]).length, ...rows.map(r => { const c = r[i]; return String(c && typeof c === 'object' ? c.v : c ?? '').length; }))));
+  const raw = head.map((_, i) => ln(i)), sum = raw.reduce((a, b) => a + b, 0);
+  const w = raw.map(x => Math.round(x / sum * TOT)); w[n - 1] += TOT - w.reduce((a, b) => a + b, 0);
+  const bd = ['top', 'left', 'bottom', 'right', 'insideH', 'insideV'].map(k => `<w:${k} w:val="single" w:sz="4" w:space="0" w:color="D0D3E8"/>`).join('');
+  const cell = (txt, i, o = {}) => `<w:tc><w:tcPr><w:tcW w:w="${w[i]}" w:type="dxa"/>${o.fill ? `<w:shd w:val="clear" w:color="auto" w:fill="${o.fill}"/>` : ''}<w:vAlign w:val="center"/></w:tcPr>${wP(wRun(txt, { b: o.b, color: o.color }), { style: 'TableText', jc: o.jc })}</w:tc>`;
+  const jcOf = i => (align && align[i] === 'r' ? 'right' : 'left');
+  let x = `<w:tbl><w:tblPr><w:tblW w:w="${TOT}" w:type="dxa"/><w:tblBorders>${bd}</w:tblBorders><w:tblLayout w:type="fixed"/><w:tblCellMar><w:top w:w="40" w:type="dxa"/><w:left w:w="80" w:type="dxa"/><w:bottom w:w="40" w:type="dxa"/><w:right w:w="80" w:type="dxa"/></w:tblCellMar></w:tblPr><w:tblGrid>${w.map(v => `<w:gridCol w:w="${v}"/>`).join('')}</w:tblGrid>`;
+  x += `<w:tr><w:trPr><w:cantSplit/><w:tblHeader/></w:trPr>${head.map((h, i) => cell(h, i, { fill: '2D348B', b: 1, color: 'FFFFFF', jc: align && align[i] === 'r' ? 'right' : 'left' })).join('')}</w:tr>`;
+  rows.forEach((r, ri) => { x += `<w:tr><w:trPr><w:cantSplit/></w:trPr>${r.map((c, i) => { const v = c && typeof c === 'object' ? c.v : c, tone = c && typeof c === 'object' ? c.k : ''; return cell(String(v ?? ''), i, { fill: TONE_FILL[tone] || (ri % 2 ? 'EEF0FB' : ''), jc: jcOf(i), b: !!tone }); }).join('')}</w:tr>`; });
+  return x + '</w:tbl>' + wP('', { style: 'TableText' });
+}
+function wKpi(items) {
+  const w = Math.floor(9638 / items.length), bd = ['top', 'left', 'bottom', 'right', 'insideV'].map(k => `<w:${k} w:val="single" w:sz="8" w:space="0" w:color="FFFFFF"/>`).join('');
+  return `<w:tbl><w:tblPr><w:tblW w:w="9638" w:type="dxa"/><w:tblBorders>${bd}</w:tblBorders><w:tblLayout w:type="fixed"/></w:tblPr><w:tblGrid>${items.map(() => `<w:gridCol w:w="${w}"/>`).join('')}</w:tblGrid><w:tr><w:trPr><w:cantSplit/></w:trPr>${items.map(i => `<w:tc><w:tcPr><w:tcW w:w="${w}" w:type="dxa"/><w:shd w:val="clear" w:color="auto" w:fill="EEF0FB"/></w:tcPr>${wP(wRun(i.l, { color: '4A55B8', sz: 20 }), { style: 'TableText', jc: 'center', sp: 1 })}${wP(wRun(i.v, { b: 1, sz: 36 }), { style: 'TableText', jc: 'center', sp: 1 })}</w:tc>`).join('')}</w:tr></w:tbl>` + wP('', { style: 'TableText' });
+}
+const WNS = 'xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"';
+function docxStyles() {
+  const f = `<w:rFonts w:ascii="Book Antiqua" w:hAnsi="Book Antiqua" w:cs="Book Antiqua" w:eastAsia="Book Antiqua"/>`;
+  const h = (id, name, sz, col, lvl, bef) => `<w:style w:type="paragraph" w:styleId="${id}"><w:name w:val="${name}"/><w:basedOn w:val="Normal"/><w:next w:val="Normal"/><w:qFormat/><w:pPr><w:keepNext/><w:keepLines/><w:spacing w:before="${bef}" w:after="140" w:line="276" w:lineRule="auto"/><w:jc w:val="left"/>${lvl != null ? `<w:outlineLvl w:val="${lvl}"/>` : ''}</w:pPr><w:rPr>${f}<w:b/><w:color w:val="${col}"/><w:sz w:val="${sz}"/><w:szCs w:val="${sz}"/></w:rPr></w:style>`;
+  return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:docDefaults><w:rPrDefault><w:rPr>${f}<w:sz w:val="22"/><w:szCs w:val="22"/><w:lang w:val="fr-FR"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after="120" w:line="360" w:lineRule="auto"/><w:jc w:val="both"/></w:pPr></w:pPrDefault></w:docDefaults>
+<w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/><w:qFormat/><w:rPr><w:color w:val="000000"/></w:rPr></w:style>
+${h('Heading1', 'heading 1', 32, '2D348B', 0, 360)}${h('Heading2', 'heading 2', 26, '4A55B8', 1, 240)}${h('Heading3', 'heading 3', 24, '6F7AD8', 2, 200)}${h('Title', 'Title', 60, '2D348B', null, 0)}${h('Subtitle', 'Subtitle', 30, '4A55B8', null, 120)}${h('TOCHeading', 'TOC Heading', 32, '2D348B', null, 0)}
+<w:style w:type="paragraph" w:styleId="TOC1"><w:name w:val="toc 1"/><w:basedOn w:val="Normal"/><w:next w:val="Normal"/><w:uiPriority w:val="39"/><w:pPr><w:tabs><w:tab w:val="right" w:leader="dot" w:pos="9628"/></w:tabs><w:spacing w:after="80"/><w:jc w:val="left"/></w:pPr><w:rPr><w:b/><w:color w:val="2D348B"/></w:rPr></w:style>
+<w:style w:type="paragraph" w:styleId="TOC2"><w:name w:val="toc 2"/><w:basedOn w:val="Normal"/><w:next w:val="Normal"/><w:uiPriority w:val="39"/><w:pPr><w:tabs><w:tab w:val="right" w:leader="dot" w:pos="9628"/></w:tabs><w:spacing w:after="60"/><w:ind w:left="283"/><w:jc w:val="left"/></w:pPr><w:rPr><w:color w:val="4A55B8"/></w:rPr></w:style>
+<w:style w:type="paragraph" w:styleId="TableText"><w:name w:val="Table Text"/><w:basedOn w:val="Normal"/><w:qFormat/><w:pPr><w:spacing w:before="0" w:after="0" w:line="240" w:lineRule="auto"/><w:jc w:val="left"/></w:pPr><w:rPr><w:sz w:val="20"/><w:szCs w:val="20"/></w:rPr></w:style>
+<w:style w:type="paragraph" w:styleId="Footer"><w:name w:val="footer"/><w:basedOn w:val="Normal"/><w:pPr><w:spacing w:after="0" w:line="240" w:lineRule="auto"/><w:jc w:val="center"/></w:pPr><w:rPr><w:color w:val="4A55B8"/><w:sz w:val="18"/><w:szCs w:val="18"/></w:rPr></w:style>
+<w:style w:type="character" w:styleId="Hyperlink"><w:name w:val="Hyperlink"/><w:rPr><w:color w:val="2D348B"/></w:rPr></w:style>
+</w:styles>`;
+}
+async function buildDocx(rep) {
+  const imgs = []; let bm = 0, nid = 0;
+  const body = [];
+  /* couverture */
+  body.push('<w:p><w:pPr><w:spacing w:before="2400"/></w:pPr></w:p>');
+  body.push(wP(wRun(rep.title), { style: 'Title' }));
+  body.push(wP(wRun(rep.sub), { style: 'Subtitle' }));
+  body.push(wP(wRun(`Préparé pour ${rep.who} · généré le ${rep.generated}`, { color: '4A55B8' }), { jc: 'left' }));
+  /* sommaire */
+  body.push(wP(wRun('Sommaire'), { style: 'TOCHeading', pb: 1 }));
+  const toc = rep.sections.map((s, i) => ({ id: '_Toc' + (i + 1), t: `${i + 1}. ${s.h}` }));
+  toc.forEach((t, i) => {
+    const first = i === 0 ? '<w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText xml:space="preserve"> TOC \\o "1-2" \\h \\z \\u </w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r>' : '';
+    const last = i === toc.length - 1 ? '<w:r><w:fldChar w:fldCharType="end"/></w:r>' : '';
+    body.push(`<w:p><w:pPr><w:pStyle w:val="TOC1"/></w:pPr>${first}<w:hyperlink w:anchor="${t.id}" w:history="1">${wRun(t.t)}</w:hyperlink>${last}</w:p>`);
+  });
+  /* sections */
+  let first = true;
+  for (let si = 0; si < rep.sections.length; si++) {
+    const s = rep.sections[si], id = ++bm;
+    body.push(`<w:p><w:pPr><w:pStyle w:val="Heading1"/>${first ? '<w:pageBreakBefore/>' : ''}</w:pPr><w:bookmarkStart w:id="${id}" w:name="_Toc${si + 1}"/>${wRun(`${si + 1}. ${s.h}`)}<w:bookmarkEnd w:id="${id}"/></w:p>`); first = false;
+    for (const b of s.blocks) {
+      if (b.t === 'p') body.push(wP(wRun(b.x)));
+      else if (b.t === 'ul') b.items.forEach(x => body.push(wP(wRun('•\t' + x), { ind: 425, hang: 283 })));
+      else if (b.t === 'kpi') body.push(wKpi(b.items));
+      else if (b.t === 'table') body.push(wTable(b.head, b.rows, b.align));
+      else if (b.t === 'chart') {
+        const W = 640, H = b.kind === 'donut' ? 260 : 300, png = await svgToPng(chartSvg(b, W, H), W, H), n = imgs.length + 1; imgs.push({ n, png });
+        const cx = 5760000, cy = Math.round(cx * H / W);
+        body.push(wP(`<w:r><w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0"><wp:extent cx="${cx}" cy="${cy}"/><wp:docPr id="${n}" name="Graphique ${n}" descr="${X(b.title || '')}"/><a:graphic><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:pic><pic:nvPicPr><pic:cNvPr id="${n}" name="chart${n}.png"/><pic:cNvPicPr/></pic:nvPicPr><pic:blipFill><a:blip r:embed="rIdImg${n}"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill><pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="${cx}" cy="${cy}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing></w:r>`, { jc: 'center' }));
+      }
+    }
+  }
+  const sect = '<w:sectPr><w:footerReference w:type="default" r:id="rIdFoot"/><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134" w:header="567" w:footer="567" w:gutter="0"/></w:sectPr>';
+  const doc = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document ${WNS}><w:body>${body.join('')}${sect}</w:body></w:document>`;
+  const foot = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:ftr ${WNS}><w:p><w:pPr><w:pStyle w:val="Footer"/></w:pPr>${wRun('My Life Pilot · ' + rep.sub + ' · page ')}<w:fldSimple w:instr=" PAGE "><w:r><w:t>1</w:t></w:r></w:fldSimple>${wRun(' / ')}<w:fldSimple w:instr=" NUMPAGES "><w:r><w:t>1</w:t></w:r></w:fldSimple></w:p></w:ftr>`;
+  const rels = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rIdSty" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/><Relationship Id="rIdSet" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings" Target="settings.xml"/><Relationship Id="rIdFoot" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer" Target="footer1.xml"/>${imgs.map(i => `<Relationship Id="rIdImg${i.n}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/chart${i.n}.png"/>`).join('')}</Relationships>`;
+  const ct = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Default Extension="png" ContentType="image/png"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/><Override PartName="/word/settings.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml"/><Override PartName="/word/footer1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml"/><Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/></Types>`;
+  const root = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/></Relationships>`;
+  const core = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><dc:title>${X(rep.title + ' — ' + rep.sub)}</dc:title><dc:creator>${X(rep.who)}</dc:creator><dcterms:created xsi:type="dcterms:W3CDTF">${new Date().toISOString().slice(0, 19)}Z</dcterms:created></cp:coreProperties>`;
+  const settings = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:settings xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:updateFields w:val="true"/><w:defaultTabStop w:val="708"/><w:compat><w:compatSetting w:name="compatibilityMode" w:uri="http://schemas.microsoft.com/office/word" w:val="15"/></w:compat></w:settings>`;
+  const files = [{ name: '[Content_Types].xml', data: ct }, { name: '_rels/.rels', data: root }, { name: 'docProps/core.xml', data: core }, { name: 'word/document.xml', data: doc }, { name: 'word/styles.xml', data: docxStyles() }, { name: 'word/settings.xml', data: settings }, { name: 'word/footer1.xml', data: foot }, { name: 'word/_rels/document.xml.rels', data: rels }];
+  for (const i of imgs) files.push({ name: `word/media/chart${i.n}.png`, data: i.png });
+  return zipStore(files);
+}
+
+/* ---------------- PDF (impression d’un rapport HTML propre) ---------------- */
+function reportHtml(rep) {
+  const css = `@page{size:A4;margin:18mm 16mm}*{box-sizing:border-box}body{font-family:${FONT};font-size:11.5pt;line-height:1.5;color:#000;text-align:justify;margin:0}
+h1{font-size:19pt;color:${B1};margin:26px 0 10px;border-bottom:2px solid ${B3};padding-bottom:4px;break-after:avoid;text-align:left}
+h2{font-size:14pt;color:${B2};text-align:left}.cov{padding-top:70mm}.cov h1{font-size:34pt;border:0;margin:0}.cov .s{font-size:17pt;color:${B2};margin:8px 0 14px;text-align:left}.cov .m{color:${B2};text-align:left}
+.toc{break-before:page;break-after:page}.toc h1{margin-top:0}.toc a{color:${B1};text-decoration:none;display:block;padding:3px 0;border-bottom:1px dotted ${B3};font-weight:700;text-align:left}
+section{break-before:auto}.first{break-before:page}table{width:100%;border-collapse:collapse;margin:8px 0 16px;font-size:9.5pt;line-height:1.25;text-align:left}
+thead{display:table-header-group}th{background:${B1};color:#fff;padding:5px 7px;text-align:left}td{padding:4px 7px;border:1px solid ${GRID}}tr{break-inside:avoid}tbody tr:nth-child(even) td{background:${ZEB}}
+.r{text-align:right}.ok{background:#E3F5E9!important;font-weight:700}.bad{background:#FDE4E4!important;font-weight:700}.warn{background:#FFF1D6!important;font-weight:700}
+.kpi{display:flex;gap:8px;margin:10px 0 14px}.kpi div{flex:1;background:${ZEB};text-align:center;padding:8px 4px}.kpi small{display:block;color:${B2};font-size:9.5pt}.kpi b{font-size:18pt}
+.ch{text-align:center;break-inside:avoid;margin:6px 0 14px}.ch svg{max-width:100%;height:auto}ul{margin:4px 0 10px;padding-left:20px}li{margin-bottom:4px}`;
+  const cell = (c, i, al) => { const v = c && typeof c === 'object' ? c.v : c, k = c && typeof c === 'object' ? c.k : ''; return `<td class="${al && al[i] === 'r' ? 'r' : ''} ${k || ''}">${esc(v ?? '')}</td>`; };
+  let h = `<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>${esc(rep.title + ' — ' + rep.sub)}</title><style>${css}</style></head><body>`;
+  h += `<div class="cov"><h1>${esc(rep.title)}</h1><div class="s">${esc(rep.sub)}</div><div class="m">Préparé pour ${esc(rep.who)} · généré le ${esc(rep.generated)}</div></div>`;
+  h += `<div class="toc"><h1>Sommaire</h1>${rep.sections.map((s, i) => `<a href="#s${i + 1}">${i + 1}. ${esc(s.h)}</a>`).join('')}</div>`;
+  rep.sections.forEach((s, i) => {
+    h += `<section id="s${i + 1}"><h1>${i + 1}. ${esc(s.h)}</h1>`;
+    for (const b of s.blocks) {
+      if (b.t === 'p') h += `<p>${esc(b.x)}</p>`;
+      else if (b.t === 'ul') h += `<ul>${b.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`;
+      else if (b.t === 'kpi') h += `<div class="kpi">${b.items.map(k => `<div><small>${esc(k.l)}</small><b>${esc(k.v)}</b></div>`).join('')}</div>`;
+      else if (b.t === 'table') h += `<table><thead><tr>${b.head.map((x, j) => `<th class="${b.align && b.align[j] === 'r' ? 'r' : ''}">${esc(x)}</th>`).join('')}</tr></thead><tbody>${b.rows.map(r => `<tr>${r.map((c, j) => cell(c, j, b.align)).join('')}</tr>`).join('')}</tbody></table>`;
+      else if (b.t === 'chart') h += `<div class="ch">${chartSvg(b, 640, b.kind === 'donut' ? 260 : 300)}</div>`;
+    }
+    h += '</section>';
+  });
+  return h.replace('<section id="s1">', '<section id="s1" class="first">') + '</body></html>';
+}
+function printHtml(html, fname) {
+  const fr = document.createElement('iframe'); fr.setAttribute('aria-hidden', 'true'); fr.style.cssText = 'position:fixed;right:0;bottom:0;width:1px;height:1px;border:0;opacity:0';
+  document.body.appendChild(fr);
+  const d = fr.contentWindow.document; d.open(); d.write(html); d.close();
+  setTimeout(() => { try { fr.contentWindow.focus(); fr.contentWindow.print(); } catch (e) { download(fname.replace(/\.pdf$/, '.html'), html, 'text/html'); toast('Impression indisponible : rapport HTML téléchargé', 'warn'); } setTimeout(() => fr.remove(), 120000); }, 500);
+}
+
+/* ---------------- Excel (.xlsx) ---------------- */
+const XTONE = { '': '0', ok: 'o', bad: 'b', warn: 'w' };
+const XFILL = { 0: 0, o: 4, b: 5, w: 6 };
+const XSTY = (() => {
+  const m = {}, list = []; let i = 0;
+  const add = (k, o) => { m[k] = i++; list.push(o); };
+  add('def', { f: 0 }); add('title', { f: 1 }); add('sub', { f: 2 }); add('h2', { f: 6 }); add('head', { f: 3, fill: 2, bd: 1, al: 'center', wrap: 1 });
+  add('kl', { f: 4, fill: 3, bd: 1 }); add('kv', { f: 5, bd: 1, al: 'left' });
+  for (const kind of ['t', 'w', 'n', 'i', 'p', 'd'])
+    for (const z of [0, 1]) for (const tn of ['0', 'o', 'b', 'w']) {
+      const fill = tn !== '0' ? XFILL[tn] : (z ? 3 : 0);
+      add(kind + z + tn, { f: tn !== '0' ? 7 : 0, fill, bd: 1, nf: kind === 'n' ? 164 : kind === 'i' ? 1 : kind === 'p' ? 9 : kind === 'd' ? 165 : 0, wrap: kind === 'w' ? 1 : 0, al: kind === 'w' || kind === 't' ? 'left' : kind === 'd' ? 'center' : 'right', v: kind === 'w' ? 'top' : 'center' });
+    }
+  const fonts = ['<font><sz val="11"/><color rgb="FF000000"/><name val="Book Antiqua"/><family val="1"/></font>', '<font><b/><sz val="18"/><color rgb="FF2D348B"/><name val="Book Antiqua"/><family val="1"/></font>', '<font><i/><sz val="11"/><color rgb="FF4A55B8"/><name val="Book Antiqua"/><family val="1"/></font>', '<font><b/><sz val="11"/><color rgb="FFFFFFFF"/><name val="Book Antiqua"/><family val="1"/></font>', '<font><b/><sz val="11"/><color rgb="FF2D348B"/><name val="Book Antiqua"/><family val="1"/></font>', '<font><b/><sz val="14"/><color rgb="FF000000"/><name val="Book Antiqua"/><family val="1"/></font>', '<font><b/><sz val="13"/><color rgb="FF4A55B8"/><name val="Book Antiqua"/><family val="1"/></font>', '<font><b/><sz val="11"/><color rgb="FF000000"/><name val="Book Antiqua"/><family val="1"/></font>'];
+  const fills = ['<fill><patternFill patternType="none"/></fill>', '<fill><patternFill patternType="gray125"/></fill>', ...['2D348B', 'EEF0FB', 'E3F5E9', 'FDE4E4', 'FFF1D6'].map(c => `<fill><patternFill patternType="solid"><fgColor rgb="FF${c}"/><bgColor indexed="64"/></patternFill></fill>`)];
+  const bds = ['<border><left/><right/><top/><bottom/><diagonal/></border>', '<border>' + ['left', 'right', 'top', 'bottom'].map(k => `<${k} style="thin"><color rgb="FFD0D3E8"/></${k}>`).join('') + '<diagonal/></border>'];
+  const xfs = list.map(o => `<xf numFmtId="${o.nf || 0}" fontId="${o.f || 0}" fillId="${o.fill || 0}" borderId="${o.bd || 0}" xfId="0" applyFont="1" applyFill="1" applyBorder="1" applyNumberFormat="1" applyAlignment="1"><alignment horizontal="${o.al || 'general'}" vertical="${o.v || 'center'}"${o.wrap ? ' wrapText="1"' : ''}/></xf>`).join('');
+  const xml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="2"><numFmt numFmtId="164" formatCode="0.0#"/><numFmt numFmtId="165" formatCode="dd/mm/yyyy"/></numFmts><fonts count="${fonts.length}">${fonts.join('')}</fonts><fills count="${fills.length}">${fills.join('')}</fills><borders count="${bds.length}">${bds.join('')}</borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="${list.length}">${xfs}</cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>`;
+  return { m, xml };
+})();
+const colL = c => { let s = ''; c++; while (c > 0) { const r = (c - 1) % 26; s = String.fromCharCode(65 + r) + s; c = Math.floor((c - 1) / 26); } return s; };
+const mkSheet = (name, widths) => ({ name: name.replace(/[\\/?*[\]:]/g, ' ').slice(0, 31), rows: [], widths, merges: [], charts: [], freeze: 0, filter: null });
+const put = (sh, r, c, v, s) => { (sh.rows[r] || (sh.rows[r] = []))[c] = { v, s }; };
+function xHead(sh, title, sub, ncol) { put(sh, 0, 0, title, 'title'); put(sh, 1, 0, sub, 'sub'); sh.merges.push([0, 0, 0, ncol - 1], [1, 0, 1, ncol - 1]); }
+function xTable(sh, r0, head, rows, kinds) {
+  head.forEach((h, i) => put(sh, r0, i, h, 'head'));
+  rows.forEach((row, ri) => row.forEach((cell, ci) => { let v = cell, tn = '0'; if (cell && typeof cell === 'object') { v = cell.v; tn = XTONE[cell.k || '']; } put(sh, r0 + 1 + ri, ci, v, kinds[ci] + (ri % 2) + tn); }));
+  return r0 + rows.length;
+}
+function buildSheets(o) {
+  const D = expData(o), { p, st, sp, q1 } = D, P = o.parts, sheets = [], sub = D.label + (q1 ? ' · ' + q1.label : '');
+  const hh = m => Math.round(m / 60 * 100) / 100;
+  if (P.synth || P.reco) {
+    const sh = mkSheet('Synthèse', [34, 18, 18, 18, 46]); xHead(sh, 'My Life Pilot — Synthèse', sub, 5); let r = 3;
+    if (P.synth) {
+      put(sh, r, 0, 'Indicateurs clés', 'h2'); r++;
+      const k = [['Score global', st.score == null ? '–' : st.score / 100, 'p'], ['Régularité', st.regularity, 'p'], ['Temps réalisé (h)', hh(st.realMin), 'n'], ['Activités reportées', st.cnt.postponed || 0, 'i'], ['Terminées', st.cnt.done || 0, 'i'], ['Partielles', st.cnt.partial || 0, 'i'], ['Non réalisées', st.cnt.missed || 0, 'i']];
+      k.forEach(([l, v, kd]) => { put(sh, r, 0, l, 'kl'); put(sh, r, 1, v, kd + '00'); r++; });
+      r++;
+      if (sp) { put(sh, r, 0, 'Comparaison avec la période précédente', 'h2'); r++; r = xTable(sh, r, ['Indicateur', 'Période', 'Précédente', 'Écart'], [['Score', st.score == null ? null : st.score / 100, sp.score == null ? null : sp.score / 100, st.score == null || sp.score == null ? null : (st.score - sp.score) / 100], ['Temps réalisé (h)', hh(st.realMin), hh(sp.realMin), hh(st.realMin - sp.realMin)], ['Régularité', st.regularity, sp.regularity, st.regularity == null || sp.regularity == null ? null : st.regularity - sp.regularity], ['Reportées', st.cnt.postponed || 0, sp.cnt.postponed || 0, (st.cnt.postponed || 0) - (sp.cnt.postponed || 0)]], ['t', 'n', 'n', 'n']) + 2; }
+    }
+    if (P.reco) { put(sh, r, 0, 'Recommandations du conseiller', 'h2'); r++; D.reco.forEach(x => { put(sh, r, 0, x, 'w00'); sh.merges.push([r, 0, r, 4]); r++; }); }
+    sheets.push(sh);
+  }
+  if (P.quotas) {
+    const sh = mkSheet('Quotas', [30, 14, 14, 14, 16]); xHead(sh, 'Quotas et objectifs', sub, 5);
+    const unit = r => (r.q.kind === 'duration' ? 'h' : r.q.unit || '');
+    const cv = (r, v) => (r.q.kind === 'duration' ? hh(v) : v);
+    const end = xTable(sh, 3, ['Quota (unité)', 'Réalisé', 'Cible', 'Avancement', 'Statut'], D.quotas.map(r => [`${r.q.icon} ${r.q.label} (${unit(r) || '×'})`, cv(r, r.done), Math.round(cv(r, r.target) * 100) / 100, r.pct, { v: r.status, k: r.tone }]), ['t', 'n', 'n', 'p', 't']);
+    sh.freeze = 4; sh.filter = `A4:E${end + 1}`;
+    if (D.quotas.length > 1) sh.charts.push({ type: 'bar', title: 'Avancement par quota', col: 3, name: 'Avancement', catCol: 0, r1: 4, r2: end, anchor: [6, 2, 15, 20], color: '2D348B', fmt: '0%' });
+    sheets.push(sh);
+  }
+  if (P.plan) {
+    const sh = mkSheet('Planning', [12, 8, 8, 34, 24, 16, 11, 11]); xHead(sh, 'Planning de la période', sub, 8);
+    const end = xTable(sh, 3, ['Date', 'Début', 'Fin', 'Activité', 'Quota', 'Statut', 'Prévu (h)', 'Réalisé (h)'], D.blocks.map(x => [x.b.date, x.b.start, x.b.end, x.b.title, x.q ? x.q.label : '—', { v: (STATUS[x.s] || ['?'])[0], k: stTone(x.s) }, hh(x.pl), hh(x.ac)]), ['d', 't', 't', 't', 't', 't', 'n', 'n']);
+    sh.freeze = 4; if (D.blocks.length) sh.filter = `A4:H${end + 1}`; sheets.push(sh);
+  }
+  if (P.missed) {
+    const sh = mkSheet('Écarts et causes', [12, 8, 8, 34, 16, 34]); xHead(sh, 'Non réalisés et causes', sub, 6);
+    const end = xTable(sh, 3, ['Date', 'Début', 'Fin', 'Activité', 'Statut', 'Motif'], D.missed.map(x => [x.b.date, x.b.start, x.b.end, x.b.title, { v: (STATUS[x.s] || ['?'])[0], k: stTone(x.s) }, x.b.reason || '—']), ['d', 't', 't', 't', 't', 'w']);
+    sh.freeze = 4; if (D.missed.length) sh.filter = `A4:F${end + 1}`;
+    const rs = Object.entries(st.reasons).sort((a, b) => b[1] - a[1]);
+    if (rs.length) { const e2 = xTable(sh, end + 3, ['Motif', 'Occurrences'], rs.map(([l, v]) => [l, v]), ['t', 'i']); sh.charts.push({ type: 'bar', title: 'Motifs d’écart', col: 1, name: 'Occurrences', catCol: 0, r1: end + 4, r2: e2, anchor: [7, 3, 15, 20], color: 'E8590C', fmt: '0' }); }
+    sheets.push(sh);
+  }
+  if (P.daily) {
+    const sh = mkSheet('Quotidien', [14, 11, 13, 10, 10]); xHead(sh, 'Évolution quotidienne', sub, 5);
+    const end = xTable(sh, 3, ['Date', 'Score', `Valeur (${D.serUnit || '×'})`, 'Humeur', 'Énergie'], D.daily.map(x => [x.d, x.score == null ? null : x.score / 100, Math.round(x.v / D.serDiv * 100) / 100, x.mood, x.energy]), ['d', 'p', 'n', 'i', 'i']);
+    sh.freeze = 4; if (D.daily.length) sh.filter = `A4:E${end + 1}`;
+    if (D.daily.length > 1) { sh.charts.push({ type: 'bar', title: 'Valeur quotidienne', col: 2, name: 'Valeur', catCol: 0, r1: 4, r2: end, anchor: [6, 2, 16, 19], color: '2D348B', fmt: '0.0', catDate: 1 }); sh.charts.push({ type: 'bar', title: 'Score quotidien', col: 1, name: 'Score', catCol: 0, r1: 4, r2: end, anchor: [6, 20, 16, 37], color: '0F9D9A', fmt: '0%', catDate: 1 }); }
+    sheets.push(sh);
+  }
+  if (P.journal) {
+    const sh = mkSheet('Journal', [12, 8, 28, 12, 12, 46]); xHead(sh, 'Journal des opérations', sub, 6);
+    const end = xTable(sh, 3, ['Date', 'Heure', 'Activité', 'Valeur', 'Durée (min)', 'Détail'], D.entries.map(e => { const q = Q(e.cat); return [e.date, e.time || '', q ? q.label : e.cat, q && q.kind === 'duration' ? hh(e.v) : e.v, entryMins(e) || null, e.note || e.sub || '']; }), ['d', 't', 't', 'n', 'i', 'w']);
+    sh.freeze = 4; if (D.entries.length) sh.filter = `A4:F${end + 1}`; sheets.push(sh);
+  }
+  if (P.notes) {
+    const sh = mkSheet('Notes et RDV', [12, 10, 10, 40, 24, 12]); xHead(sh, 'Notes libres et rendez-vous', sub, 6);
+    let r = 3; put(sh, r, 0, 'Notes libres', 'h2'); r++;
+    r = xTable(sh, r, ['Date', 'De', 'À', 'Note', '', ''], D.libre.map(l => [l.date, l.from || '', l.to || '', l.text, '', '']), ['d', 't', 't', 'w', 't', 't']) + 3;
+    put(sh, r, 0, 'Rendez-vous', 'h2'); r++;
+    xTable(sh, r, ['Date', 'Heure', 'Durée (min)', 'Rendez-vous', 'Lieu', 'Statut'], D.appts.map(a => [a.date, a.time, a.dur || null, a.title, a.place || '—', { v: a.done ? 'Fait' : 'À venir', k: a.done ? 'ok' : '' }]), ['d', 't', 'i', 't', 't', 't']);
+    sheets.push(sh);
+  }
+  if (o.kind === 'range') {
+    const sh = mkSheet('Configuration', [30, 14, 14, 12, 12]); xHead(sh, 'Quotas configurés', 'Cibles hebdomadaires en vigueur', 5);
+    xTable(sh, 3, ['Quota', 'Type', 'Mode', 'Cible / semaine', 'Cible / jour'], S.quotas.map(q => [`${q.icon} ${q.label}`, q.kind === 'duration' ? 'Durée (h)' : 'Compteur', q.mode === 'max' ? 'Plafond' : 'Minimum', q.kind === 'duration' ? hh(q.week) : q.week, q.day == null ? null : q.kind === 'duration' ? hh(q.day) : q.day]), ['t', 't', 't', 'n', 'n']);
+    sheets.push(sh);
+  }
+  if (!sheets.length) { const sh = mkSheet('Rapport', [60]); xHead(sh, 'My Life Pilot', 'Aucune section sélectionnée', 1); sheets.push(sh); }
+  return sheets;
+}
+function chartXml(ch, sheetName) {
+  const q = `'${sheetName.replace(/'/g, "''")}'`, cl = colL(ch.col), cc = colL(ch.catCol);
+  const ref = (c, a, b) => `${q}!$${c}$${a + 1}:$${c}$${b + 1}`;
+  const txPr = `<c:txPr><a:bodyPr/><a:lstStyle/><a:p><a:pPr><a:defRPr sz="900"><a:latin typeface="Book Antiqua"/></a:defRPr></a:pPr><a:endParaRPr lang="fr-FR"/></a:p></c:txPr>`;
+  return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><c:chartSpace xmlns:c="http://schemas.openxmlformats.org/drawingml/2006/chart" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><c:roundedCorners val="0"/><c:chart><c:title><c:tx><c:rich><a:bodyPr/><a:lstStyle/><a:p><a:pPr><a:defRPr sz="1200" b="1"><a:solidFill><a:srgbClr val="2D348B"/></a:solidFill><a:latin typeface="Book Antiqua"/></a:defRPr></a:pPr><a:r><a:rPr lang="fr-FR" sz="1200" b="1"><a:solidFill><a:srgbClr val="2D348B"/></a:solidFill><a:latin typeface="Book Antiqua"/></a:rPr><a:t>${X(ch.title)}</a:t></a:r></a:p></c:rich></c:tx><c:overlay val="0"/></c:title><c:autoTitleDeleted val="0"/><c:plotArea><c:layout/><c:barChart><c:barDir val="col"/><c:grouping val="clustered"/><c:varyColors val="0"/><c:ser><c:idx val="0"/><c:order val="0"/><c:tx><c:v>${X(ch.name)}</c:v></c:tx><c:spPr><a:solidFill><a:srgbClr val="${ch.color}"/></a:solidFill></c:spPr><c:invertIfNegative val="0"/><c:dLbls><c:numFmt formatCode="${ch.fmt}" sourceLinked="0"/><c:spPr><a:noFill/></c:spPr>${txPr}<c:showLegendKey val="0"/><c:showVal val="1"/><c:showCatName val="0"/><c:showSerName val="0"/><c:showPercent val="0"/><c:showBubbleSize val="0"/></c:dLbls><c:cat><c:${ch.catDate ? 'numRef' : 'strRef'}><c:f>${ref(cc, ch.r1, ch.r2)}</c:f></c:${ch.catDate ? 'numRef' : 'strRef'}></c:cat><c:val><c:numRef><c:f>${ref(cl, ch.r1, ch.r2)}</c:f></c:numRef></c:val></c:ser><c:gapWidth val="70"/><c:axId val="111111"/><c:axId val="222222"/></c:barChart><c:catAx><c:axId val="111111"/><c:scaling><c:orientation val="minMax"/></c:scaling><c:delete val="0"/><c:axPos val="b"/>${ch.catDate ? '<c:numFmt formatCode="dd/mm" sourceLinked="0"/>' : ''}<c:majorTickMark val="none"/><c:minorTickMark val="none"/><c:tickLblPos val="nextTo"/>${txPr}<c:crossAx val="222222"/><c:crosses val="autoZero"/><c:auto val="1"/><c:lblAlgn val="ctr"/><c:lblOffset val="100"/><c:noMultiLvlLbl val="0"/></c:catAx><c:valAx><c:axId val="222222"/><c:scaling><c:orientation val="minMax"/><c:min val="0"/></c:scaling><c:delete val="0"/><c:axPos val="l"/><c:majorGridlines><c:spPr><a:ln w="6350"><a:solidFill><a:srgbClr val="D0D3E8"/></a:solidFill></a:ln></c:spPr></c:majorGridlines><c:numFmt formatCode="${ch.fmt}" sourceLinked="0"/><c:majorTickMark val="none"/><c:minorTickMark val="none"/><c:tickLblPos val="nextTo"/>${txPr}<c:crossAx val="111111"/><c:crosses val="autoZero"/><c:crossBetween val="between"/></c:valAx></c:plotArea><c:plotVisOnly val="1"/><c:dispBlanksAs val="gap"/></c:chart><c:spPr><a:solidFill><a:srgbClr val="FFFFFF"/></a:solidFill><a:ln><a:solidFill><a:srgbClr val="D0D3E8"/></a:solidFill></a:ln></c:spPr></c:chartSpace>`;
+}
+function buildXlsx(sheets) {
+  const files = [], NSM = 'http://schemas.openxmlformats.org/spreadsheetml/2006/main', NSR = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships';
+  const ctO = [], wbS = [], wbR = []; let chN = 0;
+  sheets.forEach((sh, si) => {
+    const n = si + 1, nc = Math.max(sh.widths.length, ...sh.rows.map(r => (r ? r.length : 0)));
+    let sd = '';
+    for (let r = 0; r < sh.rows.length; r++) {
+      const row = sh.rows[r]; if (!row) continue;
+      const big = row[0] && (row[0].s === 'title');
+      let cs = '';
+      for (let c = 0; c < row.length; c++) {
+        const cell = row[c]; if (!cell) continue;
+        const ref = colL(c) + (r + 1), s = XSTY.m[cell.s] ?? 0; let v = cell.v;
+        if (v == null || v === '') cs += `<c r="${ref}" s="${s}"/>`;
+        else if (cell.s && cell.s[0] === 'd' && typeof v === 'string' && /^\d{4}-\d\d-\d\d$/.test(v)) cs += `<c r="${ref}" s="${s}"><v>${xlSerial(v)}</v></c>`;
+        else if (typeof v === 'number' && isFinite(v)) cs += `<c r="${ref}" s="${s}"><v>${v}</v></c>`;
+        else cs += `<c r="${ref}" s="${s}" t="inlineStr"><is><t xml:space="preserve">${X(v)}</t></is></c>`;
+      }
+      sd += `<row r="${r + 1}"${big ? ' ht="28" customHeight="1"' : ''}>${cs}</row>`;
+    }
+    const cols = sh.widths.map((w, i) => `<col min="${i + 1}" max="${i + 1}" width="${w}" customWidth="1"/>`).join('');
+    const pane = sh.freeze ? `<pane ySplit="${sh.freeze}" topLeftCell="A${sh.freeze + 1}" activePane="bottomLeft" state="frozen"/>` : '';
+    let x = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="${NSM}" xmlns:r="${NSR}"><sheetPr><pageSetUpPr fitToPage="1"/></sheetPr><dimension ref="A1:${colL(Math.max(nc - 1, 0))}${Math.max(sh.rows.length, 1)}"/><sheetViews><sheetView workbookViewId="0" showGridLines="0"${si === 0 ? ' tabSelected="1"' : ''}>${pane}</sheetView></sheetViews><sheetFormatPr defaultRowHeight="17"/>${cols ? `<cols>${cols}</cols>` : ''}<sheetData>${sd}</sheetData>${sh.filter ? `<autoFilter ref="${sh.filter}"/>` : ''}${sh.merges.length ? `<mergeCells count="${sh.merges.length}">${sh.merges.map(m => `<mergeCell ref="${colL(m[1])}${m[0] + 1}:${colL(m[3])}${m[2] + 1}"/>`).join('')}</mergeCells>` : ''}<pageMargins left="0.5" right="0.5" top="0.6" bottom="0.6" header="0.3" footer="0.3"/><pageSetup paperSize="9" orientation="landscape" fitToWidth="1" fitToHeight="0"/>${sh.charts.length ? '<drawing r:id="rId1"/>' : ''}</worksheet>`;
+    files.push({ name: `xl/worksheets/sheet${n}.xml`, data: x });
+    ctO.push(`<Override PartName="/xl/worksheets/sheet${n}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`);
+    wbS.push(`<sheet name="${X(sh.name)}" sheetId="${n}" r:id="rId${n}"/>`);
+    wbR.push(`<Relationship Id="rId${n}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${n}.xml"/>`);
+    if (sh.charts.length) {
+      files.push({ name: `xl/worksheets/_rels/sheet${n}.xml.rels`, data: `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/drawing" Target="../drawings/drawing${n}.xml"/></Relationships>` });
+      let dr = '', drr = '';
+      sh.charts.forEach((ch, k) => {
+        const cn = ++chN, a = ch.anchor;
+        files.push({ name: `xl/charts/chart${cn}.xml`, data: chartXml(ch, sh.name) });
+        ctO.push(`<Override PartName="/xl/charts/chart${cn}.xml" ContentType="application/vnd.openxmlformats-officedocument.drawingml.chart+xml"/>`);
+        drr += `<Relationship Id="rId${k + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart" Target="../charts/chart${cn}.xml"/>`;
+        dr += `<xdr:twoCellAnchor><xdr:from><xdr:col>${a[0]}</xdr:col><xdr:colOff>0</xdr:colOff><xdr:row>${a[1]}</xdr:row><xdr:rowOff>0</xdr:rowOff></xdr:from><xdr:to><xdr:col>${a[2]}</xdr:col><xdr:colOff>0</xdr:colOff><xdr:row>${a[3]}</xdr:row><xdr:rowOff>0</xdr:rowOff></xdr:to><xdr:graphicFrame macro=""><xdr:nvGraphicFramePr><xdr:cNvPr id="${k + 2}" name="Graphique ${cn}"/><xdr:cNvGraphicFramePr/></xdr:nvGraphicFramePr><xdr:xfrm><a:off x="0" y="0"/><a:ext cx="0" cy="0"/></xdr:xfrm><a:graphic><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/chart"><c:chart xmlns:c="http://schemas.openxmlformats.org/drawingml/2006/chart" r:id="rId${k + 1}"/></a:graphicData></a:graphic></xdr:graphicFrame><xdr:clientData/></xdr:twoCellAnchor>`;
+      });
+      files.push({ name: `xl/drawings/drawing${n}.xml`, data: `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><xdr:wsDr xmlns:xdr="http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="${NSR}">${dr}</xdr:wsDr>` });
+      files.push({ name: `xl/drawings/_rels/drawing${n}.xml.rels`, data: `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${drr}</Relationships>` });
+      ctO.push(`<Override PartName="/xl/drawings/drawing${n}.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>`);
+    }
+  });
+  const sn = sheets.length;
+  files.unshift(
+    { name: '[Content_Types].xml', data: `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>${ctO.join('')}</Types>` },
+    { name: '_rels/.rels', data: `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>` },
+    { name: 'xl/workbook.xml', data: `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="${NSM}" xmlns:r="${NSR}"><bookViews><workbookView/></bookViews><sheets>${wbS.join('')}</sheets></workbook>` },
+    { name: 'xl/_rels/workbook.xml.rels', data: `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${wbR.join('')}<Relationship Id="rId${sn + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>` },
+    { name: 'xl/styles.xml', data: XSTY.xml });
+  return zipStore(files);
+}
+
+/* ---------------- interface : fenêtre « Exporter » ---------------- */
+const EXP_MIME = { xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' };
+const EXP_PARTS = [['synth', 'Synthèse et indicateurs'], ['quotas', 'Quotas et objectifs'], ['plan', 'Planning'], ['missed', 'Non réalisés et causes'], ['daily', 'Évolution quotidienne'], ['journal', 'Journal des opérations'], ['notes', 'Notes libres et rendez-vous'], ['reco', 'Recommandations']];
+function expOpen(opt = {}) {
+  const kind = opt.kind || UI.statP || 'week', date = opt.date || UI.statDate || todayStr(), qf = opt.qf || UI.statQ || 'all';
+  modal(`<h2>⬇ Exporter un rapport</h2><p class="muted" style="margin-top:0">Charte : Book Antiqua, texte justifié interligne 1,5, titres en bleu, sommaire, tableaux et graphiques.</p>
+  <form class="fm" id="expf" onsubmit="return false"><div class="row"><label>Période<select name="kind">${[['day', 'Jour'], ['week', 'Semaine'], ['month', 'Mois']].map(([k, l]) => `<option value="${k}" ${k === kind ? 'selected' : ''}>${l}</option>`).join('')}</select></label><label>Date de référence<input type="date" name="date" value="${date}" required></label></div>
+  <label>Activité<select name="qf"><option value="all">Toutes les activités</option>${S.quotas.map(q => `<option value="${q.id}" ${q.id === qf ? 'selected' : ''}>${q.icon} ${esc(q.label)}</option>`).join('')}</select></label>
+  <div><b style="font-size:.9rem">Contenu</b><div class="expchk">${EXP_PARTS.map(([k, l]) => `<label class="chk"><input type="checkbox" name="p_${k}" ${k === 'journal' ? '' : 'checked'}> ${l}</label>`).join('')}</div></div>
+  <div class="fbtns"><button type="button" class="btn pri" ${A('expGo', { f: 'docx' })}>📝 Word</button><button type="button" class="btn pri" ${A('expGo', { f: 'xlsx' })}>📊 Excel</button><button type="button" class="btn pri" ${A('expGo', { f: 'pdf' })}>📄 PDF</button></div></form>`, { wide: true });
+}
+function expRead() {
+  const f = $('#expf'); if (!f) return null; const fd = new FormData(f), parts = {};
+  EXP_PARTS.forEach(([k]) => { parts[k] = fd.has('p_' + k); });
+  return { kind: fd.get('kind'), date: fd.get('date') || todayStr(), qf: fd.get('qf'), parts };
+}
+async function expRun(fmt, o) {
+  const p = o.kind === 'range' ? expAllRange() : periodOf(o.kind, o.date);
+  const base = `MyLifePilot_${o.kind === 'range' ? 'Donnees_completes' : 'Rapport_' + p.from + (p.to !== p.from ? '_' + p.to : '')}`;
+  if (fmt === 'xlsx') { download(base + '.xlsx', buildXlsx(buildSheets(o)), EXP_MIME.xlsx); return; }
+  const rep = buildReport(o);
+  if (!rep.sections.length) { toast('Coche au moins une partie du rapport', 'warn'); return; }
+  if (fmt === 'docx') { download(base + '.docx', await buildDocx(rep), EXP_MIME.docx); return; }
+  printHtml(reportHtml(rep), base + '.pdf');
+}
 /* ================= Actions, formulaires, rendu, démarrage ================= */
 const VIEWS = { cockpit: vCockpit, cal: vCal, quotas: vQuotas, journal: vJournal, libre: vLibre, rdv: vRdv, search: vSearch, stats: vStats, bilan: vBilan, settings: vSettings };
 function applyTheme() { const th = S.settings.theme; document.documentElement.dataset.th = th === 'auto' ? (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light') : th; }
@@ -1347,7 +1854,7 @@ function entryForm(e, pre = {}) {
   <div class="row k-cnt"><label>Quantité<input type="number" name="qty" min="0" step="1" value="${q.kind === 'count' ? (v.v || 1) : 1}"></label><label>Durée (min, facultatif)<input type="number" name="mins" min="0" value="${v.mins || 0}"></label></div>
   <label class="k-pr">Prière<select name="sub">${PRAYERS.map(p => `<option ${v.sub === p ? 'selected' : ''}>${p}</option>`).join('')}</select></label>
   <label>Note<input name="note" value="${esc(v.note || '')}" placeholder="contexte, cause…"></label>
-  <button class="btn pri" type="submit">Enregistrer</button></form>`);
+  <div class="fbtns"><button class="btn pri" type="submit">Enregistrer</button>${e ? `<button class="btn bad" type="button" ${A('entryDel', { id: e.id })}>🗑 Supprimer</button>` : ''}</div></form>`);
   toggleKind($('#modal form'));
 }
 function toggleKind(f) {
@@ -1368,7 +1875,7 @@ function blockForm(b, d = {}) {
   ${b ? '' : `<label>Répétition<select name="rep" data-qk="rep"><option value="0">Une seule fois</option><option value="1">Chaque semaine, aux jours choisis…</option></select></label><div class="hide" id="repbox"><div class="rg">${DAYS.map((x, i) => `<label><input type="checkbox" name="d${i}" ${i === dw ? 'checked' : ''}>${x}</label>`).join('')}</div><label style="margin-top:8px">Pendant combien de semaines ?<input type="number" name="weeks" value="4" min="1" max="52"></label></div>`}
   <div class="rg"><label><input type="checkbox" name="fixed" ${v.fixed ? 'checked' : ''}>🔒 Non déplaçable (jamais modifié par le replanificateur)</label></div>
   <label>Note<textarea name="note">${esc(v.note || '')}</textarea></label>
-  <button class="btn pri" type="submit">Enregistrer</button></form>`);
+  <div class="fbtns"><button class="btn pri" type="submit">Enregistrer</button>${b ? `<button class="btn bad" type="button" ${A('blkDel', { id: b.id })}>🗑 Supprimer</button>` : ''}</div></form>`);
 }
 function blockModal(id) {
   const b = S.blocks.find(x => x.id === id); if (!b) return;
@@ -1520,11 +2027,11 @@ function quotaDetail(id) {
 /* ---------- libre / rdv ---------- */
 function libreForm(l) {
   const v = l || { date: todayStr(), from: '', to: '', text: '', cat: '' };
-  modal(`<h2>${l ? 'Modifier' : 'Nouvelle note libre'}</h2><form class="fm" data-form="libreSave"><input type="hidden" name="id" value="${l ? l.id : ''}"><div class="row"><label>Date<input type="date" name="date" value="${v.date}" required></label><label>De<input type="time" name="from" value="${v.from || ''}"></label><label>À<input type="time" name="to" value="${v.to || ''}"></label></div><label>Note<textarea name="text" required>${esc(v.text)}</textarea></label><label>Compter dans un quota<select name="cat"><option value="">— Non —</option>${catOptions(v.cat || '')}</select></label><button class="btn pri" type="submit">Enregistrer</button></form>`);
+  modal(`<h2>${l ? 'Modifier' : 'Nouvelle note libre'}</h2><form class="fm" data-form="libreSave"><input type="hidden" name="id" value="${l ? l.id : ''}"><div class="row"><label>Date<input type="date" name="date" value="${v.date}" required></label><label>De<input type="time" name="from" value="${v.from || ''}"></label><label>À<input type="time" name="to" value="${v.to || ''}"></label></div><label>Note<textarea name="text" required>${esc(v.text)}</textarea></label><label>Compter dans un quota<select name="cat"><option value="">— Non —</option>${catOptions(v.cat || '')}</select></label><div class="fbtns"><button class="btn pri" type="submit">Enregistrer</button>${l ? `<button class="btn bad" type="button" ${A('libreDel', { id: l.id })}>🗑 Supprimer</button>` : ''}</div></form>`);
 }
 function apptForm(a) {
   const v = a || { title: '', date: addDays(todayStr(), 1), time: '10:00', dur: 60, place: '', note: '' };
-  modal(`<h2>${a ? 'Modifier le rendez-vous' : '🔔 Nouveau rendez-vous'}</h2><form class="fm" data-form="apptSave"><input type="hidden" name="id" value="${a ? a.id : ''}"><label>Titre<input name="title" value="${esc(v.title)}" required placeholder="Ex. Banque, médecin, client…"></label><div class="row"><label>Date<input type="date" name="date" value="${v.date}" required></label><label>Heure<input type="time" name="time" value="${v.time || ''}" required></label><label>Durée (min)<input type="number" name="dur" value="${v.dur || 60}" min="5" step="5"></label></div><label>Lieu<input name="place" value="${esc(v.place || '')}"></label><label>Note<input name="note" value="${esc(v.note || '')}"></label><div class="rt">Rappels automatiques : 24 h et 5 h avant, jusqu’à ce que tu coches « C’est bon ».</div><button class="btn pri" type="submit">Enregistrer</button></form>`);
+  modal(`<h2>${a ? 'Modifier le rendez-vous' : '🔔 Nouveau rendez-vous'}</h2><form class="fm" data-form="apptSave"><input type="hidden" name="id" value="${a ? a.id : ''}"><label>Titre<input name="title" value="${esc(v.title)}" required placeholder="Ex. Banque, médecin, client…"></label><div class="row"><label>Date<input type="date" name="date" value="${v.date}" required></label><label>Heure<input type="time" name="time" value="${v.time || ''}" required></label><label>Durée (min)<input type="number" name="dur" value="${v.dur || 60}" min="5" step="5"></label></div><label>Lieu<input name="place" value="${esc(v.place || '')}"></label><label>Note<input name="note" value="${esc(v.note || '')}"></label><div class="rt">Rappels automatiques : 24 h et 5 h avant, jusqu’à ce que tu coches « C’est bon ».</div><div class="fbtns"><button class="btn pri" type="submit">Enregistrer</button>${a ? `<button class="btn bad" type="button" ${A('apptDel', { id: a.id })}>🗑 Supprimer</button>` : ''}</div></form>`);
 }
 
 /* ---------- démo ---------- */
@@ -1567,6 +2074,7 @@ const ACT = {
   themeCycle: () => { const o = ['auto', 'light', 'dark'], c = S.settings.theme || 'auto'; S.settings.theme = o[(o.indexOf(c) + 1) % 3]; save(); applyTheme(); render(); toast(THM[S.settings.theme][1], 'good', 1500); },
   syncNow: async () => { if (!SYNC.cfg || !SYNC.cfg.on) return setTab('settings'); const r = await syncNow('manual'); toast(r.ok ? (r.changed ? '☁️ Synchronisé : données reçues de l’autre appareil' : '☁️ Synchronisé ✓') : '⚠️ ' + r.msg, r.ok ? 'good' : 'warn', 3500, 'sync'); },
   syncOff: async () => { if (!confirm('Désactiver la synchronisation sur cet appareil ? (tes données locales restent ici, le fichier chiffré reste sur GitHub)')) return; SYNC.cfg = null; await cfgSave(null); await baseSet(null); setSync('off'); render(); toast('Synchronisation désactivée sur cet appareil', 'warn'); },
+  askOk: () => askDone(true), askAlt: () => askDone('alt'), askNo: () => askDone(false),
   moreMenu: () => modal(`<h2>Menu</h2><div style="display:grid;gap:8px">${NAV.filter(n => ['quotas', 'libre', 'rdv', 'search', 'settings'].includes(n[0])).map(n => `<button class="btn" style="justify-content:flex-start" ${A('go', { tab: n[0] })}>${n[2]} ${n[1]}</button>`).join('')}</div>`),
   calDay: d => { UI.calDate = d.date; UI.calView = 'day'; setTab('cal'); },
   calView: d => { UI.calView = d.v; render(); },
@@ -1577,7 +2085,15 @@ const ACT = {
   blkEdit: d => blockForm(S.blocks.find(x => x.id === d.id)),
   blkDup: d => { const b = S.blocks.find(x => x.id === d.id); blockForm(null, { date: addDays(b.date, 1), start: b.start, end: b.end, q: b.q }); },
   blkReset: d => { if (!confirm('Remettre ce bloc à « Prévue » et supprimer ses saisies de temps ?')) return; const b = S.blocks.find(x => x.id === d.id); S.entries = S.entries.filter(e => e.blockId !== b.id); b.status = 'planned'; b.reason = ''; log('bloc', `Réinitialisé : ${b.title}`, b.id); save(); closeModal(); render(); },
-  blkDel: d => { const b = S.blocks.find(x => x.id === d.id); if (b.series && S.blocks.filter(x => x.series === b.series && x.date > b.date).length) { if (confirm('Supprimer aussi les occurrences futures de cette série ?\nOK = toute la série à venir · Annuler = seulement ce bloc')) S.blocks = S.blocks.filter(x => !(x.series === b.series && x.date >= b.date)); else S.blocks = S.blocks.filter(x => x.id !== b.id); } else { if (!confirm('Supprimer ce bloc ?')) return; S.blocks = S.blocks.filter(x => x.id !== b.id); } log('bloc', `Supprimé : ${b.title} ${b.date}`); save(); closeModal(); render(); },
+  blkDel: async d => {
+    const b = S.blocks.find(x => x.id === d.id); if (!b) return;
+    const fut = b.series && S.blocks.some(x => x.series === b.series && x.date > b.date);
+    const r = await ask(`« ${b.title} » · ${fmtShort(b.date)} ${b.start}–${b.end}${fut ? '\n\nCe bloc fait partie d’une série répétée.' : ''}\nLe temps déjà saisi sur ce bloc est conservé dans le journal.`, { title: 'Supprimer ce bloc ?', ok: 'Supprimer ce bloc', alt: fut ? 'Supprimer aussi les suivants' : null });
+    if (!r) return;
+    const gone = new Set(r === 'alt' ? S.blocks.filter(x => x.series === b.series && x.date >= b.date).map(x => x.id) : [b.id]);
+    S.blocks = S.blocks.filter(x => !gone.has(x.id)); S.entries.forEach(e => { if (gone.has(e.blockId)) e.blockId = null; });
+    log('bloc', `Supprimé : ${b.title} ${b.date}${gone.size > 1 ? ' (+ série)' : ''}`); save(); closeModal(); render(); toast(gone.size > 1 ? `${gone.size} blocs supprimés` : 'Bloc supprimé', 'good');
+  },
   qualify: d => { UI.backToBilan = d.back ? (UI.bilanForDate || todayStr()) : null; qualifyModal(d.id); },
   replan: d => { UI.backToBilan = null; replanModal(d.id); },
   replanPick: d => { const b = S.blocks.find(x => x.id === d.id), dur = hm2min(d.e) - hm2min(d.s); applyReplan(d.id, d.date, d.s, dur, d.mark); closeModal(); const bd = UI.backToBilan; UI.backToBilan = null; render(); if (bd) bilanModal(bd); },
@@ -1596,16 +2112,16 @@ const ACT = {
   sleep: () => sleepModal(),
   quick: () => entryForm(null), quickCat: d => entryForm(null, { cat: d.q }),
   entryEdit: d => entryForm(S.entries.find(e => e.id === d.id)),
-  entryDel: d => { if (!confirm('Supprimer cette saisie ?')) return; const e = S.entries.find(x => x.id === d.id); S.entries = S.entries.filter(x => x.id !== d.id); log('saisie', `Supprimé : ${Q(e.cat) ? Q(e.cat).label : e.cat} ${e.date}`); save(); render(); },
+  entryDel: async d => { const e = S.entries.find(x => x.id === d.id); if (!e) return; if (!await ask(`${Q(e.cat) ? Q(e.cat).label : e.cat} · ${fmtVal(Q(e.cat), e.v)} · ${e.date} ${e.time || ''}`, { title: 'Supprimer cette saisie ?' })) return; S.entries = S.entries.filter(x => x.id !== d.id); log('saisie', `Supprimé : ${Q(e.cat) ? Q(e.cat).label : e.cat} ${e.date}`); save(); closeModal(); render(); toast('Saisie supprimée', 'good'); },
   csvEntries: () => { const rows = journalRows(); download('journal_mylifepilot.csv', '﻿' + ['date;heure;categorie;valeur;unite;duree_min;detail;note;source'].concat(rows.map(e => { const q = Q(e.cat); return [e.date, e.time, q ? q.label : e.cat, q && q.kind === 'duration' ? e.v : e.v, q ? (q.kind === 'duration' ? 'min' : q.unit || '') : '', entryMins(e), e.sub || '', e.note || '', e.src].map(csvEscape).join(';'); })).join('\r\n'), 'text/csv'); toast('Export CSV provisoire (les exports Word/Excel/PDF natifs arrivent au Lot 5).', 'info'); },
   csvSearch: () => { const rows = searchRows(); download('recherche_mylifepilot.csv', '﻿' + ['date;heure;type;contenu;valeur'].concat(rows.map(r => [r.date, r.time, r.type, r.text, r.val].map(csvEscape).join(';'))).join('\r\n'), 'text/csv'); },
   jsub: d => { UI.jSub = d.v; render(); }, jfReset: () => { UI.jf = { from: '', to: '', cat: '', text: '' }; render(); }, sfReset: () => { UI.sf = { text: '', cat: '', type: '', from: '', to: '', status: '' }; render(); },
   libreNew: () => libreForm(null), libreEdit: d => libreForm(S.libre.find(x => x.id === d.id)),
-  libreDel: d => { if (!confirm('Supprimer cette note ?')) return; const l = S.libre.find(x => x.id === d.id); if (l.entryId) S.entries = S.entries.filter(e => e.id !== l.entryId); S.libre = S.libre.filter(x => x.id !== d.id); log('libre', 'Note libre supprimée'); save(); render(); },
+  libreDel: async d => { const l = S.libre.find(x => x.id === d.id); if (!l) return; if (!await ask(`${fmtShort(l.date)} ${l.from || ''}${l.to ? '–' + l.to : ''} · ${l.text || ''}`, { title: 'Supprimer cette note ?' })) return; if (l.entryId) S.entries = S.entries.filter(e => e.id !== l.entryId); S.libre = S.libre.filter(x => x.id !== d.id); log('libre', 'Note libre supprimée'); save(); closeModal(); render(); toast('Note supprimée', 'good'); },
   apptNew: () => apptForm(null), apptEdit: d => apptForm(S.appts.find(x => x.id === d.id)),
   apptDone: d => { const a = S.appts.find(x => x.id === d.id); a.done = true; a.doneAt = Date.now(); log('rdv', `Rendez-vous OK : ${a.title}`); save(); toast('✔ Rendez-vous validé — rappels arrêtés', 'good'); render(); },
   apptUndo: d => { const a = S.appts.find(x => x.id === d.id); a.done = false; save(); render(); },
-  apptDel: d => { if (!confirm('Supprimer ce rendez-vous ?')) return; S.appts = S.appts.filter(x => x.id !== d.id); save(); render(); },
+  apptDel: async d => { const a = S.appts.find(x => x.id === d.id); if (!a) return; if (!await ask(`${a.title} · ${fmtShort(a.date)} ${a.time || ''}`, { title: 'Supprimer ce rendez-vous ?' })) return; S.appts = S.appts.filter(x => x.id !== d.id); log('rdv', `Rendez-vous supprimé : ${a.title}`); save(); closeModal(); render(); toast('Rendez-vous supprimé', 'good'); },
   apptIcs: d => { const a = S.appts.find(x => x.id === d.id); download(`rdv_${a.date}.ics`, icsFor([a]), 'text/calendar'); toast('Ouvre le fichier .ics pour l’ajouter à l’agenda du téléphone (alarmes 24 h et 5 h).', 'info', 6000); },
   apptIcsAll: () => { const l = S.appts.filter(a => !a.done && a.date >= todayStr()); if (!l.length) return toast('Aucun rendez-vous à venir.', 'warn'); download('rendez-vous_mylifepilot.ics', icsFor(l), 'text/calendar'); },
   rdvsub: d => { UI.rdvSub = d.v; render(); },
@@ -1630,10 +2146,13 @@ const ACT = {
   autoplan: d => { UI.calAuto = autoPlan(d.id ? [d.id] : null); UI.qSub = 'plan'; setTab('quotas'); },
   autoplanRefresh: () => { UI.calAuto = autoPlan(); render(); },
   qsub: d => { UI.qSub = d.v; render(); }, qedit: d => quotaForm(Q(d.id)), qnew: () => quotaForm(null), qdetail: d => quotaDetail(d.id),
-  qdel: d => { if (S.entries.some(e => e.cat === d.id) || S.blocks.some(b => b.q === d.id)) return toast('Ce quota a des données : suppression refusée (modifie-le plutôt).', 'warn'); if (!confirm('Supprimer ce quota ?')) return; S.quotas = S.quotas.filter(q => q.id !== d.id); save(); closeModal(); render(); },
+  qdel: async d => { if (S.entries.some(e => e.cat === d.id) || S.blocks.some(b => b.q === d.id)) return toast('Ce quota a des données : suppression refusée (modifie-le plutôt).', 'warn'); if (!await ask('Ce quota n’a aucune donnée liée.', { title: 'Supprimer ce quota ?' })) return; S.quotas = S.quotas.filter(q => q.id !== d.id); save(); closeModal(); render(); toast('Quota supprimé', 'good'); },
   adjAccept: d => { const q = Q(d.id), to = +d.to, ws = weekStartOf(todayStr()), from = q.week; q.week = to; S.proposals.push({ id: uid(), ts: Date.now(), kind: 'objectif', q: q.id, week: ws, text: `${q.label} : ${fmtTarget(q, from)} → ${fmtTarget(q, to)} / semaine`, decision: 'accepté' }); log('objectif', `Objectif modifié (accord explicite) : ${q.label} ${fmtTarget(q, from)} → ${fmtTarget(q, to)}`); save(); toast('Objectif ajusté — décision enregistrée', 'good'); render(); },
   adjRefuse: d => { const q = Q(d.id), ws = weekStartOf(todayStr()); S.proposals.push({ id: uid(), ts: Date.now(), kind: 'objectif', q: q.id, week: ws, text: `${q.label} : cible ${fmtTarget(q, q.week)} conservée`, decision: 'refusé' }); save(); render(); },
   open: d => { if (d.k === 'e') entryForm(S.entries.find(x => x.id === d.id)); else if (d.k === 'b') blockModal(d.id); else if (d.k === 'l') libreForm(S.libre.find(x => x.id === d.id)); else if (d.k === 'a') apptForm(S.appts.find(x => x.id === d.id)); else if (d.k === 'r') { UI.bilanKind = 'day'; UI.bilanDate = d.id; setTab('bilan'); } },
+  expOpen: d => expOpen(d || {}),
+  expGo: async d => { const o = expRead(); if (!o) return; try { toast('Génération du fichier…'); await expRun(d.f, o); if (d.f !== 'pdf') { toast('Fichier généré', 'good'); closeModal(); } } catch (e) { console.error(e); toast('Échec de l’export : ' + (e && e.message || e), 'bad'); } },
+  expFull: async () => { try { await expRun('xlsx', { kind: 'range', date: todayStr(), qf: 'all', parts: { plan: true, missed: true, daily: true, journal: true, notes: true } }); toast('Excel complet généré', 'good'); } catch (e) { console.error(e); toast('Échec de l’export', 'bad'); } },
   exportJson: () => { download(`mylifepilot_sauvegarde_${todayStr()}.json`, JSON.stringify(S, null, 1)); toast('Sauvegarde téléchargée', 'good'); },
   backups: async () => { let keys = []; try { keys = (await DB.keys()).filter(k => String(k).startsWith('bak-')).sort().reverse(); } catch (e) { } modal(`<h2>Copies automatiques</h2>${keys.length ? keys.map(k => `<div class="ln"><div class="lb2"><b>${esc(String(k).replace('bak-', ''))}</b></div><button class="btn sm" ${A('restoreBak', { k })}>Restaurer</button></div>`).join('') : '<div class="empty">Aucune copie pour l’instant (la première est créée au prochain lancement).</div>'}`); },
   restoreBak: async d => { if (!confirm('Remplacer les données actuelles par cette copie ?')) return; try { const s = JSON.parse(await DB.get(d.k)); await DB.set('bak-avant-restauration-' + Date.now(), JSON.stringify(S)); S = s; migrate(); await persist(); closeModal(); render(); toast('Copie restaurée', 'good'); } catch (e) { toast('Échec de la restauration', 'danger'); } },
@@ -1798,14 +2317,20 @@ async function boot() {
   setInterval(() => { if (!$('#modal') && !isTyping() && ['cockpit', 'cal'].includes(UI.tab)) render(); checkNotify(); renderNav(); }, 30000);
   document.addEventListener('visibilitychange', () => { if (document.hidden) { persist(); syncNow('hide'); } else { if (!$('#modal') && !isTyping()) render(); checkNotify(); if (Date.now() - SYNC.last > 20000) syncNow('show'); } });
   window.addEventListener('pagehide', persist);
-  const kbOn = e => { if (e.target && e.target.matches && e.target.matches('input:not([type=checkbox]):not([type=radio]):not([type=file]),textarea,select')) document.body.classList.add('kb'); };
-  document.addEventListener('focusin', kbOn);
-  document.addEventListener('focusout', () => setTimeout(() => { if (!isTyping()) document.body.classList.remove('kb'); }, 120));
+  let baseH = innerHeight, baseW = innerWidth;
+  const kbCheck = () => {
+    const h = window.visualViewport ? visualViewport.height : innerHeight;
+    if (innerWidth !== baseW) { baseW = innerWidth; baseH = h; }
+    if (!isTyping()) baseH = Math.max(baseH, h);
+    document.body.classList.toggle('kb', !!(isTyping() && h < baseH * 0.78));
+  };
+  window.addEventListener('resize', kbCheck); if (window.visualViewport) visualViewport.addEventListener('resize', kbCheck);
+  document.addEventListener('focusin', () => setTimeout(kbCheck, 250)); document.addEventListener('focusout', () => setTimeout(kbCheck, 150));
   window.addEventListener('hashchange', () => { const h = location.hash.slice(1); if (VIEWS[h] && h !== UI.tab) { UI.tab = h; render(false); } });
   matchMedia('(prefers-color-scheme:dark)').addEventListener('change', applyTheme);
   syncInit();
   if ('serviceWorker' in navigator && /^https?:/.test(location.protocol)) navigator.serviceWorker.register('sw.js').catch(() => { });
-  window.MLP = { SYNC, syncNow, merge3, syncable, get S() { return S; }, set S(v) { S = v; }, UI, render, alerts, dayInfo, weekInfo, statsFor, periodOf, autoPlan, effStatus, loadDemo, persist, load, DB, qDone };
+  window.MLP = { EXP: { buildSheets, buildXlsx, buildReport, buildDocx, reportHtml, expData, zipStore, chartSvg, expRun }, ACT, SYNC, syncNow, merge3, syncable, get S() { return S; }, set S(v) { S = v; }, UI, render, alerts, dayInfo, weekInfo, statsFor, periodOf, autoPlan, effStatus, loadDemo, persist, load, DB, qDone };
 }
 boot();
 </script>
