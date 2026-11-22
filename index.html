@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>My Life Pilot</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-ml/itKDr6v9pq3/3YiPMp89/tE4Nau1Buhnm1uF6OMc='; style-src 'unsafe-inline'; img-src 'self' data: blob:; media-src blob:; connect-src https://api.github.com; manifest-src 'self'; worker-src 'self'; frame-src blob: about:; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#2D348B">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
@@ -169,6 +171,72 @@ details summary{cursor:pointer;font-weight:700;padding:4px 0}
 body.kb .bnav,body.kb .fab,body.kb .tmb{display:none!important}
 button,.btn,a,.nv{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 @media print{.side,.bnav,.fab,.tmb,.top .btn,.noprint{display:none!important}.app{display:block}body{background:#fff;color:#000}.card{box-shadow:none;border:1px solid #ccc;backdrop-filter:none;background:#fff;break-inside:avoid}.main{padding:0}}
+
+/* ===== V0.8 : accessibilité & contrastes (tous thèmes) ===== */
+a{color:var(--p)}[data-th=dark] a{color:#9aa4ff}
+.chip.ok{color:#0b6b41}.chip.warn{color:#7a4f00}.chip.bad{color:#a8162f}
+[data-th=dark] .chip.ok{color:#4fd48c}[data-th=dark] .chip.warn{color:#ffc247}[data-th=dark] .chip.bad{color:#ff7f92}
+.btn.ok,.dot.s3,.pr button.on{background:#14794a;color:#fff}.dot.s2{background:#b36b00;color:#fff}.dot{background:#6c7399}.dot.s1{background:#c42a43}
+[data-th=dark]{--p:#5560d8}[data-th=dark] .bnav button.on,[data-th=dark] .cdh.today{color:#9aa4ff}
+input,select,textarea{border-color:#8a90b8}[data-th=dark] input,[data-th=dark] select,[data-th=dark] textarea{border-color:#6e7299}
+input::placeholder,textarea::placeholder{color:var(--mut);opacity:.85}
+:focus-visible{outline:3px solid #2997ff;outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.btn:hover{transform:none}}
+@media(pointer:coarse){.btn.sm{min-height:40px}.btn.ic,.btn.sm.ic{min-width:44px;min-height:44px}input[type=checkbox]{width:24px;height:24px}.tabs button{min-height:40px}}
+.bnav button{font-size:.7rem}@media(max-width:360px){.bnav button{font-size:.64rem}}
+.toasts{pointer-events:none}.toasts .toast{pointer-events:auto}
+/* saisie rapide (cockpit) */
+.qbar{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 10px;margin-bottom:6px;scrollbar-width:thin}.qbar .btn{flex:0 0 auto;white-space:nowrap}
+/* ===== Thème Obsidian (inspiré du guide Apple : noir, gris charbon, bleu unique, sans ombres) ===== */
+/* Thème "Obsidian" inspiré du guide Apple — à injecter APRES le CSS existant */
+[data-th=obsidian]{
+ --bg:#000000; --bg2:#000000;
+ --card:#1d1d1f; --cardsolid:#1d1d1f;
+ --cb:#333336;
+ --tx:#f5f5f7; --mut:#a1a1a6;
+ --p:#0071e3; --p2:#0071e3;           /* remplissages (blanc dessus = 4.70:1) */
+  --ok:#30d158; --warn:#ffd60a; --bad:#ff453a;
+ --sh:0 0 0 0 transparent;             /* pas d'ombres */
+ --r:28px; --soft:rgba(255,255,255,.06);
+}
+[data-th=obsidian] body{background:#000}
+[data-th=obsidian] .card,[data-th=obsidian] .side,[data-th=obsidian] .mbox{backdrop-filter:none;-webkit-backdrop-filter:none}
+[data-th=obsidian] .card{box-shadow:0 0 0 1px #282828;border-color:transparent}
+[data-th=obsidian] .side{background:#0e0e0e;border-right:1px solid #282828}
+[data-th=obsidian] .bnav{background:rgba(14,14,14,.92);border-top:1px solid #282828}
+[data-th=obsidian] .mbox{border-radius:28px;box-shadow:0 0 0 1px #333336;background:#1d1d1f}
+[data-th=obsidian] .mod{background:rgba(0,0,0,.72)}
+/* boutons : pilules plates, bleu uni */
+[data-th=obsidian] .btn{border-radius:980px;background:rgba(66,66,69,.72);border-color:transparent}
+[data-th=obsidian] .btn.ghost{background:transparent;border:1px solid #6e6e73}
+[data-th=obsidian] .btn.sm{border-radius:980px}
+[data-th=obsidian] .btn.pri,[data-th=obsidian] .nv.on,[data-th=obsidian] .cnt .rb,[data-th=obsidian] .fab{background:#0071e3;box-shadow:none;color:#fff}
+[data-th=obsidian] .btn:hover{transform:none;box-shadow:none;filter:brightness(1.15)}
+[data-th=obsidian] .logo i{background:#0071e3;box-shadow:none}
+[data-th=obsidian] .btn.ok,[data-th=obsidian] .dot.s3,[data-th=obsidian] .pr button.on{background:#30d158;color:#000}
+[data-th=obsidian] .dot.s2{background:#ffd60a;color:#000}
+[data-th=obsidian] .btn.bad{background:#d70015}
+/* champs : fond translucide + contour Slate (3.3:1), focus bleu 2px */
+[data-th=obsidian] input,[data-th=obsidian] select,[data-th=obsidian] textarea{background:rgba(255,255,255,.05);border:1px solid #6e6e73;border-radius:14px}
+[data-th=obsidian] input:focus,[data-th=obsidian] select:focus,[data-th=obsidian] textarea:focus{outline:2px solid #2997ff;outline-offset:1px}
+/* onglets / pastilles */
+[data-th=obsidian] .tabs button{background:transparent;border-color:#6e6e73;color:#f5f5f7}
+[data-th=obsidian] .tabs button.on{background:#0071e3;border-color:#0071e3;color:#fff}
+[data-th=obsidian] .bnav button.on{color:#2997ff;background:transparent}
+[data-th=obsidian] .cdh.today{color:#2997ff}
+[data-th=obsidian] .chip{background:rgba(255,255,255,.08)}
+[data-th=obsidian] .chip.ok{background:rgba(48,209,88,.16);color:#30d158}
+[data-th=obsidian] .chip.warn{background:rgba(255,214,10,.16);color:#ffd60a}
+[data-th=obsidian] .chip.bad{background:rgba(255,69,58,.18);color:#ff6961}
+[data-th=obsidian] .chip.p{background:rgba(41,151,255,.18);color:#2997ff}
+[data-th=obsidian] .al{background:#2c2c2e}
+[data-th=obsidian] .al.danger{background:rgba(255,69,58,.14)}[data-th=obsidian] .al.warn{background:rgba(255,214,10,.1)}
+[data-th=obsidian] a,[data-th=obsidian] .card a{color:#2997ff}
+[data-th=obsidian] .kpi .v.bad,[data-th=obsidian] [style*="--bad"]{color:#ff6961}
+[data-th=obsidian] .toast,[data-th=obsidian] .tmb{background:#1d1d1f;box-shadow:0 0 0 1px #333336}
+[data-th=obsidian] svg text{fill:#a1a1a6}
+
+[data-th=obsidian] .btn.ok,[data-th=obsidian] .dot.s3,[data-th=obsidian] .pr button.on{background:#30d158;color:#000}[data-th=obsidian] .dot.s2{background:#ffd60a;color:#000}[data-th=obsidian] .dot{background:#48484a}
 </style>
 </head>
 <body>
@@ -179,7 +247,7 @@ button,.btn,a,.nv{touch-action:manipulation;-webkit-tap-highlight-color:transpar
 <script>
 'use strict';
 /* ================= My Life Pilot V0.3.1 — noyau : utilitaires, stockage, calculs ================= */
-const VERSION = '0.7.0';
+const VERSION = '0.8.0';
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const uid = () => Math.random().toString(36).slice(2, 8) + Date.now().toString(36).slice(-4);
@@ -233,6 +301,42 @@ function defaults() {
   };
 }
 
+
+/* ---------------- validation / assainissement d'un état (import, copie, fichier distant, chargement) ---------------- */
+function sanitizeState(raw) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) throw new Error('format');
+  const D = /^\d{4}-\d\d-\d\d$/, T = /^\d{1,2}:\d\d$/, C = /^#[0-9a-fA-F]{6}$/, I = /^[\w:.\-]{1,64}$/;
+  const arr = k => { if (raw[k] !== undefined && !Array.isArray(raw[k])) throw new Error('format:' + k); return (raw[k] || []).filter(x => x && typeof x === 'object' && !Array.isArray(x)); };
+  const obj = k => { if (raw[k] !== undefined && raw[k] !== null && (typeof raw[k] !== 'object' || Array.isArray(raw[k]))) throw new Error('format:' + k); return raw[k] || {}; };
+  if (!Array.isArray(raw.quotas) || !Array.isArray(raw.entries) || !Array.isArray(raw.blocks)) throw new Error('format');
+  const d0 = defaults(), out = Object.assign({}, raw);
+  const num = (x, def = 0) => (Number.isFinite(+x) ? +x : def);
+  out.quotas = arr('quotas').filter(q => I.test(String(q.id))).map(q => Object.assign({}, q, {
+    id: String(q.id), label: String(q.label ?? q.id).slice(0, 60), icon: [...String(q.icon || '⭐').replace(/[<>&"'`]/g, '')].slice(0, 3).join('') || '⭐',
+    color: C.test(q.color) ? q.color : '#6d7399', unit: q.unit == null ? q.unit : String(q.unit).replace(/[<>&"'`]/g, '').slice(0, 12),
+    kind: q.kind === 'count' ? 'count' : 'duration', mode: q.mode === 'max' ? 'max' : 'min',
+    week: num(q.week) > 0 ? num(q.week) : 1, day: q.day == null || !(num(q.day) > 0) ? null : num(q.day), prio: num(q.prio, 9)
+  }));
+  const okD = x => !x.date || D.test(x.date), okT = (x, ...ks) => ks.every(k => !x[k] || T.test(x[k]));
+  out.entries = arr('entries').filter(x => I.test(String(x.id)) && D.test(x.date) && okT(x, 'time') && Number.isFinite(+x.v)).map(x => Object.assign({}, x, { id: String(x.id), cat: String(x.cat ?? '').slice(0, 64), v: +x.v }));
+  out.blocks = arr('blocks').filter(x => I.test(String(x.id)) && D.test(x.date) && T.test(x.start) && T.test(x.end) && STATUS[x.status]).map(x => Object.assign({}, x, { id: String(x.id), q: x.q == null ? null : String(x.q) }));
+  out.appts = arr('appts').filter(x => I.test(String(x.id)) && D.test(x.date) && okT(x, 'time')).map(x => Object.assign({}, x, { id: String(x.id) }));
+  out.libre = arr('libre').filter(x => I.test(String(x.id)) && okD(x) && okT(x, 'from', 'to')).map(x => Object.assign({}, x, { id: String(x.id) }));
+  out.proposals = arr('proposals').filter(x => x && I.test(String(x.id ?? 'p')) ).map(x => Object.assign({}, x, { kind: String(x.kind ?? '').slice(0, 30), decision: x.decision == null ? x.decision : String(x.decision).slice(0, 30) }));
+  out.audit = arr('audit');
+  const clean = o => { const r = {}; for (const k of Object.keys(o)) if (D.test(k) && o[k] && typeof o[k] === 'object') r[k] = o[k]; return r; };
+  out.reviews = clean(obj('reviews')); out.wreviews = obj('wreviews'); out.notified = obj('notified');
+  const st = obj('settings'); out.settings = Object.assign({}, d0.settings, st);
+  out.settings.name = st.name == null ? st.name : String(st.name).slice(0, 40);
+  out.settings.bilanHour = clamp(num(st.bilanHour, 23), 0, 23);
+  if (!['auto', 'light', 'dark', 'obsidian'].includes(out.settings.theme)) out.settings.theme = 'auto';
+  const free = {}; for (let i = 0; i < 7; i++) { const w = out.settings.free && out.settings.free[i]; free[i] = Array.isArray(w) && T.test(w[0]) && T.test(w[1]) ? [w[0], w[1]] : null; if (free[i] === null && !(out.settings.free && i in out.settings.free)) free[i] = d0.settings.free[i]; }
+  out.settings.free = free;
+  out.reasons = Array.isArray(raw.reasons) ? raw.reasons.map(x => String(x).slice(0, 60)) : d0.reasons;
+  if (out.timer && typeof out.timer !== 'object') out.timer = null;
+  return out;
+}
+
 /* ---------------- stockage IndexedDB (+ repli localStorage) ---------------- */
 const DB = {
   db: null,
@@ -250,6 +354,7 @@ const DB = {
       const t = this.db.transaction('kv', mode), s = t.objectStore('kv'), r = fn(s);
       t.oncomplete = () => res(r && r.result);
       t.onerror = () => rej(t.error);
+      t.onabort = () => rej(t.error || new Error('abort'));
     });
   },
   get(k) { return this.tx('readonly', s => s.get(k)); },
@@ -258,9 +363,11 @@ const DB = {
   keys() { return this.tx('readonly', s => s.getAllKeys()); }
 };
 let S = null, saveT = null, storageMode = 'idb';
+const TABID = Math.random().toString(36).slice(2);
 async function load() {
   try { await DB.open(); S = await DB.get('state'); } catch (e) { storageMode = 'ls'; }
   if (!S) { try { S = JSON.parse(localStorage.getItem('mlp_state') || 'null'); } catch (e) { } }
+  if (S) { try { S = sanitizeState(S); } catch (e) { try { await DB.set('bak-etat-illisible-' + Date.now(), JSON.stringify(S)); } catch (e2) { } S = null; } }
   if (!S) S = defaults();
   migrate();
   try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) { }
@@ -277,8 +384,10 @@ async function persist() {
   try {
     if (storageMode === 'idb') await DB.set('state', JSON.parse(JSON.stringify(S)));
     else localStorage.setItem('mlp_state', JSON.stringify(S));
+    try { if (window.__bc) window.__bc.postMessage({ id: TABID, mod: S._mod || 0 }); } catch (e) { }
+    return true;
   } catch (e) {
-    try { localStorage.setItem('mlp_state', JSON.stringify(S)); } catch (e2) { toast('⚠️ Échec de la sauvegarde locale. Exportez vos données.', 'danger'); }
+    try { localStorage.setItem('mlp_state', JSON.stringify(S)); return storageMode !== 'idb' ? true : false; } catch (e2) { toast('⚠️ Échec de la sauvegarde locale. Exportez vos données.', 'danger'); return false; }
   }
 }
 function save() { clearTimeout(saveT); saveT = setTimeout(persist, 250); S._mod = Date.now(); if (typeof syncSoon === 'function') syncSoon(); }
@@ -441,10 +550,10 @@ function dayInfo(date, qf = 'all') {
   for (const b of S.blocks) {
     if (b.date !== date || !b.q || b.status === 'cancelled' || (qf !== 'all' && b.q !== qf)) continue;
     const st = effStatus(b);
-    if (st === 'unfilled') { incomplete = true; continue; }
     if (st === 'planned' || st === 'inprogress') continue;
     const p = blockPlanned(b); pl += p;
     const a = blockActual(b);
+    if (st === 'unfilled') { incomplete = true; ac += Math.min(p, a); continue; } /* bloc échu non qualifié : compte pour ce qui est saisi (provisoire) */
     ac += Math.min(p, st === 'done' ? (a || p) : a);
   }
   if (pl > 0) comps.push({ k: 'Planning', v: ac / pl, d: `${fmtDur(ac)} / ${fmtDur(pl)}` });
@@ -454,29 +563,50 @@ function dayInfo(date, qf = 'all') {
     const val = qDone(q, date, date), has = S.entries.some(e => e.cat === q.id && e.date === date);
     if (!(has || rec)) continue;
     const v = q.mode === 'max' ? (val <= q.day ? 1 : Math.max(0, 1 - (val - q.day) / q.day)) : Math.min(1, val / q.day);
-    comps.push({ k: q.label, v, d: `${fmtVal(q, val)} / ${q.mode === 'max' ? 'max ' : ''}${fmtVal(q, q.day)}` });
+    comps.push({ k: q.label, v, cap: q.mode === 'max', d: `${fmtVal(q, val)} / ${q.mode === 'max' ? 'max ' : ''}${fmtVal(q, q.day)}` });
   }
-  return { score: comps.length ? Math.round(100 * avg(comps.map(c => c.v))) : null, comps, incomplete };
+  let score = comps.length ? Math.round(100 * avg(comps.map(c => c.v))) : null;
+  /* une seule composante saisie en cours de journée ne suffit pas à noter la journée */
+  if (score != null && !rec && !comps.some(c => c.k === 'Planning') && comps.length < 2 && qf === 'all') score = null;
+  /* plafond strict dépassé : la journée ne peut pas être verte */
+  const capped = comps.some(c => c.cap && c.v < 1);
+  if (score != null && capped && score > 79) score = 79;
+  return { score, comps, incomplete, capped };
+}
+/* jours "acquis" d'une semaine : jours terminés (+ aujourd'hui seulement si son bilan est clôturé) */
+function weekAcquired(ws) {
+  const t = todayStr(), we = addDays(ws, 6);
+  if (t < ws) return 0; if (t > we) return 7;
+  return daysBetween(ws, t) + ((S.reviews[t] && S.reviews[t].closed) ? 1 : 0);
 }
 function weekInfo(ws, qf = 'all') {
   const t = todayStr(), we = addDays(ws, 6);
-  const el = t < ws ? 0 : t > we ? 7 : daysBetween(ws, t) + 1;
+  const el = t < ws ? 0 : t > we ? 7 : daysBetween(ws, t) + 1, acq = weekAcquired(ws);
+  const anyClosed = (() => { for (let d = ws; d <= we; d = addDays(d, 1)) if (S.reviews[d] && S.reviews[d].closed) return true; return false; })();
   const rows = [];
   for (const q of S.quotas) {
     if (qf !== 'all' && q.id !== qf) continue;
-    const done = qDone(q, ws, we), target = q.week, pro = el >= 7 ? target : target * el / 7;
+    const done = qDone(q, ws, we), target = q.week;
+    const trace = anyClosed || S.entries.some(e => e.cat === q.id && e.date >= ws && e.date <= we);
+    const pro = q.mode === 'max' ? target : (acq >= 7 ? target : target * acq / 7);
     let ratio = null;
-    if (pro > 0) ratio = q.mode === 'max' ? (done <= pro ? 1 : Math.max(0, 1 - (done - pro) / pro)) : Math.min(1, done / pro);
+    if (q.mode === 'max') { if (trace && target > 0) ratio = done <= target ? 1 : Math.max(0, 1 - (done - target) / target); }
+    else if (pro > 0) ratio = Math.min(1, done / pro);
     rows.push({ q, done, target, pro, ratio, pct: target ? done / target : 0, reached: q.mode === 'max' ? done <= target : done >= target });
   }
   const rs = rows.filter(r => r.ratio != null);
-  return { ws, we, el, rows, score: el > 0 && rs.length ? Math.round(100 * avg(rs.map(r => r.ratio))) : null };
+  const hasData = anyClosed || S.entries.some(e => e.date >= ws && e.date <= we) || S.blocks.some(b => b.date >= ws && b.date <= we && b.q && ['done', 'partial', 'missed', 'postponed'].includes(b.status));
+  const okScore = hasData && (qf !== 'all' ? rs.length > 0 : rs.some(r => r.q.mode === 'min'));
+  return { ws, we, el, acq, rows, score: el > 0 && okScore ? Math.round(100 * avg(rs.map(r => r.ratio))) : null };
 }
 function monthInfo(date, qf = 'all') {
   const [f, l] = monthRange(date), sc = [];
   for (let d = f; d <= l; d = addDays(d, 1)) { const i = dayInfo(d, qf); if (i.score != null) sc.push(i.score); }
   const ws = []; for (let d = weekStartOf(f); d <= l; d = addDays(d, 7)) { const w = weekInfo(d, qf); if (w.score != null) ws.push(w.score); }
-  return { score: sc.length ? Math.round(avg(sc)) : null, days: sc.length, weekAvg: ws.length ? Math.round(avg(ws)) : null };
+  const dayAvg = sc.length ? Math.round(avg(sc)) : null, weekAvg = ws.length ? Math.round(avg(ws)) : null;
+  /* le mois combine la constance des jours et le rythme des quotas hebdomadaires */
+  const score = dayAvg != null && weekAvg != null ? Math.round((dayAvg + weekAvg) / 2) : (dayAvg != null ? dayAvg : weekAvg);
+  return { score, days: sc.length, weekAvg, dayAvg };
 }
 const scoreCls = s => (s == null ? 's0' : s >= 80 ? 's3' : s >= 50 ? 's2' : 's1');
 
@@ -496,7 +626,9 @@ function statsFor(p, qf = 'all') {
   const per = qs.map(q => {
     const done = qDone(q, p.from, p.to);
     const target = p.kind === 'day' ? (q.day != null ? q.day : q.week / 7) : q.week * p.days / 7;
-    return { q, done, target, pct: target ? done / target : 0 };
+    let pro = target; const t = todayStr();
+    if (p.kind !== 'day' && t >= p.from && t <= p.to) { let dc = daysBetween(p.from, t); if (S.reviews[t] && S.reviews[t].closed) dc++; pro = q.mode === 'max' ? target : target * dc / p.days; }
+    return { q, done, target, pro, pct: target ? done / target : 0, ppct: pro > 0 ? done / pro : 1 };
   });
   const bl = S.blocks.filter(b => b.date >= p.from && b.date <= p.to && b.q && (qf === 'all' || b.q === qf) && b.status !== 'cancelled');
   const cnt = {}; let plannedMin = 0, realMin = 0;
@@ -614,7 +746,7 @@ function alerts() {
     const dl = daysBetween(t, we) + 1;
     A.push({ key: `adv:${q.id}:${ws}`, lvl: 'info', icon: '💡', title: `${q.label} : ${fmtVal(q, r.rem)} à faire, ${fmtVal(q, r.unscheduled)} pas encore planifié(s)`, text: `${dl} jour(s) restant(s) cette semaine${q.kind === 'duration' ? ` — environ ${fmtDur(r.rem / dl)} par jour` : ''}.`, acts: [{ l: 'Proposer des créneaux', act: 'autoplan', id: q.id }], advisor: true });
   }
-  if (totalUns > cap + 1) A.push({ key: `real:${ws}`, lvl: 'danger', icon: '⚖️', title: 'Objectifs irréalistes pour la semaine restante', text: `Il reste ${fmtDur(totalUns)} à placer pour seulement ${fmtDur(cap)} de créneaux libres. Hiérarchise ou ajuste (avec ton accord).`, acts: [{ l: 'Voir les quotas', act: 'go', tab: 'quotas' }], advisor: true });
+  if (totalUns > cap + 1 && (S.blocks.length || S.entries.length)) A.push({ key: `real:${ws}`, lvl: 'danger', icon: '⚖️', title: 'Objectifs irréalistes pour la semaine restante', text: `Il reste ${fmtDur(totalUns)} à placer pour seulement ${fmtDur(cap)} de créneaux libres. Hiérarchise ou ajuste (avec ton accord).`, acts: [{ l: 'Voir les quotas', act: 'go', tab: 'quotas' }], advisor: true });
   return A;
 }
 const lvlOrder = { danger: 0, warn: 1, info: 2, good: 3 };
@@ -623,14 +755,16 @@ const lvlOrder = { danger: 0, warn: 1, info: 2, good: 3 };
 function timerElapsed() { const T = S.timer; if (!T) return 0; return T.acc + (T.running ? NOWFN().getTime() - T.startedAt : 0); }
 
 /* ---------------- export agenda (.ics) avec rappels 24 h et 5 h ---------------- */
+const icsT = x => String(x ?? '').replace(/\\/g, '\\\\').replace(/\r?\n|\r/g, '\\n').replace(/[,;]/g, m => '\\' + m);
 function icsFor(list) {
+  list = list.filter(a => !a.demo);
   const f = (d, t) => d.replace(/-/g, '') + 'T' + t.replace(':', '') + '00';
   const L = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//My Life Pilot//FR', 'CALSCALE:GREGORIAN'];
   for (const a of list) {
     const st = hm2min(a.time || '09:00'), en = st + (a.dur || 60);
-    L.push('BEGIN:VEVENT', 'UID:' + a.id + '@mylifepilot', 'DTSTAMP:' + f(todayStr(), '00:00'), 'DTSTART:' + f(a.date, a.time || '09:00'), 'DTEND:' + f(a.date, min2hm(Math.min(en, 1439))), 'SUMMARY:' + String(a.title).replace(/[,;\n]/g, ' '));
-    if (a.place) L.push('LOCATION:' + a.place.replace(/[,;\n]/g, ' '));
-    if (a.note) L.push('DESCRIPTION:' + a.note.replace(/\n/g, ' ').replace(/[,;]/g, ' '));
+    L.push('BEGIN:VEVENT', 'UID:' + a.id + '@mylifepilot', 'DTSTAMP:' + f(todayStr(), '00:00'), 'DTSTART:' + f(a.date, a.time || '09:00'), 'DTEND:' + f(a.date, min2hm(Math.min(en, 1439))), 'SUMMARY:' + icsT(a.title));
+    if (a.place) L.push('LOCATION:' + icsT(a.place));
+    if (a.note) L.push('DESCRIPTION:' + icsT(a.note));
     L.push('BEGIN:VALARM', 'TRIGGER:-P1D', 'ACTION:DISPLAY', 'DESCRIPTION:Rendez-vous demain', 'END:VALARM', 'BEGIN:VALARM', 'TRIGGER:-PT5H', 'ACTION:DISPLAY', 'DESCRIPTION:Rendez-vous dans 5 heures', 'END:VALARM', 'END:VEVENT');
   }
   L.push('END:VCALENDAR');
@@ -695,11 +829,13 @@ function heat(map, from, to, color) {
 
 /* ---------- modales / toasts ---------- */
 function modal(html, { wide = false } = {}) {
-  closeModal();
+  const prevFocus = document.activeElement; closeModal();
+  UI.lastFocus = prevFocus && prevFocus !== document.body ? prevFocus : UI.lastFocus;
   const m = document.createElement('div'); m.className = 'mod'; m.id = 'modal';
-  m.innerHTML = `<div class="mbox ${wide ? 'wide' : ''}" role="dialog"><button class="x" data-act="mclose" aria-label="Fermer">✕</button>${html}</div>`;
+  m.innerHTML = `<div class="mbox ${wide ? 'wide' : ''}" role="dialog" aria-modal="true" aria-labelledby="mt"><button class="x" data-act="mclose" aria-label="Fermer">✕</button>${html}</div>`;
   m.addEventListener('mousedown', e => { if (e.target === m) closeModal(true); });
-  document.body.appendChild(m);
+  document.body.appendChild(m); a11yFix(m);
+  const h2 = m.querySelector('h2'); if (h2) h2.id = 'mt'; else m.querySelector('.mbox').removeAttribute('aria-labelledby');
   const f = m.querySelector('input:not([type=hidden]):not([type=checkbox]):not([type=radio]),select,textarea'); if (f && matchMedia('(pointer:fine)').matches) f.focus();
   return m;
 }
@@ -710,10 +846,11 @@ function ask(text, { title = 'Confirmer', ok = 'Supprimer', alt = null, danger =
   });
 }
 function askDone(v) { const r = UI.askRes; UI.askRes = null; const m = $('#modal'); if (m) m.remove(); if (r) r(v); }
-function closeModal(manual) { const m = $('#modal'); if (UI.askRes) { const r = UI.askRes; UI.askRes = null; r(false); } if (m) m.remove(); if (manual) { UI.actDate = null; UI.bilanForDate = null; UI.backToBilan = null; } }
+function closeModal(manual) { const m = $('#modal'); if (UI.askRes) { const r = UI.askRes; UI.askRes = null; r(false); } if (m) { m.remove(); try { if (UI.lastFocus && UI.lastFocus.isConnected) UI.lastFocus.focus(); } catch (e) { } } if (manual) { UI.actDate = null; UI.bilanForDate = null; UI.backToBilan = null; } }
 function toast(msg, lvl = 'info', ms = 4200, key = '') {
   if (key) $$('#toasts .toast').filter(x => x.dataset.k === key).forEach(x => x.remove());
-  const t = document.createElement('div'); t.className = 'toast ' + lvl; t.dataset.k = key; t.innerHTML = msg; $('#toasts').appendChild(t);
+  const tc = $('#toasts'); if (tc && !tc.getAttribute('role')) { tc.setAttribute('role', 'status'); tc.setAttribute('aria-live', 'polite'); }
+  const t = document.createElement('div'); t.className = 'toast ' + lvl; if (lvl === 'danger' || lvl === 'bad') t.setAttribute('role', 'alert'); t.dataset.k = key; t.innerHTML = msg; $('#toasts').appendChild(t);
   setTimeout(() => t.remove(), ms);
 }
 function notify(title, body) {
@@ -746,12 +883,28 @@ function renderTimerBar() {
   b.querySelector('button').textContent = T.running ? '⏸' : '▶';
 }
 function fmtClock(ms) { const s = Math.floor(ms / 1000), h = Math.floor(s / 3600), m = Math.floor(s / 60) % 60; return (h ? h + ':' : '') + pad(m) + ':' + pad(s % 60); }
+
+/* clavier : Échap ferme la fenêtre ; Tab reste dans la fenêtre ; Entrée/Espace activent les zones cliquables */
+document.addEventListener('keydown', e => {
+  const m = $('#modal');
+  if (m && e.key === 'Escape') { e.preventDefault(); closeModal(true); return; }
+  if (m && e.key === 'Tab') {
+    const f = $$('button:not([disabled]),input:not([type=hidden]):not([disabled]),select,textarea,a[href],[tabindex="0"]', m).filter(x => x.offsetParent !== null);
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (!m.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+    else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    return;
+  }
+  if ((e.key === 'Enter' || e.key === ' ') && e.target && e.target.matches && e.target.matches('[data-act][role=button]')) { e.preventDefault(); e.target.click(); }
+});
 /* ================= Écrans A : Cockpit, Calendrier, Quotas ================= */
 const A = (act, d = {}) => `data-act="${act}" ` + Object.entries(d).map(([k, v]) => `data-${k}="${esc(v)}"`).join(' ');
 const infoBtn = (k, d) => `<button class="btn sm ic" title="Comment ce score est calculé" aria-label="Comment ce score est calculé" ${A('scoreInfo', { k, d })}>ⓘ</button>`;
-const THM = { auto: ['🌓', 'Thème automatique'], light: ['☀️', 'Thème clair'], dark: ['🌙', 'Thème sombre'] };
+const THM = { auto: ['🌓', 'Thème automatique'], light: ['☀️', 'Thème clair'], dark: ['🌙', 'Thème sombre'], obsidian: ['⚫', 'Thème Obsidian'] };
 const themeBtn = () => { const t = (S.settings.theme || 'auto'); return `<button class="btn sm thbtn" title="${THM[t][1]} — toucher pour changer" aria-label="${THM[t][1]}" data-act="themeCycle">${THM[t][0]}<span class="thl">${t === 'auto' ? 'Auto' : t === 'light' ? 'Clair' : 'Sombre'}</span></button>`; };
-const greeting = () => { const h = NOWFN().getHours(); return (h >= 6 && h < 17 ? 'Bonjour' : 'Bonsoir') + ' ' + (S.settings.name || 'Hamza'); };
+const greeting = () => { const h = NOWFN().getHours(); return (h >= 6 && h < 17 ? 'Bonjour' : 'Bonsoir') + ' ' + esc(S.settings.name || 'Hamza'); };
 const pageTop = (title, sub, right = '') => `<div class="top"><div class="tl0"><h1>${title}</h1>${sub ? `<div class="sub">${sub}</div>` : ''}</div><div class="tbar">${syncChip()}${themeBtn()}</div>${right ? `<div class="tact">${right}</div>` : ''}</div>`;
 const stChip = st => { const [l, i] = STATUS[st] || ['?', '']; const c = st === 'done' ? 'ok' : st === 'missed' ? 'bad' : st === 'unfilled' || st === 'partial' ? 'warn' : 'p'; return `<span class="chip ${c}">${i} ${l}</span>`; };
 const scoreDot = (s, lbl) => `<div class="dot ${scoreCls(s)}">${s == null ? '–' : s}</div>`;
@@ -795,14 +948,20 @@ function vCockpit() {
   const sl = sq ? (() => { const e = S.entries.filter(e => e.cat === 'sommeil' && e.date === t)[0]; return `<div class="card"><div class="ch"><h3>😴 Sommeil (nuit dernière)</h3>${e ? `<span class="chip ${e.v >= (sq.day || 420) ? 'ok' : 'warn'}">objectif ${fmtDur(sq.day || 420)}</span>` : ''}</div>${e ? `<div class="big">${fmtDur(e.v)}</div><div class="rt">${esc(e.note || '')}</div><button class="btn sm" style="margin-top:8px" ${A('sleep')}>Modifier</button>` : `<div class="empty" style="padding:8px">Non renseigné</div><button class="btn pri" ${A('sleep')}>Saisir ma nuit</button>`}</div>`; })() : '';
   const ap = S.appts.filter(a => !a.done && (a.date + (a.time || '')) >= t).sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time)).slice(0, 3);
   const lib = S.libre.slice().sort((a, b) => (b.date + (b.from || '')).localeCompare(a.date + (a.from || ''))).slice(0, 3);
-  const welcome = '';
+  const quickBtns = S.quotas.filter(q => q.noPlan && q.kind === 'count' && !q.prayers).map(q => `<button class="btn" ${A('cnt', { q: q.id, d: 1 })} aria-label="Ajouter 1 ${esc(q.label)}">${q.icon} +1 <span class="chip p">${qDone(q, t, t)}</span></button>`).join('');
+  const qcafe = Q('cafe') ? `<button class="btn" ${A('quickCat', { q: 'cafe' })}>${Q('cafe').icon} Café</button>` : '';
+  const qpri = Q('priere') ? `<button class="btn" ${A('quickCat', { q: 'priere' })}>🕌 Prière</button>` : '';
+  const qsl = Q('sommeil') ? `<button class="btn" ${A('sleep')}>😴 Sommeil</button>` : '';
+  const qbar = `<div class="qbar" role="group" aria-label="Saisie rapide">${quickBtns}${qcafe}${qpri}${qsl}<button class="btn" ${A('quick')}>＋ Autre</button></div>`;
+  const firstRun = !S.entries.length && !S.blocks.length ? `<div class="card" style="margin-bottom:14px;border-left:6px solid var(--p2)"><div class="ch"><h2>👋 Pour commencer</h2></div><div class="sub" style="margin-bottom:8px">Rien n’est encore enregistré. Trois façons de démarrer :</div><div class="fbtns"><button class="btn pri" ${A('autoplan', { id: '' })}>🗓️ Proposer un planning de la semaine</button><button class="btn" ${A('quick')}>＋ Ma première saisie</button><button class="btn" ${A('go', { tab: 'settings' })}>🧭 Guide & démo</button></div></div>` : '';
+  const welcome = firstRun;
   return pageTop(`${greeting()} 👋`, fmtDate(t) + ` · semaine ${isoWeek(t)}`, `<button class="btn" ${A('quick')}>＋ Saisie rapide</button><button class="btn" ${A('timerStart', { id: '' })}>⏱ Chrono libre</button><button class="btn pri" ${A('bilan')}>🌙 Bilan du soir</button>`) +
-    welcome + `<div class="card" style="margin-bottom:14px"><div class="strip">${strip}</div></div>
+    qbar + welcome + `<div class="card" style="margin-bottom:14px"><div class="strip">${strip}</div></div>
     <div class="g g4">
       <div class="card kpi">${ring((di.score || 0) / 100, { label: di.score == null ? '–' : di.score + '%', color: `var(--${di.score == null ? 'mut' : di.score >= 80 ? 'ok' : di.score >= 50 ? 'warn' : 'bad'})` })}<div><div class="l">Score du jour ${infoBtn('day', todayStr())}</div><div class="rt">${di.comps.map(c => `${esc(c.k)} ${Math.round(c.v * 100)}%`).join(' · ') || (di.incomplete ? 'À qualifier' : 'Rien d’enregistré')}</div></div></div>
       <div class="card kpi">${ring((wi.score || 0) / 100, { label: wi.score == null ? '–' : wi.score + '%', color: 'var(--p2)' })}<div><div class="l">Score de la semaine (rythme) ${infoBtn('week', todayStr())}</div><div class="rt">jour ${wi.el}/7</div></div></div>
       <div class="card kpi"><div><div class="v">${fmtDur(real)}</div><div class="l">réalisé aujourd’hui</div><div class="rt">prévu ${fmtDur(planned)} (${scored.length} bloc${scored.length > 1 ? 's' : ''})</div></div></div>
-      <div class="card kpi" ${A('go', { tab: 'cockpit' })}><div><div class="v" style="color:${urgent.length ? 'var(--bad)' : 'var(--ok)'}">${urgent.length}</div><div class="l">alerte(s) à traiter</div></div></div>
+      <div class="card kpi"><div><div class="v" style="color:${urgent.length ? 'var(--bad)' : 'var(--ok)'}">${urgent.length}</div><div class="l">alerte(s) à traiter</div></div></div>
     </div>
     ${urgent.length ? `<div class="card" style="margin-bottom:14px"><div class="ch"><h2>🚨 Alertes</h2></div>${urgent.map(alertHtml).join('')}</div>` : ''}
     ${next ? `<div class="card" style="margin-bottom:14px;border-left:6px solid ${blockColor(next)}"><div class="ch"><div><div class="rt">Prochaine activité</div><h2>${qLabel(next.q)}${next.title !== (Q(next.q) || {}).label ? ' — ' + esc(next.title) : ''}</h2><div class="sub">${next.start}–${next.end} · ${fmtDur(blockPlanned(next))}${hm2min(next.start) > nowMin() ? ' · dans ' + fmtDur(hm2min(next.start) - nowMin()) : ' · en cours'}</div></div><div style="display:flex;gap:6px"><button class="btn pri" ${A('timerStart', { id: next.id })}>▶ Démarrer</button><button class="btn" ${A('qualify', { id: next.id })}>✔ Fait</button></div></div></div>` : ''}
@@ -914,17 +1073,17 @@ function scoreInfo(k, d) {
   let h = '';
   if (k === 'day') {
     const i = dayInfo(d);
-    h = `<h2>Comment est calculé le score du jour ?</h2><p class="sub">Le score du ${fmtDate(d)} est la <b>moyenne</b> de plusieurs notes entre 0 et 100 %, une par critère :</p>
-    <ul style="margin:6px 0 10px 18px;line-height:1.5"><li><b>Planning</b> : temps réellement fait ÷ temps prévu, sur les blocs déjà terminés ou échus.</li><li><b>Quotas du jour</b> (sommeil, prières, cigarettes) : réalisé ÷ objectif du jour. Pour un plafond (cigarettes), 100 % tant que tu ne le dépasses pas, puis la note baisse.</li></ul>
-    <p class="sub">Un quota du jour ne compte que si tu as saisi quelque chose, ou si tu as clôturé le bilan du soir (alors « rien » veut dire zéro).</p>`;
-    h += i.future ? '<div class="empty">Jour futur : pas encore de score.</div>' : i.comps.length ? `<div class="tw"><table class="rs"><thead><tr><th>Critère</th><th>Détail</th><th>Note</th><th></th></tr></thead><tbody>${i.comps.map(c => `<tr><td>${esc(c.k)}</td><td>${esc(c.d)}</td><td><b>${Math.round(c.v * 100)} %</b></td><td>${bar(c.v)}</td></tr>`).join('')}</tbody></table></div><p><b>Score du jour = ${i.comps.map(c => Math.round(c.v * 100)).join(' + ')} ÷ ${i.comps.length} = ${i.score} %</b></p>` : `<div class="empty">${i.incomplete ? 'Des activités passées attendent d’être qualifiées (fait, reporté, manqué).' : 'Rien d’enregistré ce jour : pas de score. Fais une saisie ou clôture le bilan du soir.'}</div>`;
+    h = `<h2>Comment est calculé le score du jour ?</h2><p class="sub">Le score du ${fmtDate(d)} est la <b>moyenne simple</b> de plusieurs notes entre 0 et 100 % : chaque critère pèse autant.</p>
+    <ul style="margin:6px 0 10px 18px;line-height:1.5"><li><b>Planning</b> : temps réellement saisi ÷ temps prévu, sur les blocs terminés. Un bloc échu mais pas encore qualifié compte pour ce qui est saisi (donc 0 s’il n’y a rien) : le score est alors <b>provisoire</b>. Un bloc « Fait » sans minute saisie compte 100 %.</li><li><b>Quotas du jour</b> (sommeil, prières, cigarettes) : réalisé ÷ objectif du jour. Plafond (cigarettes) : 100 % jusqu’à la limite, puis la note baisse (20 max : 21 → 95 %, 30 → 50 %, 40 → 0 %). <b>Dépasser un plafond empêche le vert</b> : le score du jour est plafonné à 79 %.</li></ul>
+    <p class="sub">Un quota du jour ne compte que si tu as saisi quelque chose, ou si tu as clôturé le bilan du soir (alors « rien » veut dire zéro). En cours de journée, une seule saisie isolée ne suffit pas à noter la journée.</p>`;
+    h += i.future ? '<div class="empty">Jour futur : pas encore de score.</div>' : i.comps.length ? `<div class="tw"><table class="rs"><thead><tr><th>Critère</th><th>Détail</th><th>Note</th><th></th></tr></thead><tbody>${i.comps.map(c => `<tr><td>${esc(c.k)}</td><td>${esc(c.d)}</td><td><b>${Math.round(c.v * 100)} %</b></td><td>${bar(c.v)}</td></tr>`).join('')}</tbody></table></div><p><b>Score du jour = (${i.comps.map(c => Math.round(c.v * 100)).join(' + ')}) ÷ ${i.comps.length} = ${i.score} %</b>${i.capped && i.score === 79 ? ' <span class="rt">(plafonné à 79 % : un plafond est dépassé)</span>' : ''}${i.incomplete ? ' <span class="rt">· provisoire : des blocs attendent d’être qualifiés</span>' : ''}</p>` : `<div class="empty">${i.incomplete ? 'Des activités passées attendent d’être qualifiées (fait, reporté, manqué).' : 'Rien d’enregistré ce jour : pas de score. Fais une saisie ou clôture le bilan du soir.'}</div>`;
   } else if (k === 'week') {
     const ws = weekStartOf(d), w = weekInfo(ws);
-    h = `<h2>Comment est calculé le score de la semaine ?</h2><p class="sub">C’est le <b>rythme</b> : pour chaque quota, ce que tu as fait ÷ ce que tu devais avoir fait <b>à ce jour</b> (cible × jours écoulés ÷ 7). Un plafond (café, cigarettes) vaut 100 % tant qu’il n’est pas dépassé. Le score est la moyenne de ces notes.</p><p class="sub">Aujourd’hui, jour ${w.el} sur 7.</p>`;
-    h += w.score == null ? '<div class="empty">Pas encore de score pour cette semaine.</div>' : `<div class="tw"><table class="rs"><thead><tr><th>Quota</th><th>Réalisé</th><th>Attendu à ce jour</th><th>Cible semaine</th><th>Note</th><th></th></tr></thead><tbody>${w.rows.filter(r => r.ratio != null).map(r => `<tr><td>${r.q.icon} ${esc(r.q.label)}</td><td>${fmtVal(r.q, r.done)}</td><td>${r.q.mode === 'max' ? 'max ' : ''}${fmtTarget(r.q, r.pro)}</td><td>${fmtTarget(r.q, r.target)}</td><td><b>${Math.round(r.ratio * 100)} %</b></td><td>${bar(r.ratio)}</td></tr>`).join('')}</tbody></table></div><p><b>Score de la semaine = moyenne des notes = ${w.score} %</b></p>`;
+    h = `<h2>Comment est calculé le score de la semaine ?</h2><p class="sub">C’est le <b>rythme</b> : pour chaque quota minimum, ce que tu as fait ÷ ce que tu devais avoir fait <b>sur les jours terminés</b> (cible × jours terminés ÷ 7 ; aujourd’hui ne compte qu’une fois le bilan du soir clôturé, donc le score ne bouge pas à minuit). Un plafond (café, cigarettes) est comparé au <b>plafond de la semaine</b> : 100 % tant qu’il n’est pas dépassé, et seulement si tu as saisi quelque chose ou clôturé un bilan. Le score est la moyenne simple de ces notes. Les plafonds seuls ne suffisent pas à noter la semaine.</p><p class="sub">${w.acq >= 7 ? 'Semaine terminée.' : w.el === 0 ? 'Semaine à venir.' : `Jours terminés : ${w.acq} sur 7.`} Ce détail est le score global (tous quotas), même si un filtre est actif.</p>`;
+    h += w.score == null ? '<div class="empty">Pas encore de score pour cette semaine.</div>' : `<div class="tw"><table class="rs"><thead><tr><th>Quota</th><th>Réalisé</th><th>Attendu (jours terminés)</th><th>Cible semaine</th><th>Note</th><th></th></tr></thead><tbody>${w.rows.filter(r => r.ratio != null).map(r => `<tr><td>${r.q.icon} ${esc(r.q.label)}</td><td>${fmtVal(r.q, r.done)}</td><td>${r.q.mode === 'max' ? 'max ' : ''}${fmtTarget(r.q, r.pro)}</td><td>${fmtTarget(r.q, r.target)}</td><td><b>${Math.round(r.ratio * 100)} %</b></td><td>${bar(r.ratio)}</td></tr>`).join('')}</tbody></table></div><p><b>Score de la semaine = moyenne des notes = ${w.score} %</b></p>`;
   } else {
     const m = monthInfo(d);
-    h = `<h2>Comment est calculé le score du mois ?</h2><p class="sub">C’est la <b>moyenne des scores quotidiens</b> des jours qui ont un score${m.days ? ` (ici ${m.days} jour${m.days > 1 ? 's' : ''})` : ''}. Les jours sans donnée ne comptent pas, ce qui évite de te pénaliser pour un jour vide.</p>${m.score == null ? '<div class="empty">Pas encore de score ce mois-ci.</div>' : `<p><b>Score du mois = ${m.score} %</b>${m.weekAvg != null ? ` · moyenne des semaines : ${m.weekAvg} %` : ''}</p>`}`;
+    h = `<h2>Comment est calculé le score du mois ?</h2><p class="sub">C’est la <b>moyenne de deux mesures</b> : la constance des jours (moyenne des scores quotidiens${m.days ? `, ici ${m.days} jour${m.days > 1 ? 's' : ''}` : ''}) et le rythme des quotas hebdomadaires (moyenne des semaines du mois). Les jours sans donnée ne comptent pas.</p>${m.score == null ? '<div class="empty">Pas encore de score ce mois-ci.</div>' : `<p><b>Score du mois = ${m.score} %</b>${m.dayAvg != null ? ` · jours : ${m.dayAvg} %` : ''}${m.weekAvg != null ? ` · semaines : ${m.weekAvg} %` : ''}</p>`}`;
   }
   h += '<p class="rt">Repères : vert ≥ 80 %, orange 50–79 %, rouge &lt; 50 %.</p>';
   modal(h, { wide: true });
@@ -941,11 +1100,11 @@ function journalRows() {
 }
 function journalTable() {
   const rows = journalRows();
-  const sel = new Set([...(UI.jSel || [])].filter(id => rows.some(e => e.id === id))), shown = rows.slice(0, 400), allSel = shown.length > 0 && shown.every(e => sel.has(e.id));
+  const sel = new Set([...(UI.jSel || [])].filter(id => rows.some(e => e.id === id))), allSel = rows.length > 0 && rows.every(e => sel.has(e.id));
   const bycat = {}; rows.forEach(e => { bycat[e.cat] = (bycat[e.cat] || 0) + e.v; });
   const selBar = sel.size ? `<div class="selbar"><b>${sel.size} sélectionnée${sel.size > 1 ? 's' : ''}</b><button class="btn danger sm" ${A('jDelSel')}>🗑 Supprimer la sélection</button><button class="btn sm" ${A('jNone')}>Tout désélectionner</button></div>` : '';
   const tot = Object.entries(bycat).map(([c, v]) => `<span class="chip p">${Q(c) ? Q(c).icon + ' ' + fmtVal(Q(c), v) : c}</span>`).join(' ');
-  return `<div class="rt" style="margin-bottom:8px">${rows.length} opération(s) ${tot ? '· ' + tot : ''} ${rows.length ? `<button class="btn sm" ${A('jAll')}>${allSel ? '☐ Tout désélectionner' : '☑ Tout sélectionner'}</button>` : ''}</div>${selBar}<div class="tw"><table class="rs"><thead><tr><th style="width:34px"><input type="checkbox" aria-label="Tout sélectionner" ${allSel ? 'checked' : ''} ${A('jAll')}></th><th>Date</th><th>Heure</th><th>Catégorie</th><th>Valeur</th><th>Détail / note</th><th>Source</th><th></th></tr></thead><tbody>${rows.slice(0, 400).map(e => { const q = Q(e.cat); return `<tr class="${sel.has(e.id) ? 'selrow' : ''}"><td data-l="Sél."><input type="checkbox" aria-label="Sélectionner" ${sel.has(e.id) ? 'checked' : ''} ${A('jToggle', { id: e.id })}></td><td data-l="Date">${fmtShort(e.date)}</td><td data-l="Heure">${e.time || ''}</td><td data-l="Catégorie">${q ? q.icon + ' ' + esc(q.label) : esc(e.cat)}</td><td data-l="Valeur"><b>${q ? fmtVal(q, e.v) : e.v}</b>${q && q.kind === 'count' && e.mins ? `<div class="rt">${fmtDur(e.mins)}</div>` : ''}</td><td data-l="Détail">${esc(e.sub || '')} ${esc(e.note || '')}</td><td data-l="Source"><span class="chip">${esc(e.src)}</span></td><td style="white-space:nowrap"><button class="btn sm ic" ${A('entryEdit', { id: e.id })}>✎</button><button class="btn sm ic" ${A('entryDel', { id: e.id })}>🗑</button></td></tr>`; }).join('') || '<tr><td colspan="8"><div class="empty">Aucune opération pour ces filtres</div></td></tr>'}</tbody></table></div>${rows.length > 400 ? '<div class="rt">400 premières lignes affichées — affinez les filtres.</div>' : ''}`;
+  return `<div class="rt" style="margin-bottom:8px">${rows.length} opération(s) ${tot ? '· ' + tot : ''} ${rows.length ? `<button class="btn sm" ${A('jAll')}>${allSel ? '☐ Tout désélectionner' : `☑ Tout sélectionner (${rows.length})`}</button>` : ''}</div>${selBar}<div class="tw"><table class="rs"><thead><tr><th style="width:34px"><input type="checkbox" aria-label="Tout sélectionner" ${allSel ? 'checked' : ''} ${A('jAll')}></th><th>Date</th><th>Heure</th><th>Catégorie</th><th>Valeur</th><th>Détail / note</th><th>Source</th><th></th></tr></thead><tbody>${rows.slice(0, 400).map(e => { const q = Q(e.cat); return `<tr class="${sel.has(e.id) ? 'selrow' : ''}"><td data-l="Sél."><input type="checkbox" aria-label="Sélectionner" ${sel.has(e.id) ? 'checked' : ''} ${A('jToggle', { id: e.id })}></td><td data-l="Date">${fmtShort(e.date)}</td><td data-l="Heure">${e.time || ''}</td><td data-l="Catégorie">${q ? q.icon + ' ' + esc(q.label) : esc(e.cat)}</td><td data-l="Valeur"><b>${q ? fmtVal(q, e.v) : e.v}</b>${q && q.kind === 'count' && e.mins ? `<div class="rt">${fmtDur(e.mins)}</div>` : ''}</td><td data-l="Détail">${esc(e.sub || '')} ${esc(e.note || '')}</td><td data-l="Source"><span class="chip">${esc(e.src)}</span></td><td style="white-space:nowrap"><button class="btn sm ic" ${A('entryEdit', { id: e.id })}>✎</button><button class="btn sm ic" ${A('entryDel', { id: e.id })}>🗑</button></td></tr>`; }).join('') || '<tr><td colspan="8"><div class="empty">Aucune opération pour ces filtres</div></td></tr>'}</tbody></table></div>${rows.length > 400 ? '<div class="rt">400 premières lignes affichées — affinez les filtres.</div>' : ''}`;
 }
 function vJournal() {
   const sub = UI.jSub, f = UI.jf;
@@ -1053,7 +1212,7 @@ function vStats() {
     <tr><td>Régularité</td><td>${st.regularity == null ? '–' : Math.round(st.regularity * 100) + ' %'}</td><td>${sp.regularity == null ? '–' : Math.round(sp.regularity * 100) + ' %'}</td><td>${delta(st.regularity == null ? null : st.regularity * 100, sp.regularity == null ? null : sp.regularity * 100, ' pts')}</td></tr>
     <tr><td>Activités reportées</td><td>${cnt.postponed || 0}</td><td>${sp.cnt.postponed || 0}</td><td>${delta(-(cnt.postponed || 0), -(sp.cnt.postponed || 0))}</td></tr>`;
   const sdet = kind === 'day' ? dayInfo(p.from, qf) : null;
-  return pageTop('📊 Statistiques & scores', 'Un seul jeu de filtres : tous les chiffres et graphiques sont recalculés sur le même périmètre', `<button class="btn" ${A('goBilan', { k: kind === 'month' ? 'week' : kind })}>📑 Bilan détaillé</button><button class="btn pri" ${A('expOpen', {})}>⬇ Exporter…</button><button class="btn" onclick="window.print()">🖨 Imprimer</button>`) +
+  return pageTop('📊 Statistiques & scores', 'Un seul jeu de filtres : tous les chiffres et graphiques sont recalculés sur le même périmètre', `<button class="btn" ${A('goBilan', { k: kind === 'month' ? 'week' : kind })}>📑 Bilan détaillé</button><button class="btn pri" ${A('expOpen', {})}>⬇ Exporter…</button><button class="btn" data-act="print">🖨 Imprimer</button>`) +
     `<div class="card" style="margin-bottom:14px"><div class="fr" style="margin:0"><div class="tabs" style="margin:0">${[['day', 'Jour'], ['week', 'Semaine'], ['month', 'Mois']].map(([k, l]) => `<button class="${kind === k ? 'on' : ''}" ${A('statP', { v: k })}>${l}</button>`).join('')}</div><div class="calbar"><button class="btn sm" ${A('statNav', { n: -step })}>‹</button><b class="ct" style="min-width:200px">${periodLabel(p)}</b><button class="btn sm" ${A('statNav', { n: step })}>›</button><button class="btn sm" ${A('statToday')}>Aujourd’hui</button></div><label>Domaine / quota<select data-live="stq" name="q"><option value="all">Tous les quotas</option>${catOptions(qf)}</select></label>${qf !== 'all' ? `<button class="btn sm" ${A('statQreset')}>✕ Réinitialiser le filtre</button>` : ''}</div></div>
     <div class="g g4">
       <div class="card kpi">${ring((sc || 0) / 100, { size: 84, label: sc == null ? '–' : sc + '%', color: `var(--${sc == null ? 'mut' : sc >= 80 ? 'ok' : sc >= 50 ? 'warn' : 'bad'})` })}<div><div class="l">Score ${kind === 'day' ? 'du jour' : kind === 'week' ? 'de la semaine' : 'du mois'} ${infoBtn(kind, date)}</div><div>${delta(sc, sp.score, ' pts')} <span class="rt">vs précédent</span></div></div></div>
@@ -1103,7 +1262,7 @@ function vBilan() {
   if (!recos.length) recos.push('Tous les objectifs de la semaine sont tenus. Bravo — pense à protéger ton repos.');
   const top = st.reasons && Object.entries(st.reasons).sort((a, b) => b[1] - a[1])[0];
   if (top) recos.push(`Cause la plus fréquente des écarts : « ${top[0]} » (${top[1]} fois).`);
-  return pageTop(`📑 Bilan de la semaine`, `${fmtShort(ws)} → ${fmtShort(we)}`, `<button class="btn" ${A('bilanNav', { n: -7 })}>‹</button><button class="btn" ${A('bilanNav', { n: 7 })}>›</button><button class="btn" ${A('copyReport', { ws })}>📋 Copier</button><button class="btn" onclick="window.print()">🖨 PDF</button><button class="btn pri" ${A('wbDone', { ws })}>✔ Marquer comme lu</button>`) +
+  return pageTop(`📑 Bilan de la semaine`, `${fmtShort(ws)} → ${fmtShort(we)}`, `<button class="btn" ${A('bilanNav', { n: -7 })}>‹</button><button class="btn" ${A('bilanNav', { n: 7 })}>›</button><button class="btn" ${A('copyReport', { ws })}>📋 Copier</button><button class="btn" data-act="print">🖨 PDF</button><button class="btn pri" ${A('wbDone', { ws })}>✔ Marquer comme lu</button>`) +
     `<div class="g g2"><div class="card kpi">${ring((wi.score || 0) / 100, { size: 96, label: wi.score == null ? '–' : wi.score + '%' })}<div><div class="l">Score de la semaine ${infoBtn('week', ws)}</div><div class="rt">${wi.rows.filter(r => r.reached).length}/${wi.rows.length} objectifs tenus</div></div></div><div class="card"><div class="ch"><h2>Score par jour</h2></div><div class="tw">${barChart(days, { h: 140, showAvg: false, fmt: v => v + '%', minW: 44 })}</div></div></div>
     <div class="card" style="margin-bottom:14px"><div class="ch"><h2>Objectifs : atteints ou non ?</h2></div><div class="tw"><table class="rs"><thead><tr><th>Quota</th><th>Réalisé</th><th>Cible</th><th>%</th><th>Verdict</th></tr></thead><tbody>${wi.rows.map(r => `<tr><td data-l="Quota">${r.q.icon} ${esc(r.q.label)}</td><td data-l="Réalisé"><b>${fmtVal(r.q, r.done)}</b></td><td data-l="Cible">${r.q.mode === 'max' ? 'max ' : ''}${fmtVal(r.q, r.target)}</td><td data-l="%">${Math.round(r.pct * 100)} %</td><td data-l="Verdict"><span class="chip ${r.reached ? 'ok' : 'bad'}">${r.reached ? (r.q.mode === 'max' ? '✔ Plafond respecté' : '✔ Objectif atteint') : (r.q.mode === 'max' ? '✘ Plafond dépassé' : '✘ Non atteint')}</span></td></tr>`).join('')}</tbody></table></div></div>
     <div class="card" style="margin-bottom:14px"><div class="ch"><h2>Tâches non faites, partielles ou reportées</h2></div>${miss.length ? miss.map(b => `<div class="ln"><div class="lt">${fmtShort(b.date)}<br>${b.start}</div><div class="lb2"><b>${qLabel(b.q)} — ${esc(b.title)}</b> ${stChip(effStatus(b))}<div class="rt">${b.reason ? esc(b.reason) : 'cause non renseignée'}${b.note ? ' — ' + esc(b.note) : ''}</div></div>${['unfilled', 'missed', 'partial'].includes(effStatus(b)) ? `<button class="btn sm" ${A('qualify', { id: b.id })}>Corriger</button><button class="btn sm" ${A('replan', { id: b.id })}>Reporter</button>` : ''}</div>`).join('') : '<div class="empty">Aucune tâche manquée cette semaine 🎉</div>'}</div>
@@ -1115,7 +1274,7 @@ function vSettings() {
   const s = S.settings, size = Math.round(JSON.stringify(S).length / 1024);
   return pageTop('⚙️ Réglages & données', `Stockage local (${storageMode === 'idb' ? 'IndexedDB' : 'localStorage'}) · ${size} Ko · V${VERSION}`) +
     `<div class="card" style="margin-bottom:14px;border-left:6px solid var(--p2)"><div class="ch"><h2>🧭 Démarrage & guide</h2></div><p class="sub">Tes quotas stricts sont déjà réglés (sport 3×, révision 7 h, freelance 20 h, apprentissage 12 h, café ≤ 20 h, sommeil 49 h, cigarettes ≤ 140/semaine et 20/jour). Ajoute ton travail, puis laisse le conseiller proposer ta semaine.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn pri" ${A('go', { tab: 'settings' })}>1 · Régler mes créneaux libres & mon travail</button><button class="btn" ${A('autoplan', { id: '' })}>2 · Proposer ma semaine</button><button class="btn" ${A('demoLoad')}>Voir avec des données de démo</button></div></div>` + `<div class="g g2">
-    <div class="card"><div class="ch"><h2>Apparence & bilan</h2></div><form class="fm" data-form="settingsSave"><div class="row"><label>Prénom (message d’accueil)<input name="name" value="${esc(s.name || 'Hamza')}"></label><label>Thème<select name="theme">${[['auto', 'Automatique'], ['light', 'Clair'], ['dark', 'Sombre']].map(([k, l]) => `<option value="${k}" ${s.theme === k ? 'selected' : ''}>${l}</option>`).join('')}</select></label><label>Heure du bilan du soir<input type="time" name="bilanHour" value="${pad(s.bilanHour)}:00"></label></div><div class="ch"><h3>Fenêtres libres (créneaux utilisables par le planificateur)</h3></div><div class="rt">Le temps de sommeil, de travail et de transport est protégé : ne mets ici que ce qui est vraiment disponible.</div>${DAYSL.map((d, i) => `<div class="frow"><b>${d}</b><input type="time" name="f${i}s" value="${s.free[i] ? s.free[i][0] : '18:45'}"><input type="time" name="f${i}e" value="${s.free[i] ? s.free[i][1] : '22:30'}"><label style="flex-direction:row;align-items:center;gap:5px"><input type="checkbox" name="f${i}n" ${s.free[i] ? '' : 'checked'}>aucune</label></div>`).join('')}<label>Causes d’imprévus / non-réalisation (une par ligne)<textarea name="reasons" rows="6">${esc(S.reasons.join('\n'))}</textarea></label><button class="btn pri" type="submit">Enregistrer</button></form></div>
+    <div class="card"><div class="ch"><h2>Apparence & bilan</h2></div><form class="fm" data-form="settingsSave"><div class="row"><label>Prénom (message d’accueil)<input name="name" value="${esc(s.name || 'Hamza')}"></label><label>Thème<select name="theme">${[['auto', 'Automatique'], ['light', 'Clair'], ['dark', 'Sombre'], ['obsidian', 'Obsidian (noir, bleu unique)']].map(([k, l]) => `<option value="${k}" ${s.theme === k ? 'selected' : ''}>${l}</option>`).join('')}</select></label><label>Heure du bilan du soir<input type="time" name="bilanHour" value="${pad(s.bilanHour)}:00"></label></div><div class="ch"><h3>Fenêtres libres (créneaux utilisables par le planificateur)</h3></div><div class="rt">Le temps de sommeil, de travail et de transport est protégé : ne mets ici que ce qui est vraiment disponible.</div>${DAYSL.map((d, i) => `<div class="frow"><b>${d}</b><input type="time" name="f${i}s" value="${s.free[i] ? s.free[i][0] : '18:45'}"><input type="time" name="f${i}e" value="${s.free[i] ? s.free[i][1] : '22:30'}"><label style="flex-direction:row;align-items:center;gap:5px"><input type="checkbox" name="f${i}n" ${s.free[i] ? '' : 'checked'}>aucune</label></div>`).join('')}<label>Causes d’imprévus / non-réalisation (une par ligne)<textarea name="reasons" rows="6">${esc(S.reasons.join('\n'))}</textarea></label><button class="btn pri" type="submit">Enregistrer</button></form></div>
     <div style="display:grid;gap:14px;align-content:start">
       <div class="card"><div class="ch"><h2>☁️ Synchronisation PC ↔ téléphone</h2></div>
         <div class="sub" id="syncstat" style="margin-bottom:8px">${esc(syncStatusText())}</div>
@@ -1219,18 +1378,23 @@ function merge3(base, L, R, pref = 'local') {
 const syncTE = new TextEncoder(), syncTD = new TextDecoder();
 function b64e(u8) { let s = ''; for (let i = 0; i < u8.length; i += 0x8000) s += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000)); return btoa(s); }
 function b64d(s) { return Uint8Array.from(atob(String(s).replace(/\s/g, '')), c => c.charCodeAt(0)); }
-async function deriveKey(pass, salt) {
+const SYNC_ITER = window.__SYNC_ITER || 600000;
+const KEYC = new Map();
+async function deriveKey(pass, salt, it = 200000) {
+  const ck = it + '|' + b64e(salt) + '|' + pass, hit = KEYC.get(ck); if (hit) return hit;
   const km = await crypto.subtle.importKey('raw', syncTE.encode(pass), 'PBKDF2', false, ['deriveKey']);
-  return crypto.subtle.deriveKey({ name: 'PBKDF2', salt, iterations: 200000, hash: 'SHA-256' }, km, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+  const key = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt, iterations: it, hash: 'SHA-256' }, km, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+  if (KEYC.size >= 6) KEYC.delete(KEYC.keys().next().value);
+  KEYC.set(ck, key); return key;
 }
 async function encJson(obj, pass) {
-  const salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12)), key = await deriveKey(pass, salt);
+  const salt = (SYNC.salt && SYNC.saltPass === pass) ? SYNC.salt : (SYNC.salt = crypto.getRandomValues(new Uint8Array(16)), SYNC.saltPass = pass, SYNC.salt), iv = crypto.getRandomValues(new Uint8Array(12)), key = await deriveKey(pass, salt, SYNC_ITER);
   const ct = new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, syncTE.encode(JSON.stringify(obj))));
-  return { app: 'mylifepilot', v: 1, alg: 'AES-GCM/PBKDF2-SHA256-200k', s: b64e(salt), i: b64e(iv), d: b64e(ct) };
+  return { app: 'mylifepilot', v: 1, alg: 'AES-GCM/PBKDF2-SHA256', it: SYNC_ITER, s: b64e(salt), i: b64e(iv), d: b64e(ct) };
 }
 async function decJson(env, pass) {
   try {
-    const key = await deriveKey(pass, b64d(env.s));
+    const key = await deriveKey(pass, b64d(env.s), env.it > 0 && env.it <= 2000000 ? +env.it : 200000);
     return JSON.parse(syncTD.decode(await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64d(env.i) }, key, b64d(env.d))));
   } catch (e) { const er = new Error('BADPASS'); er.code = 'BADPASS'; throw er; }
 }
@@ -1250,7 +1414,11 @@ async function fetchRemote(cfg) {
   SYNC.etag = r.headers.get('ETag'); const j = await r.json(); let text;
   if (j.content && j.encoding === 'base64') text = syncTD.decode(b64d(j.content));
   else { const rr = await ghFetch(cfg, 'GET', '/contents/' + SYNC_PATH, null, true); if (!rr.ok) throw httpErr(rr.status); text = await rr.text(); }
-  return { sha: j.sha, payload: await decJson(JSON.parse(text), cfg.pass) };
+  let env; try { env = JSON.parse(text); } catch (_) { const er = new Error('BADFILE'); er.code = 'BADFILE'; throw er; }
+  if (!env || typeof env !== 'object' || !env.s || !env.i || !env.d) { const er = new Error('BADFILE'); er.code = 'BADFILE'; throw er; }
+  const payload = await decJson(env, cfg.pass);
+  if (!payload || typeof payload !== 'object' || !payload.data || typeof payload.data !== 'object' || !Array.isArray(payload.data.entries) || !Array.isArray(payload.data.blocks) || !Array.isArray(payload.data.quotas)) { const er = new Error('BADFILE'); er.code = 'BADFILE'; throw er; }
+  return { sha: j.sha, payload };
 }
 async function headEtag(cfg) { const r = await ghFetch(cfg, 'HEAD', '/contents/' + SYNC_PATH); return r.ok ? r.headers.get('ETag') : null; }
 async function syncPeek() {
@@ -1271,8 +1439,10 @@ function syncErrMsg(e) {
   if (c === 403) return 'Accès refusé : le jeton doit avoir le droit « Contents : lecture et écriture » sur le dépôt (ou limite GitHub atteinte).';
   if (c === 404) return 'Dépôt introuvable : vérifie le propriétaire, le nom du dépôt et que le jeton a accès à ce dépôt.';
   if (c === 'BADPASS') return 'Mot de passe de chiffrement incorrect (il doit être identique sur tous les appareils).';
+  if (c === 'BADFILE') return 'Le fichier distant est illisible ou n’est pas de My Life Pilot : rien n’a été écrasé. Vérifie le dépôt.';
+  if (c === 'STORE') return 'Impossible d’enregistrer sur cet appareil (espace plein ?) : synchronisation annulée, rien n’a été perdu.';
   if (c === 'RETRY') return 'GitHub était occupé, réessaie dans un instant.';
-  if (e instanceof TypeError) return 'Hors ligne ou GitHub injoignable.';
+  if (e instanceof TypeError && !c) return 'Hors ligne ou GitHub injoignable.';
   return 'Erreur de synchronisation : ' + (e && e.message ? e.message : e);
 }
 
@@ -1286,6 +1456,14 @@ async function presyncBackup() {
   try { await DB.set('bak-presync-' + Date.now(), JSON.stringify(S)); const ks = (await DB.keys()).filter(k => String(k).startsWith('bak-presync-')).sort(); while (ks.length > 3) await DB.del(ks.shift()); } catch (e) { }
 }
 
+/* retire de l'état fusionné tout élément mal formé (jamais de HTML/valeurs hors format qui voyagent) */
+function cleanMerged(m) {
+  const c = sanitizeState(Object.assign({ quotas: [], entries: [], blocks: [] }, m));
+  for (const k of ['quotas', 'blocks', 'entries', 'libre', 'appts', 'proposals']) m[k] = JSON.parse(JSON.stringify(c[k]));
+  if (m.reviews) m.reviews = JSON.parse(JSON.stringify(c.reviews));
+  if (m.settings && 'name' in m.settings) m.settings.name = c.settings.name;
+  return m;
+}
 /* ---------- application de l'état fusionné ---------- */
 function applySync(m) {
   for (const k of SYNC_ID_COLS) S[k] = m[k].concat((S[k] || []).filter(isDemo));
@@ -1312,7 +1490,7 @@ function syncStatusText() {
   if (st === 'err') return '⚠️ ' + SYNC.msg;
   if (st === 'offline') return '⏸ Hors ligne — la synchronisation reprendra dès le retour d’Internet.';
   const s = SYNC.stats;
-  return SYNC.last ? `✓ Dernière synchronisation à ${syncClock(SYNC.last)}${s ? ` · ${s.fromRemote} élément(s) reçu(s)${s.conflicts ? ` · ${s.conflicts} modification(s) simultanée(s) fusionnée(s)` : ''}` : ''}` : 'Prête, pas encore synchronisée.';
+  return SYNC.last ? `✓ Dernière synchronisation à ${syncClock(SYNC.last)}${s ? ` · ${s.fromRemote} élément(s) reçu(s)${s.conflicts ? ` · ${s.conflicts} modification(s) simultanée(s) : la version la plus récente est conservée` : ''}` : ''}` : 'Prête, pas encore synchronisée.';
 }
 function setSync(st, msg = '') {
   SYNC.status = st; SYNC.msg = msg;
@@ -1334,15 +1512,21 @@ async function syncRun(reason) {
   try {
     for (let tries = 1; ; tries++) {
       const rem = await fetchRemote(cfg);
-      const loc = syncable(S), braw = await baseGet(), base = braw ? JSON.parse(braw) : null;
+      const braw = await baseGet(), base = braw ? JSON.parse(braw) : null, ver = S._mod;
+      const loc = syncable(S);
       let merged = loc, stats = { fromRemote: 0, conflicts: 0, removed: 0 }, needPush = true;
       if (rem.payload) {
         const pref = (rem.payload.mod || 0) > (S._mod || 0) ? 'remote' : 'local';
-        const res = merge3(base, loc, rem.payload.data, pref); merged = res.merged; stats = res.stats;
+        const res = merge3(base, loc, rem.payload.data, pref); merged = cleanMerged(res.merged); stats = res.stats;
         needPush = syncCanon(merged) !== syncCanon(rem.payload.data);
       }
       const changed = syncCanon(merged) !== syncCanon(loc);
-      if (changed) { await presyncBackup(); applySync(merged); await persist(); }
+      if (changed) {
+        await presyncBackup();
+        if (S._mod !== ver) { if (tries < 4) continue; SYNC.again = true; break; } /* une saisie a eu lieu pendant la fusion : on recommence plutôt que de l'écraser */
+        applySync(merged);
+        if (!(await persist())) { const er = new Error('STORE'); er.code = 'STORE'; throw er; }
+      }
       if (needPush) {
         try { await pushRemote(cfg, { app: 'mlp', ver: VERSION, mod: Date.now(), device: cfg.device || 'appareil', data: merged }, rem.sha); }
         catch (e) { if (e.code === 'RETRY' && tries < 3) continue; throw e; }
@@ -1354,7 +1538,7 @@ async function syncRun(reason) {
     }
     setSync('ok');
     if (result.changed) { if (!$('#modal') && !isTyping()) render(); toast('☁️ Données mises à jour depuis l’autre appareil', 'good', 3000, 'sync'); }
-  } catch (e) { result = { ok: false, msg: syncErrMsg(e) }; setSync(e instanceof TypeError ? 'offline' : 'err', result.msg); }
+  } catch (e) { result = { ok: false, msg: syncErrMsg(e) }; setSync(e instanceof TypeError && !e.code ? 'offline' : 'err', result.msg); }
   finally { SYNC.busy = false; if (SYNC.again) { SYNC.again = false; syncSoon(2500); } }
   return result;
 }
@@ -1415,7 +1599,8 @@ function zipStore(files) {
 const qStatus = r => {
   const q = r.q;
   if (q.mode === 'max') return r.done <= r.target ? ['Respecté', 'ok'] : ['Dépassé', 'bad'];
-  return r.pct >= 1 ? ['Atteint', 'ok'] : r.pct >= 0.7 ? ['Partiel', 'warn'] : ['En retard', 'bad'];
+  const x = r.ppct != null ? r.ppct : r.pct; /* par rapport au rythme attendu à ce jour */
+  return r.pct >= 1 ? ['Atteint', 'ok'] : x >= 1 ? ['Dans le rythme', 'ok'] : x >= 0.7 ? ['Partiel', 'warn'] : ['En retard', 'bad'];
 };
 const stTone = s => (s === 'done' ? 'ok' : s === 'missed' ? 'bad' : s === 'partial' || s === 'postponed' || s === 'unfilled' ? 'warn' : '');
 function expPeriodLabel(p) {
@@ -1433,7 +1618,7 @@ function expData(o) {
   const st = statsFor(p, qf), q1 = qf === 'all' ? null : Q(qf);
   const sp = p.kind === 'range' ? null : statsFor(prevPeriod(p, o.date), qf);
   const inP = d => d >= p.from && d <= p.to;
-  const quotas = st.per.map(r => { const s = qStatus(r); return { q: r.q, done: r.done, target: r.target, pct: r.pct, status: s[0], tone: s[1] }; });
+  const quotas = st.per.map(r => { const s = qStatus(r); return { q: r.q, done: r.done, target: r.target, pct: r.pct, ppct: r.ppct, status: s[0], tone: s[1] }; });
   const blocks = S.blocks.filter(b => inP(b.date) && b.status !== 'cancelled' && (qf === 'all' || b.q === qf))
     .sort((a, b) => (a.date + a.start).localeCompare(b.date + b.start))
     .map(b => { const s = effStatus(b), pl = blockPlanned(b); const ac = ['done', 'partial', 'missed', 'postponed'].includes(s) ? Math.min(pl, blockActual(b) || (s === 'done' ? pl : 0)) : 0; return { b, s, pl, ac, q: b.q ? Q(b.q) : null }; });
@@ -1847,7 +2032,7 @@ const EXP_PARTS = [['synth', 'Synthèse et indicateurs'], ['quotas', 'Quotas et 
 function expOpen(opt = {}) {
   const kind = opt.kind || UI.statP || 'week', date = opt.date || UI.statDate || todayStr(), qf = opt.qf || UI.statQ || 'all';
   modal(`<h2>⬇ Exporter un rapport</h2><p class="muted" style="margin-top:0">Charte : Book Antiqua, texte justifié interligne 1,5, titres en bleu, sommaire, tableaux et graphiques.</p>
-  <form class="fm" id="expf" onsubmit="return false"><div class="row"><label>Période<select name="kind">${[['day', 'Jour'], ['week', 'Semaine'], ['month', 'Mois']].map(([k, l]) => `<option value="${k}" ${k === kind ? 'selected' : ''}>${l}</option>`).join('')}</select></label><label>Date de référence<input type="date" name="date" value="${date}" required></label></div>
+  <form class="fm" id="expf" data-form="expNoop"><div class="row"><label>Période<select name="kind">${[['day', 'Jour'], ['week', 'Semaine'], ['month', 'Mois']].map(([k, l]) => `<option value="${k}" ${k === kind ? 'selected' : ''}>${l}</option>`).join('')}</select></label><label>Date de référence<input type="date" name="date" value="${date}" required></label></div>
   <label>Activité<select name="qf"><option value="all">Toutes les activités</option>${S.quotas.map(q => `<option value="${q.id}" ${q.id === qf ? 'selected' : ''}>${q.icon} ${esc(q.label)}</option>`).join('')}</select></label>
   <div><b style="font-size:.9rem">Contenu</b><div class="expchk">${EXP_PARTS.map(([k, l]) => `<label class="chk"><input type="checkbox" name="p_${k}" ${k === 'journal' ? '' : 'checked'}> ${l}</label>`).join('')}</div></div>
   <div class="fbtns"><button type="button" class="btn pri" ${A('expGo', { f: 'docx' })}>📝 Word</button><button type="button" class="btn pri" ${A('expGo', { f: 'xlsx' })}>📊 Excel</button><button type="button" class="btn pri" ${A('expGo', { f: 'pdf' })}>📄 PDF</button></div></form>`, { wide: true });
@@ -1881,7 +2066,7 @@ async function voxLoad() {
   try { if (storageMode === 'idb') VX.list = (await DB.get('voxMeta')) || []; } catch (e) { VX.list = []; }
   VX.ready = true;
 }
-const voxSaveMeta = () => (storageMode === 'idb' ? DB.set('voxMeta', JSON.parse(JSON.stringify(VX.list))).catch(() => { }) : Promise.resolve());
+const voxSaveMeta = () => (storageMode === 'idb' ? DB.set('voxMeta', JSON.parse(JSON.stringify(VX.list))).then(() => true) : Promise.resolve(true));
 
 async function voxStart() {
   if (VX.rec) return;
@@ -1890,7 +2075,8 @@ async function voxStart() {
   let stream;
   try { stream = await navigator.mediaDevices.getUserMedia({ audio: true }); } catch (e) { return toast('Micro refusé : autorise le micro pour ce site dans le navigateur.', 'bad', 6000); }
   const mt = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/ogg;codecs=opus'].find(m => MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(m)) || '';
-  const mr = new MediaRecorder(stream, mt ? { mimeType: mt } : undefined), chunks = [];
+  let mr; const chunks = [];
+  try { mr = new MediaRecorder(stream, mt ? { mimeType: mt } : undefined); } catch (e) { stream.getTracks().forEach(t => t.stop()); return toast('Enregistrement audio non supporté sur ce navigateur.', 'bad'); }
   mr.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
   const rec = { mr, stream, chunks, t0: Date.now(), date: todayStr(), time: min2hm(nowMin()), cancel: false, mime: mr.mimeType || mt || 'audio/webm' };
   rec.timer = setInterval(() => { const el = $('#vtime'); const s = (Date.now() - rec.t0) / 1000; if (el) el.textContent = fmtSec(s); if (s >= 600) voxStop(); }, 400);
@@ -1908,7 +2094,7 @@ async function voxFinish(rec) {
   if (blob.size < 400) { toast('Vocal vide : rien n’a été enregistré.', 'warn'); return render(false); }
   const m = { id: uid(), ts: rec.t0, date: rec.date, time: rec.time, dur, status: 'new', title: '', mime: rec.mime, size: blob.size, treated: null };
   try { await DB.set('vox:' + m.id, blob); VX.list.push(m); await voxSaveMeta(); toast('🎙️ Vocal enregistré', 'good'); }
-  catch (e) { toast('Impossible de sauvegarder le vocal (espace plein ?).', 'bad'); }
+  catch (e) { VX.list = VX.list.filter(x => x.id !== m.id); try { await DB.del('vox:' + m.id); } catch (_) { } toast('Impossible de sauvegarder le vocal (espace plein ?).', 'bad'); }
   UI.vf = 'new'; render(false);
 }
 
@@ -1983,12 +2169,30 @@ function voxInit() {
 }
 /* ================= Actions, formulaires, rendu, démarrage ================= */
 const VIEWS = { voice: vVoice, cockpit: vCockpit, cal: vCal, quotas: vQuotas, journal: vJournal, libre: vLibre, rdv: vRdv, search: vSearch, stats: vStats, bilan: vBilan, settings: vSettings };
-function applyTheme() { const th = S.settings.theme; document.documentElement.dataset.th = th === 'auto' ? (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light') : th; }
+function applyTheme() { const th = S.settings.theme; const dark = th === 'dark' || th === 'obsidian' || (th === 'auto' && matchMedia('(prefers-color-scheme:dark)').matches); const mt = document.querySelector('meta[name=theme-color]'); if (mt) mt.content = th === 'obsidian' ? '#000000' : dark ? '#0b0d1c' : '#2D348B';
+  document.documentElement.dataset.th = th === 'auto' ? (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light') : th; }
 function render(keep = true) {
   const y = window.scrollY, st = $('#main');
   st.innerHTML = (VIEWS[UI.tab] || vCockpit)();
-  renderNav(); renderTimerBar();
+  renderNav(); renderTimerBar(); a11yFix($('#main'));
   if (keep) window.scrollTo(0, y); else window.scrollTo(0, 0);
+}
+/* remplacement global des données (import, copie, effacement) : valide d'abord, prévient si la synchro est active */
+async function replaceAll(newState, bakLabel, what) {
+  const clean = newState === null ? defaults() : sanitizeState(newState);
+  if (SYNC.cfg && SYNC.cfg.on) {
+    const m = await ask(`La synchronisation est active. ${what} va aussi se répercuter sur l’autre appareil au prochain échange.\n\nQue veux-tu faire ?`, { title: 'Synchronisation active', ok: 'Oui, sur tous mes appareils', alt: 'Seulement ici (couper la synchro)' });
+    if (m === false) return false;
+    if (m === 'alt') { SYNC.cfg = null; await cfgSave(null); await baseSet(null); setSync('off'); }
+  }
+  try { await DB.set(bakLabel + Date.now(), JSON.stringify(S)); } catch (e) { }
+  S = clean; migrate(); S._mod = Date.now(); await persist();
+  return true;
+}
+/* zones cliquables en div : atteignables au clavier */
+function a11yFix(root) {
+  if (!root) return;
+  $$('[data-act]:not(button):not(input):not(select):not(textarea):not(a):not([tabindex])', root).forEach(x => { x.setAttribute('role', 'button'); x.setAttribute('tabindex', '0'); });
 }
 function setTab(t) { UI.tab = t; history.replaceState(null, '', '#' + t); closeModal(true); render(false); }
 function isTyping() { const a = document.activeElement; return a && ['INPUT', 'TEXTAREA', 'SELECT'].includes(a.tagName); }
@@ -2043,7 +2247,7 @@ function blockModal(id) {
   const b = S.blocks.find(x => x.id === id); if (!b) return;
   const st = effStatus(b), q = Q(b.q), act = Math.round(blockActual(b)), p = blockPlanned(b);
   modal(`<h2>${q ? q.icon + ' ' : ''}${esc(b.title)}</h2><div class="sub">${fmtDate(b.date)} · ${b.start}–${b.end} (${fmtDur(p)})</div><div style="margin:10px 0">${stChip(st)} ${b.fixed ? '<span class="chip">🔒 fixe</span>' : ''} ${act ? `<span class="chip p">${fmtDur(act)} réalisés</span>` : ''}</div>${b.reason ? `<div class="rt">Cause : ${esc(b.reason)}</div>` : ''}${b.note ? `<div style="white-space:pre-wrap;margin:6px 0">${esc(b.note)}</div>` : ''}${b.rescheduledFrom ? '<div class="rt">↪ Reporté depuis un autre créneau</div>' : ''}
-  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">${b.q && ['planned', 'inprogress', 'unfilled'].includes(st) ? `<button class="btn pri" ${A('timerStart', { id })}>▶ Chrono</button>` : ''}${b.q ? `<button class="btn" ${A('qualify', { id })}>✔ Qualifier</button>` : ''}${b.q && !b.fixed ? `<button class="btn" ${A('replan', { id })}>↪ Reporter</button>` : ''}<button class="btn" ${A('blkEdit', { id })}>✎ Modifier</button><button class="btn" ${A('blkDup', { id })}>⎘ Dupliquer</button>${st !== 'planned' ? `<button class="btn" ${A('blkReset', { id })}>↺ Réinitialiser</button>` : ''}<button class="btn bad" ${A('blkDel', { id })}>🗑 Supprimer</button></div>`);
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">${b.q && ['planned', 'inprogress', 'unfilled'].includes(st) ? `<button class="btn pri" ${A('timerStart', { id })}>▶ Chrono</button>` : ''}${b.q ? `<button class="btn" ${A('qualify', { id })}>✔ Qualifier</button>` : ''}${b.q && !b.fixed && ['planned', 'inprogress', 'unfilled', 'missed', 'partial'].includes(st) ? `<button class="btn" ${A('replan', { id })}>↪ Reporter</button>` : ''}<button class="btn" ${A('blkEdit', { id })}>✎ Modifier</button><button class="btn" ${A('blkDup', { id })}>⎘ Dupliquer</button>${st !== 'planned' ? `<button class="btn" ${A('blkReset', { id })}>↺ Réinitialiser</button>` : ''}<button class="btn bad" ${A('blkDel', { id })}>🗑 Supprimer</button></div>`);
 }
 
 /* ---------- qualifier un bloc (fait / partiel / non fait / reporter / annuler) ---------- */
@@ -2097,6 +2301,8 @@ function replanModal(id, opts = {}) {
 }
 function applyReplan(id, date, start, dur, mark) {
   const b = S.blocks.find(x => x.id === id); if (!b) return;
+  if (!(dur > 0) || hm2min(start) + dur > 1440) return toast('Durée ou heure invalide : le bloc doit tenir dans la journée (durée > 0).', 'warn');
+  if (S.blocks.some(x => x.rescheduledFrom === id && x.status !== 'cancelled')) return toast('Ce bloc a déjà été reporté.', 'warn');
   const nb = { id: uid(), date, start, end: min2hm(hm2min(start) + dur), title: b.title, q: b.q, status: 'planned', fixed: false, note: b.note || '', rescheduledFrom: b.id };
   S.blocks.push(nb);
   if (mark === 'postponed') b.status = 'postponed';
@@ -2130,11 +2336,12 @@ function tick1s() {
   if (T.limit && !T.alerted && timerElapsed() / 60000 > T.limit) {
     T.alerted = true; save();
     toast(`⏱️ <b>${esc(T.label)}</b> : durée prévue de ${fmtDur(T.limit)} dépassée`, 'danger', 8000); notify('Durée dépassée', `${T.label} : ${fmtDur(T.limit)} dépassées`);
-    if (!$('#modal')) render();
+    if (!$('#modal') && !isTyping()) render();
   }
 }
 function timerStopModal() {
   const T = S.timer; if (!T) return;
+  if (!Q(T.cat)) { S.timer = null; save(); closeModal(); render(); return toast('Le quota de ce chrono n’existe plus : chrono annulé.', 'warn'); }
   if (T.running) { T.acc += NOWFN().getTime() - T.startedAt; T.running = false; }
   const min = Math.max(1, Math.round(T.acc / 60000)), q = Q(T.cat), b = T.blockId && S.blocks.find(x => x.id === T.blockId);
   const planned = b ? blockPlanned(b) : null;
@@ -2228,14 +2435,14 @@ function loadDemo() {
   S.libre.push({ id: uid(), demo: 1, date: addDays(t, -1), from: '15:00', to: '17:00', text: 'Hammam', cat: '' });
   log('démo', 'Données de démonstration chargées'); save();
 }
-function csvEscape(x) { x = String(x ?? ''); return /[;"\n]/.test(x) ? '"' + x.replace(/"/g, '""') + '"' : x; }
+function csvEscape(x) { x = String(x ?? ''); if (/^[=+\-@\t\r]/.test(x)) x = "'" + x; return /[;"\n]/.test(x) ? '"' + x.replace(/"/g, '""') + '"' : x; }
 
 /* ================= Délégation d'événements ================= */
 const ACT = {
   go: d => setTab(d.tab), mclose: () => closeModal(true),
-  themeCycle: () => { const o = ['auto', 'light', 'dark'], c = S.settings.theme || 'auto'; S.settings.theme = o[(o.indexOf(c) + 1) % 3]; save(); applyTheme(); render(); toast(THM[S.settings.theme][1], 'good', 1500); },
+  themeCycle: () => { const o = ['auto', 'light', 'dark', 'obsidian'], c = S.settings.theme || 'auto'; S.settings.theme = o[(o.indexOf(c) + 1) % 4]; save(); applyTheme(); render(); toast(THM[S.settings.theme][1], 'good', 1500); },
   syncNow: async () => { if (!SYNC.cfg || !SYNC.cfg.on) return setTab('settings'); const r = await syncNow('manual'); toast(r.ok ? (r.changed ? '☁️ Synchronisé : données reçues de l’autre appareil' : '☁️ Synchronisé ✓') : '⚠️ ' + r.msg, r.ok ? 'good' : 'warn', 3500, 'sync'); },
-  syncOff: async () => { if (!confirm('Désactiver la synchronisation sur cet appareil ? (tes données locales restent ici, le fichier chiffré reste sur GitHub)')) return; SYNC.cfg = null; await cfgSave(null); await baseSet(null); setSync('off'); render(); toast('Synchronisation désactivée sur cet appareil', 'warn'); },
+  syncOff: async () => { if (!confirm('Désactiver la synchronisation sur cet appareil ? (tes données locales restent ici, le fichier chiffré reste sur GitHub)')) return; SYNC.cfg = null; await cfgSave(null); await baseSet(null); try { for (const k of await caches.keys()) await caches.delete(k); } catch (e) { } setSync('off'); render(); toast('Synchronisation désactivée. Pense à révoquer le jeton sur GitHub (Settings → Developer settings).', 'warn', 6000); },
   askOk: () => askDone(true), askAlt: () => askDone('alt'), askNo: () => askDone(false),
   moreMenu: () => modal(`<h2>Menu</h2><div style="display:grid;gap:8px">${NAV.filter(n => ['quotas', 'libre', 'rdv', 'search', 'settings'].includes(n[0])).map(n => `<button class="btn" style="justify-content:flex-start" ${A('go', { tab: n[0] })}>${n[2]} ${n[1]}</button>`).join('')}</div>`),
   calDay: d => { UI.calDate = d.date; UI.calView = 'day'; setTab('cal'); },
@@ -2275,16 +2482,17 @@ const ACT = {
   quick: () => entryForm(null), quickCat: d => entryForm(null, { cat: d.q }),
   entryEdit: d => entryForm(S.entries.find(e => e.id === d.id)),
   entryDel: async d => { const e = S.entries.find(x => x.id === d.id); if (!e) return; if (!await ask(`${Q(e.cat) ? Q(e.cat).label : e.cat} · ${fmtVal(Q(e.cat), e.v)} · ${e.date} ${e.time || ''}`, { title: 'Supprimer cette saisie ?' })) return; S.entries = S.entries.filter(x => x.id !== d.id); log('saisie', `Supprimé : ${Q(e.cat) ? Q(e.cat).label : e.cat} ${e.date}`); save(); closeModal(); render(); toast('Saisie supprimée', 'good'); },
-  csvEntries: () => { const rows = journalRows(); download('journal_mylifepilot.csv', '﻿' + ['date;heure;categorie;valeur;unite;duree_min;detail;note;source'].concat(rows.map(e => { const q = Q(e.cat); return [e.date, e.time, q ? q.label : e.cat, q && q.kind === 'duration' ? e.v : e.v, q ? (q.kind === 'duration' ? 'min' : q.unit || '') : '', entryMins(e), e.sub || '', e.note || '', e.src].map(csvEscape).join(';'); })).join('\r\n'), 'text/csv'); toast('Export CSV provisoire (les exports Word/Excel/PDF natifs arrivent au Lot 5).', 'info'); },
+  csvEntries: () => { const rows = journalRows(); download('journal_mylifepilot.csv', '﻿' + ['date;heure;categorie;valeur;unite;duree_min;detail;note;source'].concat(rows.map(e => { const q = Q(e.cat); return [e.date, e.time, q ? q.label : e.cat, q && q.kind === 'duration' ? e.v : e.v, q ? (q.kind === 'duration' ? 'min' : q.unit || '') : '', entryMins(e), e.sub || '', e.note || '', e.src].map(csvEscape).join(';'); })).join('\r\n'), 'text/csv'); toast('Export CSV généré.', 'good'); },
   csvSearch: () => { const rows = searchRows(); download('recherche_mylifepilot.csv', '﻿' + ['date;heure;type;contenu;valeur'].concat(rows.map(r => [r.date, r.time, r.type, r.text, r.val].map(csvEscape).join(';'))).join('\r\n'), 'text/csv'); },
   jToggle: d => { const s = UI.jSel || (UI.jSel = new Set()); s.has(d.id) ? s.delete(d.id) : s.add(d.id); $('#jres').innerHTML = journalTable(); },
-  jAll: () => { const s = UI.jSel || (UI.jSel = new Set()), rows = journalRows().slice(0, 400), all = rows.every(e => s.has(e.id)); rows.forEach(e => (all ? s.delete(e.id) : s.add(e.id))); $('#jres').innerHTML = journalTable(); },
+  jAll: () => { const s = UI.jSel || (UI.jSel = new Set()), rows = journalRows(), all = rows.every(e => s.has(e.id)); rows.forEach(e => (all ? s.delete(e.id) : s.add(e.id))); $('#jres').innerHTML = journalTable(); },
   jNone: () => { UI.jSel = new Set(); $('#jres').innerHTML = journalTable(); },
   jDelSel: async () => {
     const ids = new Set(journalRows().filter(e => (UI.jSel || new Set()).has(e.id)).map(e => e.id)); if (!ids.size) return;
     if (!await ask(`${ids.size} saisie${ids.size > 1 ? 's seront supprimées' : ' sera supprimée'} définitivement. Cette action est irréversible (sauf restauration d’une sauvegarde).`, { title: `Supprimer ${ids.size} saisie${ids.size > 1 ? 's' : ''} ?`, ok: 'Supprimer', danger: true })) return;
-    S.entries = S.entries.filter(e => !ids.has(e.id)); UI.jSel = new Set(); log('saisie', `Suppression groupée : ${ids.size} saisie(s)`); save(); toast(`${ids.size} saisie${ids.size > 1 ? 's supprimées' : ' supprimée'}`, 'good'); render(false);
+    UI.undoEntries = S.entries.filter(e => ids.has(e.id)); S.entries = S.entries.filter(e => !ids.has(e.id)); UI.jSel = new Set(); log('saisie', `Suppression groupée : ${ids.size} saisie(s)`); save(); toast(`${ids.size} saisie${ids.size > 1 ? 's supprimées' : ' supprimée'} <button class="btn sm" data-act="undoDel">↶ Annuler</button>`, 'good', 9000, 'undo'); render(false);
   },
+  undoDel: () => { const L = UI.undoEntries; if (!L || !L.length) return; const have = new Set(S.entries.map(e => e.id)); L.forEach(e => { if (!have.has(e.id)) S.entries.push(e); }); UI.undoEntries = null; log('saisie', `Suppression annulée : ${L.length} saisie(s) restaurée(s)`); save(); $$('#toasts .toast').forEach(x => x.remove()); toast(`${L.length} saisie(s) restaurée(s)`, 'good'); render(false); },
   scoreInfo: d => scoreInfo(d.k, d.d),
   jsub: d => { UI.jSub = d.v; render(); }, jfReset: () => { UI.jf = { from: '', to: '', cat: '', text: '' }; render(); }, sfReset: () => { UI.sf = { text: '', cat: '', type: '', from: '', to: '', status: '' }; render(); },
   libreNew: () => libreForm(null), libreEdit: d => libreForm(S.libre.find(x => x.id === d.id)),
@@ -2317,19 +2525,34 @@ const ACT = {
   autoplan: d => { UI.calAuto = autoPlan(d.id ? [d.id] : null); UI.qSub = 'plan'; setTab('quotas'); },
   autoplanRefresh: () => { UI.calAuto = autoPlan(); render(); },
   qsub: d => { UI.qSub = d.v; render(); }, qedit: d => quotaForm(Q(d.id)), qnew: () => quotaForm(null), qdetail: d => quotaDetail(d.id),
-  qdel: async d => { if (S.entries.some(e => e.cat === d.id) || S.blocks.some(b => b.q === d.id)) return toast('Ce quota a des données : suppression refusée (modifie-le plutôt).', 'warn'); if (!await ask('Ce quota n’a aucune donnée liée.', { title: 'Supprimer ce quota ?' })) return; S.quotas = S.quotas.filter(q => q.id !== d.id); save(); closeModal(); render(); toast('Quota supprimé', 'good'); },
+  qdel: async d => { if (S.entries.some(e => e.cat === d.id) || S.blocks.some(b => b.q === d.id) || (S.timer && S.timer.cat === d.id)) return toast('Ce quota a des données : suppression refusée (modifie-le plutôt).', 'warn'); if (!await ask('Ce quota n’a aucune donnée liée.', { title: 'Supprimer ce quota ?' })) return; S.quotas = S.quotas.filter(q => q.id !== d.id); save(); closeModal(); render(); toast('Quota supprimé', 'good'); },
   adjAccept: d => { const q = Q(d.id), to = +d.to, ws = weekStartOf(todayStr()), from = q.week; q.week = to; S.proposals.push({ id: uid(), ts: Date.now(), kind: 'objectif', q: q.id, week: ws, text: `${q.label} : ${fmtTarget(q, from)} → ${fmtTarget(q, to)} / semaine`, decision: 'accepté' }); log('objectif', `Objectif modifié (accord explicite) : ${q.label} ${fmtTarget(q, from)} → ${fmtTarget(q, to)}`); save(); toast('Objectif ajusté — décision enregistrée', 'good'); render(); },
   adjRefuse: d => { const q = Q(d.id), ws = weekStartOf(todayStr()); S.proposals.push({ id: uid(), ts: Date.now(), kind: 'objectif', q: q.id, week: ws, text: `${q.label} : cible ${fmtTarget(q, q.week)} conservée`, decision: 'refusé' }); save(); render(); },
   open: d => { if (d.k === 'e') entryForm(S.entries.find(x => x.id === d.id)); else if (d.k === 'b') blockModal(d.id); else if (d.k === 'l') libreForm(S.libre.find(x => x.id === d.id)); else if (d.k === 'a') apptForm(S.appts.find(x => x.id === d.id)); else if (d.k === 'r') { UI.bilanKind = 'day'; UI.bilanDate = d.id; setTab('bilan'); } },
+  print: () => window.print(),
   expOpen: d => expOpen(d || {}),
   expGo: async d => { const o = expRead(); if (!o) return; try { toast('Génération du fichier…'); await expRun(d.f, o); if (d.f !== 'pdf') { toast('Fichier généré', 'good'); closeModal(); } } catch (e) { console.error(e); toast('Échec de l’export : ' + (e && e.message || e), 'bad'); } },
   expFull: async () => { try { await expRun('xlsx', { kind: 'range', date: todayStr(), qf: 'all', parts: { plan: true, missed: true, daily: true, journal: true, notes: true } }); toast('Excel complet généré', 'good'); } catch (e) { console.error(e); toast('Échec de l’export', 'bad'); } },
   exportJson: () => { download(`mylifepilot_sauvegarde_${todayStr()}.json`, JSON.stringify(S, null, 1)); toast('Sauvegarde téléchargée', 'good'); },
   backups: async () => { let keys = []; try { keys = (await DB.keys()).filter(k => String(k).startsWith('bak-')).sort().reverse(); } catch (e) { } modal(`<h2>Copies automatiques</h2>${keys.length ? keys.map(k => `<div class="ln"><div class="lb2"><b>${esc(String(k).replace('bak-', ''))}</b></div><button class="btn sm" ${A('restoreBak', { k })}>Restaurer</button></div>`).join('') : '<div class="empty">Aucune copie pour l’instant (la première est créée au prochain lancement).</div>'}`); },
-  restoreBak: async d => { if (!confirm('Remplacer les données actuelles par cette copie ?')) return; try { const s = JSON.parse(await DB.get(d.k)); await DB.set('bak-avant-restauration-' + Date.now(), JSON.stringify(S)); S = s; migrate(); await persist(); closeModal(); render(); toast('Copie restaurée', 'good'); } catch (e) { toast('Échec de la restauration', 'danger'); } },
+  restoreBak: async d => { try { const raw = JSON.parse(await DB.get(d.k)); if (!(await replaceAll(raw, 'bak-avant-restauration-', 'Restaurer cette copie'))) return; closeModal(); render(); toast('Copie restaurée', 'good'); } catch (e) { toast('Échec de la restauration : copie illisible, tes données actuelles sont intactes.', 'danger'); } },
   demoLoad: () => { if (S.blocks.some(b => b.demo)) return toast('La démo est déjà chargée.', 'warn'); loadDemo(); render(); toast('Démo chargée : 4 semaines de données fictives', 'good'); },
-  demoClear: () => { S.blocks = S.blocks.filter(x => !x.demo); S.entries = S.entries.filter(x => !x.demo); S.appts = S.appts.filter(x => !x.demo); S.libre = S.libre.filter(x => !x.demo); for (const k of Object.keys(S.reviews)) if (S.reviews[k].demo) delete S.reviews[k]; log('démo', 'Démo retirée'); save(); render(); toast('Démo retirée', 'good'); },
-  resetAll: async () => { if (!confirm('Effacer TOUTES les données ? (une copie de sécurité est conservée)')) return; if (!confirm('Dernière confirmation : tout effacer ?')) return; try { await DB.set('bak-avant-effacement-' + Date.now(), JSON.stringify(S)); } catch (e) { } S = defaults(); await persist(); render(); toast('Données effacées', 'warn'); },
+  demoClear: () => { S.blocks = S.blocks.filter(x => !x.demo); S.entries = S.entries.filter(x => !x.demo); S.appts = S.appts.filter(x => !x.demo); S.libre = S.libre.filter(x => !x.demo); for (const k of Object.keys(S.reviews)) if (S.reviews[k].demo) delete S.reviews[k]; { const ids = new Set(S.blocks.map(b => b.id)); S.entries.forEach(e => { if (e.blockId && !ids.has(e.blockId)) delete e.blockId; }); } log('démo', 'Démo retirée'); save(); render(); toast('Démo retirée', 'good'); },
+  resetAll: async () => {
+    const m = await ask('Choisis le niveau d’effacement :\n• « Effacer mes données » : planning, saisies, journal… (une copie de sécurité reste sur cet appareil).\n• « Tout effacer définitivement » : en plus, les copies automatiques, les vocaux et la configuration de synchro (jeton).', { title: 'Effacer', ok: 'Effacer mes données', alt: 'Tout effacer définitivement' });
+    if (m === false) return;
+    if (!confirm(m === 'alt' ? 'Dernière confirmation : TOUT effacer définitivement (irréversible) ?' : 'Dernière confirmation : effacer toutes les données ?')) return;
+    if (m === 'alt') {
+      const wasSync = SYNC.cfg && SYNC.cfg.on;
+      if (wasSync && !(await replaceAll(null, 'tmp-', 'Effacer tout'))) return;
+      try { for (const k of await DB.keys()) await DB.del(k); } catch (e) { }
+      try { for (const k of await caches.keys()) await caches.delete(k); } catch (e) { }
+      try { localStorage.removeItem('mlp_state'); localStorage.removeItem('mlp_sync_cfg'); localStorage.removeItem('mlp_sync_base'); } catch (e) { }
+      SYNC.cfg = null; S = defaults(); if (typeof VX !== 'undefined') VX.list = []; await persist(); render(); toast('Tout a été effacé de cet appareil', 'warn'); return;
+    }
+    if (!(await replaceAll(null, 'bak-avant-effacement-', 'Effacer toutes les données'))) return;
+    render(); toast('Données effacées', 'warn');
+  },
   notifAsk: async () => { if (!('Notification' in window)) return toast('Notifications non supportées sur ce navigateur.', 'warn'); const r = await Notification.requestPermission(); S.settings.notif = r === 'granted'; save(); render(); }
 };
 document.addEventListener('click', e => {
@@ -2341,6 +2564,7 @@ document.addEventListener('click', e => {
 
 /* ---------- formulaires ---------- */
 const FORMS = {
+  expNoop() { },
   entrySave(fd) {
     const cat = fd.get('cat'), q = Q(cat), id = fd.get('id'); let v, mins = 0;
     if (q.kind === 'duration') { v = (+fd.get('h') || 0) * 60 + (+fd.get('m') || 0); const qd = fd.get('qd'); if (!v && qd) v = +qd; } else { v = +fd.get('qty') || 0; mins = pd(fd.get('mins')) || 0; }
@@ -2365,8 +2589,10 @@ const FORMS = {
     save(); closeModal(); render(); toast(id ? 'Bloc modifié' : `${dates.length} bloc(s) créé(s)`, 'good');
   },
   qualifySave(fd) {
-    const b = S.blocks.find(x => x.id === fd.get('id')), out = fd.get('out'), add = Math.max(0, pd(fd.get('add')) || 0), reason = fd.get('reason') || '', note = fd.get('note') || '';
+    const b = S.blocks.find(x => x.id === fd.get('id')); let out = fd.get('out'); const add = Math.max(0, pd(fd.get('add')) || 0), reason = fd.get('reason') || '', note = fd.get('note') || '';
     const q = Q(b.q); b.note = note || b.note; if (reason) b.reason = reason;
+    const had = Math.round(blockActual(b));
+    if (had > 0 && ['missed', 'cancelled', 'postponed'].includes(out)) { if (confirm(`${fmtDur(had)} sont déjà saisies sur ce bloc.\n\nOK = les supprimer (le bloc est vraiment « ${STATUS[out][0]} »).\nAnnuler = les garder et passer le bloc en « Partielle ».`)) S.entries = S.entries.filter(e => e.blockId !== b.id); else out = 'partial'; }
     const back = UI.backToBilan; UI.backToBilan = null;
     let next = null;
     if (out === 'done') { recordDone(b, add, true); b.status = 'done'; b.reason = ''; }
@@ -2380,7 +2606,7 @@ const FORMS = {
     else if (back) { UI.backToBilan = null; render(); bilanModal(back); return; }
     render();
   },
-  replanManual(fd) { const id = fd.get('id'); applyReplan(id, fd.get('date'), fd.get('s'), pd(fd.get('dur')), fd.get('mark')); closeModal(); render(); },
+  replanManual(fd) { const id = fd.get('id'), dur = pd(fd.get('dur')); if (!(dur > 0) || hm2min(fd.get('s')) + dur > 1440) return toast('Durée ou heure invalide : le bloc doit tenir dans la journée.', 'warn'); applyReplan(id, fd.get('date'), fd.get('s'), dur, fd.get('mark')); closeModal(); render(); },
   libreSave(fd) {
     const id = fd.get('id'), o = { date: fd.get('date'), from: fd.get('from') || '', to: fd.get('to') || '', text: (fd.get('text') || '').trim(), cat: fd.get('cat') || '' };
     if (o.from && o.to && hm2min(o.to) <= hm2min(o.from)) return toast('Heure de fin avant le début.', 'warn');
@@ -2397,7 +2623,7 @@ const FORMS = {
   },
   quotaSave(fd) {
     const id = fd.get('id'), kind = fd.get('kind'), h = kind === 'duration', mul = h ? 60 : 1;
-    const o = { label: fd.get('label').trim(), icon: fd.get('icon') || '⭐', color: fd.get('color'), kind, mode: fd.get('mode'), week: Math.round((+fd.get('week') || 0) * mul), day: fd.get('day') === '' ? null : Math.round(+fd.get('day') * mul), sessionMin: pd(fd.get('sessionMin')) || 60, noPlan: !!fd.get('noPlan'), overlap: !!fd.get('overlap') };
+    const o = { label: fd.get('label').trim(), icon: fd.get('icon') || '⭐', color: fd.get('color'), kind, mode: fd.get('mode'), week: Math.max(1, Math.round((+fd.get('week') || 0) * mul)), day: fd.get('day') === '' || !(+fd.get('day') > 0) ? null : Math.round(+fd.get('day') * mul), sessionMin: pd(fd.get('sessionMin')) || 60, noPlan: !!fd.get('noPlan'), overlap: !!fd.get('overlap') };
     if (id) { const q = Q(id); if (q.week !== o.week) { S.proposals.push({ id: uid(), ts: Date.now(), kind: 'objectif', q: id, text: `${q.label} : ${fmtTarget(q, q.week)} → ${fmtTarget({ ...q, ...o }, o.week)} (modification manuelle)`, decision: 'accepté' }); log('objectif', `Objectif modifié : ${q.label}`); } Object.assign(q, o); }
     else S.quotas.push({ id: 'q' + uid(), prio: 5, unit: kind === 'count' ? 'fois' : '', ...o });
     save(); closeModal(); render();
@@ -2407,7 +2633,10 @@ const FORMS = {
     const c = { owner: (fd.get('owner') || '').trim(), repo: (fd.get('repo') || '').trim().replace(/^.*\//, ''), token: (fd.get('token') || '').trim() || old.token || '', pass: fd.get('pass') || old.pass || '', on: true, device: (fd.get('device') || '').trim() || old.device || (/Android|iPhone|iPad|Mobile/i.test(navigator.userAgent) ? 'Téléphone' : 'PC') };
     if (!c.owner || !c.repo) return toast('Indique le propriétaire et le nom du dépôt de données.', 'warn');
     if (!c.token) return toast('Colle le jeton GitHub.', 'warn');
-    if (c.pass.length < 6) return toast('Mot de passe de chiffrement : 6 caractères minimum.', 'warn');
+    if (c.pass.length < 10) return toast('Mot de passe de chiffrement : 10 caractères minimum (une phrase de passe est idéale).', 'warn');
+    /* on vérifie d'abord : une faute de frappe ne remplace plus une configuration qui marchait */
+    try { await fetchRemote(c); } catch (e) { return toast('⚠️ ' + syncErrMsg(e), 'warn', 6000); }
+    if (old.owner !== c.owner || old.repo !== c.repo) await baseSet(null); /* nouveau dépôt : aucune suppression déduite de l'ancien */
     SYNC.cfg = c; await cfgSave(c); setSync('busy');
     const r = await syncNow('setup');
     if (r.ok) { toast('☁️ Synchronisation activée ✓', 'good'); render(); } else toast('⚠️ ' + r.msg, 'warn', 6000);
@@ -2419,7 +2648,8 @@ const FORMS = {
     save(); applyTheme(); render(); toast('Réglages enregistrés', 'good');
   },
   workAdd(fd) {
-    const s = fd.get('s'), e = fd.get('e'), w = clamp(+fd.get('w') || 1, 1, 52), ws = weekStartOf(todayStr()), series = uid(); let n = 0;
+    const s = fd.get('s'), e = fd.get('e'); if (!s || !e || hm2min(e) <= hm2min(s)) return toast('L’heure de fin doit être après le début.', 'warn');
+    const w = clamp(+fd.get('w') || 1, 1, 52), ws = weekStartOf(todayStr()), series = uid(); let n = 0;
     for (let k = 0; k < w; k++) for (let i = 0; i < 5; i++) { const d = addDays(ws, k * 7 + i); if (d < todayStr() || S.blocks.some(b => b.date === d && b.title === 'Travail' && !b.q)) continue; S.blocks.push({ id: uid(), date: d, start: s, end: e, title: 'Travail', q: null, status: 'done', fixed: true, series }); n++; }
     save(); render(); toast(`${n} bloc(s) de travail ajouté(s)`, 'good');
   },
@@ -2437,9 +2667,10 @@ const FORMS = {
   },
   timerNew(fd) { S.timer = { cat: fd.get('cat'), blockId: null, label: (fd.get('label') || '').trim() || Q(fd.get('cat')).label, startedAt: NOWFN().getTime(), acc: 0, running: true, limit: pd(fd.get('limit')) || null, alerted: false }; log('chrono', `Démarrage : ${S.timer.label}`); save(); closeModal(); render(); timerModal(); },
   timerStopSave(fd) {
-    const T = S.timer, q = Q(T.cat), min = Math.max(1, pd(fd.get('min')) || 1), b = T.blockId && S.blocks.find(x => x.id === T.blockId), fin = fd.get('fin');
-    if (q.kind === 'duration') addEntry({ cat: q.id, v: min, blockId: T.blockId || undefined, src: 'timer', note: fd.get('note') || '', date: b ? b.date : todayStr() });
-    else addEntry({ cat: q.id, v: fd.get('unit') ? 1 : 0, mins: min, blockId: T.blockId || undefined, src: 'timer', note: fd.get('note') || '', date: b ? b.date : todayStr() });
+    const T = S.timer; if (!T) return closeModal(); const q = Q(T.cat); if (!q) { S.timer = null; save(); closeModal(); render(); return toast('Le quota de ce chrono n’existe plus : chrono annulé.', 'warn'); }
+    const min = Math.max(1, pd(fd.get('min')) || 1), b = T.blockId && S.blocks.find(x => x.id === T.blockId), fin = fd.get('fin');
+    if (q.kind === 'duration') addEntry({ cat: q.id, v: min, blockId: b ? T.blockId : undefined, src: 'timer', note: fd.get('note') || '', date: b ? b.date : todayStr() });
+    else addEntry({ cat: q.id, v: fd.get('unit') ? 1 : 0, mins: min, blockId: b ? T.blockId : undefined, src: 'timer', note: fd.get('note') || '', date: b ? b.date : todayStr() });
     if (b) { b.status = fin === 'partial' ? 'inprogress' : 'done'; if (fin !== 'partial') b.reason = ''; }
     log('chrono', `Terminé : ${T.label} — ${fmtDur(min)}`); S.timer = null; save(); closeModal(); render();
     if (q.mode === 'max') checkLimitToast(q); toast(`✅ ${fmtDur(min)} enregistrées`, 'good');
@@ -2451,7 +2682,7 @@ document.addEventListener('input', e => {
   if (t.dataset.dur !== undefined) { const m = parseDur(t.value), h = t.parentElement.querySelector('.dh'); if (h) h.textContent = t.value.trim() === '' ? '' : m == null ? '⚠ Format : 1:40, 1h40, 100' : '= ' + fmtDur(m); }
   if (t.dataset.live) {
     const k = t.dataset.live, n = t.name, v = t.value;
-    if (k === 'jf') { UI.jf[n] = v; $('#jres').innerHTML = journalTable(); }
+    if (k === 'jf') { UI.jf[n] = v; UI.jSel = new Set(); $('#jres').innerHTML = journalTable(); }
     else if (k === 'sf') { UI.sf[n] = v; $('#sres').innerHTML = searchTable(); }
     else if (k === 'libre') { UI.libreText = v; $('#lres').innerHTML = libreList(); }
     else if (k === 'stq') { UI.statQ = v; render(); }
@@ -2468,16 +2699,30 @@ document.addEventListener('change', e => {
   if (t.dataset.qk === 'rep') $('#repbox').classList.toggle('hide', t.value !== '1');
   if (t.id === 'impfile' && t.files[0]) {
     const r = new FileReader();
-    r.onload = async () => { try { const s = JSON.parse(r.result); if (!s.quotas || !s.entries || !s.blocks) throw new Error('format'); if (!confirm('Remplacer toutes les données actuelles par ce fichier ?')) return; try { await DB.set('bak-avant-import-' + Date.now(), JSON.stringify(S)); } catch (e) { } S = s; migrate(); await persist(); render(); toast('Données importées', 'good'); } catch (e) { toast('Fichier invalide : sauvegarde My Life Pilot (.json) attendue.', 'danger'); } };
+    r.onload = async () => { let raw; try { raw = JSON.parse(r.result); sanitizeState(raw); } catch (e) { return toast('Fichier invalide : sauvegarde My Life Pilot (.json) attendue. Tes données actuelles sont intactes.', 'danger'); } if (!confirm('Remplacer toutes les données actuelles par ce fichier ?')) return; try { if (await replaceAll(raw, 'bak-avant-import-', 'Importer ce fichier')) { render(); toast('Données importées', 'good'); } } catch (e) { toast('Import impossible : ' + (e && e.message || e), 'danger'); } t.value = ''; };
     r.readAsText(t.files[0]);
   }
 });
 
 /* ================= Démarrage ================= */
+/* deux onglets / fenêtres ouverts en même temps : l'autre onglet enregistre → on recharge son état au lieu de l'écraser */
+function tabsInit() {
+  try {
+    const bc = new BroadcastChannel('mlp-state'); window.__bc = bc;
+    bc.onmessage = async ev => {
+      if (!ev.data || ev.data.id === TABID || saveT || storageMode !== 'idb') return;
+      try {
+        const st = await DB.get('state');
+        if (st && (st._mod || 0) > (S._mod || 0) && !saveT) { S = sanitizeState(st); migrate(); if (!$('#modal') && !isTyping()) render(); }
+      } catch (e) { }
+    };
+  } catch (e) { }
+}
+
 function openReminders(force) {
   if (window.__NOREM) return;
   if ($('#modal') || (!force && UI.remAt && Date.now() - UI.remAt < 180000)) return;
-  const al = alerts().filter(a => a.lvl === 'danger' || a.lvl === 'warn').slice(0, 6); if (!al.length) return;
+  const al = alerts().filter(a => a.lvl === 'danger' || a.lvl === 'warn').sort((a, b) => lvlOrder[a.lvl] - lvlOrder[b.lvl]).slice(0, 6); if (!al.length) return;
   UI.remAt = Date.now();
   const now = Date.now(); al.forEach(a => { S.notified[a.key] = now; });
   modal(`<h2>🔔 Rappels</h2><div style="display:grid;gap:8px;margin-top:6px">${al.map(a => `<div class="card" style="padding:12px;margin:0"><div><b>${a.icon} ${esc(a.title)}</b></div><div class="rt">${esc(a.text || '')}</div>${(a.acts || []).length ? `<div class="fbtns" style="margin-top:8px">${a.acts.map(x => { const { l, act, ...rest } = x; return `<button class="btn sm" ${A(act, rest)}>${l}</button>`; }).join('')}</div>` : ''}</div>`).join('')}</div><div class="fbtns" style="margin-top:12px"><button class="btn pri" ${A('mclose')}>OK, j’ai vu</button></div>`);
@@ -2493,7 +2738,7 @@ async function boot() {
   await load(); applyTheme();
   const h = location.hash.slice(1); if (VIEWS[h]) UI.tab = h;
   const fab = document.createElement('button'); fab.className = 'fab'; fab.textContent = '＋'; fab.title = 'Saisie rapide'; fab.dataset.act = 'quick'; fab.setAttribute('aria-label', 'Saisie rapide'); document.body.appendChild(fab);
-  voxInit(); render(false); openReminders(true); checkNotify();
+  tabsInit(); voxInit(); render(false); openReminders(true); checkNotify();
   setInterval(tick1s, 1000);
   setInterval(() => { if (!$('#modal') && !isTyping() && ['cockpit', 'cal'].includes(UI.tab)) render(); checkNotify(); renderNav(); }, 30000);
   document.addEventListener('visibilitychange', () => { if (document.hidden) { UI.hidAt = Date.now(); persist(); syncNow('hide'); } else { if (!$('#modal') && !isTyping()) render(); if (UI.hidAt && Date.now() - UI.hidAt > 180000) openReminders(); checkNotify(); if (Date.now() - SYNC.last > 5000) syncNow('show'); } });
@@ -2511,7 +2756,7 @@ async function boot() {
   matchMedia('(prefers-color-scheme:dark)').addEventListener('change', applyTheme);
   syncInit();
   if ('serviceWorker' in navigator && /^https?:/.test(location.protocol)) navigator.serviceWorker.register('sw.js').catch(() => { });
-  window.MLP = { save, EXP: { buildSheets, buildXlsx, buildReport, buildDocx, reportHtml, expData, zipStore, chartSvg, expRun }, ACT, SYNC, syncNow, merge3, syncable, get S() { return S; }, set S(v) { S = v; }, UI, render, alerts, dayInfo, weekInfo, statsFor, periodOf, autoPlan, effStatus, loadDemo, persist, load, DB, qDone };
+  window.MLP = { save, sanitizeState, defaults, weekStartOf, icsFor, addEntry, applyTheme,  EXP: { buildSheets, buildXlsx, buildReport, buildDocx, reportHtml, expData, zipStore, chartSvg, expRun }, ACT, SYNC, syncNow, merge3, syncable, get S() { return S; }, set S(v) { S = v; }, UI, render, alerts, dayInfo, weekInfo, statsFor, periodOf, autoPlan, effStatus, loadDemo, persist, load, DB, qDone };
 }
 boot();
 </script>
